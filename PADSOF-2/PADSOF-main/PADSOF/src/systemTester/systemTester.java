@@ -3,6 +3,7 @@ package systemTester;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 import system.ArtGallery;
@@ -27,7 +28,7 @@ public class systemTester implements Serializable {
 		 /*Creamos nuevos usuarios*/
 		 inicio.newClient("Paco", "Fiestas", "51546798A", Gender.OTHER, LocalDate.of(2004, 10, 2), "SOY-EL-JEFE");
 		 /*Creamos exhibiciones*/
-		 inicio.createExhibition("FIESTA CON EL JEFE", "La Nuit", LocalDateTime.of(2024, 3, 31, 8, 0),  LocalDateTime.of(2024, 4, 7, 8, 0));
+		 inicio.createExhibition("FIESTA CON EL JEFE", "La Nuit", LocalDateTime.of(2024, 4, 3, 8, 0),  LocalDateTime.of(2024, 4, 7, 8, 0));
 		 
 		 /*Creamos una sala*/
 		 SubRoom room1 = new SubRoom(1, true, 21.5 ,48.00, 24.00, 5.00, 40.00);
@@ -43,8 +44,8 @@ public class systemTester implements Serializable {
 		 exActual = inicio.searchExhibition("FIESTA CON EL JEFE");
 		 boolean staux = exActual.addRoomExhibition(space1);
 		 exActual.publishExposition();
-		 
-		 
+		 System.out.println("Numero de entradas: " + exActual.getNumTest());
+;		 
 		 /*Cargamos pruebas de sistema*/
 		 System.out.println("BIENVENIDO A ART GALLERY!\n");
 		 System.out.println("POR FAVOR INDIQUE SI QUIERE REGISTRARSE(R) O INICIAR SESION(I):");
@@ -143,6 +144,8 @@ public class systemTester implements Serializable {
 			 System.out.println(e.getTitle());
 			 if((e.getTitle()).equals("FIESTA CON EL JEFE"));
 			 	/*Vamos a intentar que compra distintas*/
+			 	System.out.println("Nombre del cliente que va a comprar: " + clientSing.getName());
+			 	System.out.println("Estamos a fecha " + LocalDateTime.now());
 			 	Ticket t1 = e.buyTicket(clientSing, LocalDateTime.of(2024, 4, 3, 12, 0));
 			 	if(t1 == null);
 			 		System.out.println("ERROR EN LA COMPRA 3-4-2024 12:00-BIEN");

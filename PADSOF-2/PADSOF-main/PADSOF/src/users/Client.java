@@ -77,4 +77,11 @@ public class Client extends User implements Serializable{
 		return true;
 	}
 	
+	public Boolean getNotificationEnable() {
+		return notificationEnable;
+	}
+	
+	public Set<Notification> getNotifications() {
+		return notifications;
+	}
 }

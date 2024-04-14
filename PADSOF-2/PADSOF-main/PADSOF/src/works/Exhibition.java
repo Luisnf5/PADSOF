@@ -318,6 +318,76 @@ public class Exhibition implements Serializable {
     public boolean addRoomExhibition(SubroomExhibition Re) {
         return this.roomexhibitions.add(Re); 
     }
-    
-   
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public ExhibitionStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ExhibitionStatus status) {
+		this.status = status;
+	}
+
+	public void setRaffle(Raffle raffle) {
+		this.raffle = raffle;
+	}
+
+	public Discount getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Discount discount) {
+		this.discount = discount;
+	}
+
+	public Map<LocalDateTime, Set<Ticket>> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Map<LocalDateTime, Set<Ticket>> tickets) {
+		this.tickets = tickets;
+	}
+
+	public Set<SubroomExhibition> getRoomexhibitions() {
+		return roomexhibitions;
+	}
+
+	public void setRoomexhibitions(Set<SubroomExhibition> roomexhibitions) {
+		this.roomexhibitions = roomexhibitions;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	public Raffle getRaffle() {
+		return raffle;
+	}
 }
