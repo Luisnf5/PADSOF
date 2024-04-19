@@ -60,4 +60,8 @@ public class SubroomExhibition implements Serializable{
     public Set<Work> getWorks(){
         return this.worksIn;
     }
+    
+    public int getCapacity() {
+    	return this.salaHija.getCapacity();
+    }
 }

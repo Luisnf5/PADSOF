@@ -77,4 +77,16 @@ public class Client extends User implements Serializable{
 		return true;
 	}
 	
+	public Boolean getNotificationEnable() {
+		return notificationEnable;
+	}
+	
+	public Set<Notification> getNotifications() {
+		return notifications;
+	}
+	
+	@Override
+	public String toString() {
+		return "NOMBRE: " + this.getName() + " APELLIDO: " + this.getSurname() + " NIF: " + this.getNif() + " PWD: " + this.getPassword() +  " DATE: " + this.getBirthDate() + " GENDER: " + this.getGender();
+	}
 }

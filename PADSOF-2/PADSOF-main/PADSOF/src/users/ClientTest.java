@@ -4,19 +4,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import system.ArtGallery;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import works.*;
-import users.*;
 
 class ClientTest {
 	Client client;
+	Exhibition exh;
 	@BeforeEach
     void setUp() {
         client = new Client("John", "Doe", "123456", Gender.MALE, LocalDate.now(), "password");
+        exh = new Exhibition("Title", "Author", LocalDateTime.now(), LocalDateTime.of(2025, 12, 12, 20, 0));
     }
 
 	@Test
@@ -52,8 +51,8 @@ class ClientTest {
 
 	@Test
 	void testAddTickets() {
-		Ticket ticket1 = new Ticket(LocalDateTime.now(), 12.5, client);
-		Ticket ticket2 = new Ticket(LocalDateTime.now(), 20, client);
+		Ticket ticket1 = new Ticket(LocalDateTime.now(), 12.5, client, exh);
+		Ticket ticket2 = new Ticket(LocalDateTime.now(), 20, client, exh);
 		client.addTickets(ticket1, ticket2);
 		assertEquals(client.getNumTickets(), 2, "Tickets not added");
 	}

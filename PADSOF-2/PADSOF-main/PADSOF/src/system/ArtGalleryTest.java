@@ -54,6 +54,12 @@ class ArtGalleryTest {
 		artGallery.deleteNotification(n);
 		assertFalse(artGallery.getNotifications().contains(n), "Notification not deleted");
 	}
+	
+	@Test
+	void testNewStaff() {
+		artGallery.newStaff("John", "Doe", "123456", Gender.MALE, LocalDate.now());
+		assertEquals(artGallery.getUsers().size(), 3, "Staff not created");
+	}
 
 	@Test
 	void testNewClient() {
@@ -62,38 +68,32 @@ class ArtGalleryTest {
 	}
 
 	@Test
-	void testNewStaff() {
-		artGallery.newStaff("John", "Doe", "123456", Gender.MALE, LocalDate.now());
-		assertEquals(artGallery.getUsers().size(), 1, "Staff not created");
-	}
-
-	@Test
 	void testNewAdmin() {
 		artGallery.newAdmin("John", "Doe", "123456", Gender.MALE, LocalDate.now(), "password");
-		assertEquals(artGallery.getUsers().size(), 1, "Admin not created");
+		assertEquals(artGallery.getUsers().size(), 2, "Admin not created");
 	}
 
 	@Test
 	void testCreatePainting() {
-        artGallery.createPainting("Mona Lisa", "Leonardo da Vinci", false, true, 77, 0, 53, 50, "Oil");
-        assertEquals(artGallery.getInventory().getWorks().size(), 1, "Painting not created");
+        artGallery.createPainting("Mona Lisa", "Leonardo da Vinci", false, 20, 77, 0, 53, 50, "Oil");
+        assertEquals(artGallery.getInventory().getWorks().size(), 3, "Painting not created");
 	}
 
 	@Test
 	void testCreateSculpture() {
-        artGallery.createSculpture("The Thinker", "Auguste Rodin", false, false, 98, 145, 186, 50, "Bronze", "Chisel");
-        assertEquals(artGallery.getInventory().getWorks().size(), 1, "Sculpture not created");
+        artGallery.createSculpture("The Thinker", "Auguste Rodin", false, 0, 98, 145, 186, 50, "Bronze", "Chisel");
+        assertEquals(artGallery.getInventory().getWorks().size(), 4, "Sculpture not created");
     }
 
 	@Test
 	void testCreateVideo() {
-        artGallery.createVideo("Test Video", "John Doe", true, false, 1920, 1080, 0, 50, true, "MP4", 1080);
-        assertEquals(artGallery.getInventory().getWorks().size(), 1, "Video not created");
+        artGallery.createVideo("Test Video", "John Doe", true, 0, 1920, 1080, 0, 50, true, "MP4", 1080);
+        assertEquals(artGallery.getInventory().getWorks().size(), 2, "Video not created");
 	}
 
 	@Test
 	void testCreatePhoto() {
-        artGallery.createPhoto("Test Photo", "John Doe", true, false, 4000, 3000, 0, 50, true, "JPEG", 300);
+        artGallery.createPhoto("Test Photo", "John Doe", true, 0, 4000, 3000, 0, 50, true, "JPEG", 300);
         assertEquals(artGallery.getInventory().getWorks().size(), 1, "Photo not created");
 	}
 

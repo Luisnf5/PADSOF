@@ -10,7 +10,7 @@ import system.ArtGallery;
 public class Staff extends User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String bankAccount;
-	private static String password;
+	protected static String password;
 	private Set<Privileges> privileges = new HashSet<>();
 
 	public Staff(String name, String surname, String nif, Gender gender, LocalDate date){
@@ -19,10 +19,6 @@ public class Staff extends User implements Serializable {
 	
 	@Override
 	public Boolean changePwd(String newPwd) {
-		if (this.isPwdValid(newPwd) && this == ArtGallery.getSystem().getLoggedUser()) {
-			Staff.password = newPwd;
-			return true;
-		}
 		return false;
 	}
 	

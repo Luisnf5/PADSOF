@@ -208,6 +208,7 @@ public class ArtGallery implements Serializable{
 		}
 		return false;
 	}
+	
 	public void createPainting(String title, String author, Boolean elctricity, double temperature, double width, double lenght,
 	double height, double humidity, String technique){
 		Painting p = new Painting(title, author, elctricity, temperature, width, lenght, height, humidity, technique);
@@ -234,6 +235,11 @@ public class ArtGallery implements Serializable{
 
 	public boolean createExhibition(String title, String author, LocalDateTime startDate, LocalDateTime endDate){
 		Exhibition e = new Exhibition(title, author, startDate, endDate);
+		for(Exhibition u: this.exhibitions) {
+			if(u.getTitle().equals(title))
+				return false;
+			
+		}
 		return this.exhibitions.add(e);
 	}
 

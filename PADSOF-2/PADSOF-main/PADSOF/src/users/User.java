@@ -1,4 +1,3 @@
-
 /**
  * The User class represents a user of the art gallery system.
  * It is an abstract class implementing Serializable.

@@ -66,5 +66,59 @@ public class Raffle implements Serializable {
 		this.participants.remove(c);
 	}
 	
-	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public int getNumWinners() {
+		return numWinners;
+	}
+
+	public void setNumWinners(int numWinners) {
+		this.numWinners = numWinners;
+	}
+
+	public Map<Client, LocalDateTime> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(Map<Client, LocalDateTime> participants) {
+		this.participants = participants;
+	}
+
+	public Exhibition getExhibition() {
+		return exhibition;
+	}
+
+	public void setExhibition(Exhibition exhibition) {
+		this.exhibition = exhibition;
+	}
 }
