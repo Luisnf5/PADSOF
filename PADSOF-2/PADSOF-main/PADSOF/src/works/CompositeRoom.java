@@ -27,8 +27,8 @@ public class CompositeRoom extends Room implements Serializable{
      * @param height the height of the room
      * @param humidity the humidity conditions suitable for the room
      */
-    public CompositeRoom(int roomID, boolean electricity, double temperature, double width, double length, double height, double humidity){
-        super(roomID, electricity, temperature, width, length, height, humidity);
+    public CompositeRoom(int roomID, boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity){
+        super(roomID, electricity, temperature, width, length, height, humidity, capacity);
     }
     
 }

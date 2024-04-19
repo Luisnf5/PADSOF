@@ -107,7 +107,14 @@ public class Exhibition implements Serializable {
     public LocalDateTime getEndDate() { 
         return endDate;
     }
-
+    
+    public int getCapacity() {
+    	int cap = 0;
+    	for (SubroomExhibition s : this.roomexhibitions) {
+    		cap += s.getCapacity();
+    	}
+    	return cap;
+    }
     /**
      * Checks if the given hour is valid for ticket purchase.
      * 
@@ -135,7 +142,10 @@ public class Exhibition implements Serializable {
         if (!this.isHourValid(hour) || this.status == ExhibitionStatus.DRAFT || this.status == ExhibitionStatus.ENDING) {
             return null;
         }
+
         Ticket newTicket = new Ticket(hour, this.getPrice(), client, this);
+        client.addTickets(newTicket);
+        
         this.tickets.get(hour).add(newTicket);
         
         return newTicket;
@@ -154,14 +164,16 @@ public class Exhibition implements Serializable {
         }
         
         int days;
-        LocalDateTime actual = this.startDate.minusDays(1).minusHours(1);
+        LocalDateTime actual = this.startDate.minusDays(1);
         
         days = (Period.between(this.startDate.toLocalDate(), this.endDate.toLocalDate())).getDays();
         
         for (int i = 0; i<days+1; i++) {
             actual = actual.plusDays(1);
+            actual = actual.withHour(10);	
             for (int j = 0; j<10; j++) {
                 this.tickets.put(actual, new LinkedHashSet<Ticket>());
+                System.out.println("DEBUG: " + actual);
                 actual = actual.plusHours(1);
             }
         }
@@ -209,11 +221,12 @@ public class Exhibition implements Serializable {
             return;
         }
 
-        LocalDateTime actual = this.endDate.minusDays(1).minusHours(11);
+        LocalDateTime actual = this.endDate.minusDays(1);
         int days = (Period.between(this.endDate.toLocalDate(), newDate.toLocalDate())).getDays();
         
         for (int i = 0; i<days+1; i++) {
             actual = actual.plusDays(1);
+            actual = actual.withHour(10);
             for (int j = 0; j<10; j++) {
                 this.tickets.put(actual, new LinkedHashSet<Ticket>());
                 System.out.println("count :" + this.tickets.size());
@@ -316,6 +329,10 @@ public class Exhibition implements Serializable {
      * @return true if the sub-room exhibition is successfully added, false otherwise
      */
     public boolean addRoomExhibition(SubroomExhibition Re) {
+    	if (this.roomexhibitions.add(Re)) {
+    		this.capacity = this.getCapacity();
+    		return true;
+    	}
         return this.roomexhibitions.add(Re); 
     }
 
@@ -329,10 +346,6 @@ public class Exhibition implements Serializable {
 
 	public void setAuthor(String author) {
 		this.author = author;
-	}
-
-	public int getCapacity() {
-		return capacity;
 	}
 
 	public void setCapacity(int capacity) {
