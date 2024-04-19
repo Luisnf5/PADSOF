@@ -1,48 +1,86 @@
 package vistasUsers;
 
 import javax.swing.*;
+
+import controladores.ControladorCliente;
+import systemTester.systemTester;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Properties;
 
-public class vistaCliente extends JFrame {
+public class vistaCliente extends JPanel {
 	private static final long serialVersionUID = 1L;
+	
 
 	public vistaCliente() {
-		
-		
-		
-		
-	}
 	
-	public static void main(String[] args) {
-		JFrame ventana = new JFrame("Mi GUI. Ejemplo 1");
 		
-		// obtener contenedor, asignar layout
-		Container contenedor = ventana.getContentPane();
-		contenedor.setLayout(new FlowLayout());
+		
+		
+		
+		
+		this.setLayout(new FlowLayout());
+		
 		
 		// crear componentes
-		JLabel etiqueta = new JLabel("Nombre");
-		JTextField campo = new JTextField(10);
-		JButton boton = new JButton("Haz click");
+		JLabel etiquetaNombre = new JLabel("Nombre");
+		JTextField campoNombre = new JTextField(10);
+		JLabel etiquetaApellido = new JLabel("Apellido");
+		JTextField campoApellido = new JTextField(10);
+		JLabel etiquetaNie = new JLabel("NIE");
+		JTextField campoNie = new JTextField(10);
+		JLabel etiquetaPwd = new JLabel("new Password");
+		JTextField campoPwd = new JTextField(10);
+		JLabel etiquetaDia = new JLabel("Dia");
+		JTextField campoDia = new JTextField(10);
+		JLabel etiquetaMes = new JLabel("Mes");
+		JTextField campoMes = new JTextField(10);
+		JLabel etiquetaAno = new JLabel("Año");
+		JTextField campoGender = new JTextField(10);
+		JLabel etiquetaGender = new JLabel("Gender");
+		JTextField campoAno = new JTextField(10);
+
+	JButton registrarse = new JButton("Resgistrarse");
 		
 		// asociar acciones a componentes
-		boton.addActionListener(
+		registrarse.addActionListener(
 		           new ActionListener() {
 		                 public void actionPerformed(ActionEvent e) {
-		                      JOptionPane.showMessageDialog(null, campo.getText());
+		                      JOptionPane.showMessageDialog(null, 
+		                    		  new ControladorCliente().addCliente(campoNombre.getText(), campoApellido.getText(), campoNie.getText(), campoGender.getText(), campoDia.getText(), campoMes.getText(), campoAno.getText(), campoPwd.getText())
+		                    	
+		                      );
+		                     
+		                      
 		                 }
 		           }
 		       );
 		
 		// aniadir componentes al contenedor
-		contenedor.add(etiqueta);
-		contenedor.add(campo);
-		contenedor.add(boton);
+		this.add(etiquetaNombre);
+		this.add(campoNombre);
+		this.add(etiquetaApellido);
+		this.add(campoApellido);
+		this.add(etiquetaNie);
+		this.add(campoNie);
+		this.add(etiquetaPwd);
+		this.add(campoPwd);
+		this.add(etiquetaDia);
+		this.add(campoDia);
+		this.add(etiquetaMes);
+		this.add(campoMes);
+		this.add(etiquetaAno);
+		this.add(campoAno);
+		this.add(etiquetaGender);
+		this.add(campoGender);
+		this.add(registrarse);
+
 		
-		// mostrar ventana
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setSize(250,140);
-		ventana.setVisible(true);	
+		
 	}
+	
+	
+	
+
 }
