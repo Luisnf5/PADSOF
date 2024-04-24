@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controladores.ControladorCliente;
 import users.Gender;
 import users.User;
 import vistasSystem.vistaSystem;
@@ -55,19 +56,12 @@ public class vistaInicioSesion extends JPanel {
 							else if (pwd.equals("")) {
 								JOptionPane.showMessageDialog(null, "Introduzca una contraseña");
 								return;
-							}else if (!fecha.matches(patronFecha)) {
-								JOptionPane.showMessageDialog(null, "Introduzca una fecha con un formato valido \n(DD/MM/YYYY)");
-								return;
-							}else if (!User.isPwdValidStatic(pwd)) {
-								JOptionPane.showMessageDialog(null, "Introduzca una contraseña valida. Debe contener:\n\tUn numero\n\tUna letra minúscula\n\tUna letra mayúscula\n\tSu longitud debe ser mayor o igual a 8");
-								return;
-							}else if (!nie.matches(patronNif)) {
-								JOptionPane.showMessageDialog(null, "Introduzca un NIF valido con 8 numeros y una letra mayúscula");
-								return;
-							}else if (selected == null) {
-								JOptionPane.showMessageDialog(null, "Seleccione un genero");
+							}else if (!ControladorCliente.iniciarSesion(nif, pwd)) {
+								JOptionPane.showMessageDialog(null, "La contraseña es incorrecta");
 								return;
 							}
+							JOptionPane.showMessageDialog(null, "Bienvenido");
+							goToInicioCliente();
 		                 }
 		           }
 		       );
@@ -78,11 +72,13 @@ public class vistaInicioSesion extends JPanel {
 		this.add(campoContraseña);
 		this.add(iniciarSesion);
 		this.add(volver);
-		
-		
 	}
 	
 	private void returnToMain() {
 		this.parent.returnToMain(this);
+	}
+	
+	private void goToInicioCliente() {
+		parent.goToInicioCliente(this);
 	}
 }

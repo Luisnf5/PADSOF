@@ -1,6 +1,7 @@
 
 package controladores;
 
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class ControladorCliente {
 	}
 	
 	
-	public boolean iniciarSesion(String nif, String pwd) {
+	public static boolean iniciarSesion(String nif, String pwd) {
 		User u = ArtGallery.getSystem().getUserFromNif(nif);
 		if (u == null) {
 			return false;

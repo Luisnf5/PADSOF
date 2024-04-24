@@ -16,12 +16,15 @@ public class vistaSystem extends JFrame{
 	private JPanel ventanaPrincipal;
 	private JPanel ventanaCliente;
 	private JPanel ventanaInicioSesion;
+	private JPanel ventanaInicioCliente;
 	
 	public vistaSystem() {
 		super("ArtGallery");	
 		this.ventanaPrincipal = new JPanel();
 		this.ventanaCliente = new vistaCliente(this);
 		this.ventanaInicioSesion = new vistaInicioSesion(this);
+		this.ventanaInicioCliente = new VistaInicioCliente(this);
+		
 
 		
 		
@@ -61,6 +64,19 @@ public class vistaSystem extends JFrame{
 		           }
 		       );
 		
+		boton.addActionListener(
+		           new ActionListener() {
+		                 public void actionPerformed(ActionEvent e) {
+		             		 ventanaPrincipal.setVisible(false);
+		                	 ventanaInicioCliente.setVisible(true);
+		                	 
+		                 }
+		           }
+		       );
+		
+		
+		
+		
 		
 		// aniadir componentes al contenedor
 		ventanaPrincipal.add(boton);
@@ -74,17 +90,14 @@ public class vistaSystem extends JFrame{
         contenedor.add(ventanaPrincipal);
         contenedor.add(ventanaCliente);
         contenedor.add(ventanaInicioSesion);
-        
-        
-        
-		
-	
+        contenedor.add(ventanaInicioCliente);
 		
 		
 		
 		// mostrar ventana
 		ventanaCliente.setVisible(false);
 		ventanaInicioSesion.setVisible(false);
+		ventanaInicioCliente.setVisible(false);
 		
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,6 +109,11 @@ public class vistaSystem extends JFrame{
 	public void returnToMain(JPanel actual) {
 		actual.setVisible(false);
 		this.ventanaPrincipal.setVisible(true);
+	}
+	
+	public void goToInicioCliente(JPanel actual) {
+		actual.setVisible(false);
+		this.ventanaInicioCliente.setVisible(true);
 	}
 	
 }
