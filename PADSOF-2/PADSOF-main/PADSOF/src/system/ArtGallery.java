@@ -121,14 +121,15 @@ public class ArtGallery implements Serializable{
 		this.notifications.remove(noti);
 	}
 
-	public void newClient(String name, String surname, String nif, Gender gender, LocalDate date, String password){
+	public boolean newClient(String name, String surname, String nif, Gender gender, LocalDate date, String password){
 		Client c = new Client(name, surname, nif, gender, date, password);
 		for(User u: this.users) {
 			if(u instanceof Client && u.getNif().equals(nif))
-				return;
+				return false;
 			
 		}
 		this.users.add(c);
+		return true;
 
 	}
 	
@@ -208,6 +209,7 @@ public class ArtGallery implements Serializable{
 		}
 		return false;
 	}
+	
 	public void createPainting(String title, String author, Boolean elctricity, double temperature, double width, double lenght,
 	double height, double humidity, String technique){
 		Painting p = new Painting(title, author, elctricity, temperature, width, lenght, height, humidity, technique);
@@ -234,6 +236,11 @@ public class ArtGallery implements Serializable{
 
 	public boolean createExhibition(String title, String author, LocalDateTime startDate, LocalDateTime endDate){
 		Exhibition e = new Exhibition(title, author, startDate, endDate);
+		for(Exhibition u: this.exhibitions) {
+			if(u.getTitle().equals(title))
+				return false;
+			
+		}
 		return this.exhibitions.add(e);
 	}
 
@@ -250,5 +257,14 @@ public class ArtGallery implements Serializable{
 		this.rooms.add(s);
 		
 	}*/
+	
+	public User getUserFromNif(String nif) {
+		for (User u : this.users) {
+			if (u.getNif().equals(nif)){
+				return u;
+			}
+		}
+		return null;
+	}
 	
 }

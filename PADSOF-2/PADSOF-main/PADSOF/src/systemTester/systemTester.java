@@ -3,11 +3,13 @@ package systemTester;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 import system.ArtGallery;
 import users.*;
 import works.*;
+import vistasUsers.*;
 
 public class systemTester implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -27,11 +29,14 @@ public class systemTester implements Serializable {
 		 /*Creamos nuevos usuarios*/
 		 inicio.newClient("Paco", "Fiestas", "51546798A", Gender.OTHER, LocalDate.of(2004, 10, 2), "SOY-EL-JEFE");
 		 /*Creamos exhibiciones*/
-		 inicio.createExhibition("FIESTA CON EL JEFE", "La Nuit", LocalDateTime.of(2024, 3, 31, 8, 0),  LocalDateTime.of(2024, 4, 7, 8, 0));
+		 inicio.createExhibition("FIESTA CON EL JEFE", "La Nuit", LocalDateTime.of(2024, 4, 3, 8, 0),  LocalDateTime.of(2024, 4, 7, 8, 0));
 		 
 		 /*Creamos una sala*/
-		 SubRoom room1 = new SubRoom(1, true, 21.5 ,48.00, 24.00, 5.00, 40.00);
+		 SubRoom room1 = new SubRoom(1, true, 21.5 ,48.00, 24.00, 5.00, 40.00, 100);
 		 inicio.addSubRoom(room1);
+		 
+		 SubRoom room2 = new SubRoom(1, true, 21.5 ,48.00, 24.00, 5.00, 40.00, 150);
+		 inicio.addSubRoom(room2);
 		 
 		 
 		 SubroomExhibition space1 = new SubroomExhibition(room1); 
@@ -44,13 +49,13 @@ public class systemTester implements Serializable {
 		 boolean staux = exActual.addRoomExhibition(space1);
 		 exActual.publishExposition();
 		 
-		 
 		 /*Cargamos pruebas de sistema*/
 		 System.out.println("BIENVENIDO A ART GALLERY!\n");
 		 System.out.println("POR FAVOR INDIQUE SI QUIERE REGISTRARSE(R) O INICIAR SESION(I):");
 		 System.out.println("R o I?\n");
 		 
-		 while(st) {
+		 vistaCliente vc = new vistaCliente();
+;		 while(st) {
 			 String entradaUsuario = scanner.nextLine().toUpperCase();
 			 switch(entradaUsuario) {
 			 	case "R":
@@ -141,15 +146,18 @@ public class systemTester implements Serializable {
 		 System.out.println("(vamos a comprarle entradas para la exposicion Fiesta con el jefe)");
 		 for(Exhibition e: inicio.getExhibitions()) {
 			 System.out.println(e.getTitle());
-			 if((e.getTitle()).equals("FIESTA CON EL JEFE"));
-			 	/*Vamos a intentar que compra distintas*/
-			 	Ticket t1 = e.buyTicket(clientSing, LocalDateTime.of(2024, 4, 3, 12, 0));
-			 	if(t1 == null);
-			 		System.out.println("ERROR EN LA COMPRA 3-4-2024 12:00-BIEN");
-			 	if(e.buyTicket(clientSing, LocalDateTime.of(2024, 3, 3, 12, 0)) == null);
-			 		System.out.println("ERROR EN LA COMPRA 3-3-2024 12:00-MAL");
-			 	if(e.buyTicket(clientSing, LocalDateTime.of(2024, 4, 3, 3, 0)) == null);
-			 		System.out.println("ERROR EN LA COMPRA 3-3-2024 3:00-MAL");
+			 if((e.getTitle()).equals("FIESTA CON EL JEFE")) {
+				 	/*Vamos a intentar que compra distintas*/
+				 	Ticket t1 = e.buyTicket(clientSing, LocalDateTime.of(2024, 4, 4, 12, 0));
+				 	
+				 	if(t1 == null)
+				 		System.out.println("ERROR EN LA COMPRA 4-4-2024 12:00-BIEN");
+				 	if(e.buyTicket(clientSing, LocalDateTime.of(2024, 3, 3, 12, 0)) == null)
+				 		System.out.println("ERROR EN LA COMPRA 3-3-2024 12:00-MAL");
+				 	if(e.buyTicket(clientSing, LocalDateTime.of(2024, 4, 3, 3, 0)) == null)
+				 		System.out.println("ERROR EN LA COMPRA 4-4-2024 3:00-MAL");
+			 }
+
 			 	
 		 }
 		 

@@ -12,8 +12,8 @@ public class InventoryTests {
 	@Test
     public void testAddWorks() {
         Inventory inventory = new Inventory();
-        Work work1 = new Painting("La Mona Lisa", "Leonardo da Vinci", false, false, 77.0, 53.0, 2.0, 40.0, "oleo");
-        Work work2 = new Painting("Guernica", "Pablo Picasso", false, false, 349.0, 776.0, 7.8, 60.0, "oleo");
+        Work work1 = new Painting("La Mona Lisa", "Leonardo da Vinci", false, 20, 77.0, 53.0, 2.0, 40.0, "oleo");
+        Work work2 = new Painting("Guernica", "Pablo Picasso", false, 15, 349.0, 776.0, 7.8, 60.0, "oleo");
         
         inventory.addWorks(work1, work2);
         
@@ -27,8 +27,8 @@ public class InventoryTests {
 	@Test
     public void testSendReparation() {
 		 Inventory inventory = new Inventory();
-	     Work work1 = new Painting("La Mona Lisa", "Leonardo da Vinci", false, false, 77.0, 53.0, 2.0, 40.0, "oleo");
-	     Work work2 = new Painting("Guernica", "Pablo Picasso", false, false, 349.0, 776.0, 7.8, 60.0, "oleo");
+	     Work work1 = new Painting("La Mona Lisa", "Leonardo da Vinci", false, 20, 77.0, 53.0, 2.0, 40.0, "oleo");
+	     Work work2 = new Painting("Guernica", "Pablo Picasso", false, 15, 349.0, 776.0, 7.8, 60.0, "oleo");
 	        
 	    inventory.addWorks(work1, work2);
 	        

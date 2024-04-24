@@ -28,7 +28,8 @@ public abstract class Room implements Serializable {
     private double width;
     private double length;
     private double height;
-    private double humidity; 
+    private double humidity;
+    protected int capacity;
 
     /**
      * Constructs a Room object with specified parameters.
@@ -41,7 +42,7 @@ public abstract class Room implements Serializable {
      * @param height the height of the room
      * @param humidity the humidity conditions of the room
      */
-    public Room(int roomID, boolean electricity, double temperature, double width, double length, double height, double humidity) { 
+    public Room(int roomID, boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity) { 
         super();
         this.roomID = roomID;
         this.electricity = electricity;
@@ -50,7 +51,12 @@ public abstract class Room implements Serializable {
         this.length = length;
         this.height = height;
         this.humidity = humidity;
+        this.capacity = capacity;
     }
+    
+    public int getCapacity() {
+		return capacity;
+	}
 
     /**
      * Gets the temperature of the room.
