@@ -14,7 +14,7 @@ public class vistaSystem extends JFrame{
 		JFrame ventana = new JFrame("ART GALLERY");
 		JPanel ventanaPrincipal = new JPanel();
 		JPanel ventanaCliente = new vistaCliente();
-		
+		JPanel ventanaInicioSesion = new vistaInicioSesion();
 		
 		// obtener contenedor, asignar layout
 		Container contenedor = ventana.getContentPane();
@@ -22,7 +22,7 @@ public class vistaSystem extends JFrame{
 		
 		// crear componentes
 		JButton boton = new JButton("Haz click");
-		JButton inciar = new JButton("Inciar Sesión");
+		JButton iniciar = new JButton("Inciar Sesión");
 		JButton clienteReg = new JButton("Registrarse");
 		
 		// asociar acciones a componentes
@@ -36,18 +36,28 @@ public class vistaSystem extends JFrame{
 		           }
 		       );	
 		
+		iniciar.addActionListener(
+		           new ActionListener() {
+		                 public void actionPerformed(ActionEvent e) {
+		             		 ventanaPrincipal.setVisible(false);
+		                	 ventanaInicioSesion.setVisible(true);
+		                	 
+		                 }
+		           }
+		       );	
 		
 		
 		// aniadir componentes al contenedor
 		ventanaPrincipal.add(boton);
-		ventanaPrincipal.add(inciar);
+		ventanaPrincipal.add(iniciar);
 		ventanaPrincipal.add(clienteReg);
 		ventanaPrincipal.setVisible(true);
 		contenedor.add(ventanaPrincipal);
 		
 	
 		contenedor.add(ventanaCliente);
-		
+		contenedor.add(ventanaInicioSesion);
+		ventanaInicioSesion.setVisible(false);
 		// mostrar ventana
 		ventanaCliente.setVisible(false);	
 		
@@ -57,6 +67,7 @@ public class vistaSystem extends JFrame{
 		ventana.setVisible(true);
 		
 	}
+	
 	
 }
 

@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import controladores.ControladorCliente;
 import systemTester.systemTester;
+import vistasSystem.vistaSystem;
 
 import java.awt.*;
 import java.awt.event.*;
