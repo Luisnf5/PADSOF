@@ -1,7 +1,13 @@
-package vistasSystem;
+	package vistasSystem;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,16 +15,30 @@ import javax.swing.*;
 import vistasUsers.*;
 
 public class vistaSystem extends JFrame{
-
+	private JPanel ventanaPrincipal;
+	private JPanel ventanaCliente;
+	private JPanel ventanaInicioSesion;
+	private JPanel ventanaInicioCliente;
+	
 	public vistaSystem() {
-		JFrame ventana = new JFrame("ART GALLERY");
-		JPanel ventanaPrincipal = new JPanel();
-		JPanel ventanaCliente = new vistaCliente();
-		JPanel ventanaInicioSesion = new vistaInicioSesion();
+		super("ArtGallery");
+		this.ventanaPrincipal = new JPanel();
+		this.ventanaCliente = new vistaCliente(this);
+		this.ventanaInicioSesion = new vistaInicioSesion(this);
+		this.ventanaInicioCliente = new VistaInicioCliente(this);
+		
+		
+		ventanaCliente.setLocation(500, 50);
+		
+
+		
+		
 		
 		// obtener contenedor, asignar layout
-		Container contenedor = ventana.getContentPane();
-		contenedor.setLayout(new FlowLayout());
+		Container contenedor = this.getContentPane();
+		contenedor.setLayout(new FlowLayout(1, 900, 1));
+		contenedor.setLocation(500, 500);
+		
 		
 		// crear componentes
 		JButton boton = new JButton("Haz click");
@@ -44,7 +64,20 @@ public class vistaSystem extends JFrame{
 		                	 
 		                 }
 		           }
-		       );	
+		       );
+		
+		boton.addActionListener(
+		           new ActionListener() {
+		                 public void actionPerformed(ActionEvent e) {
+		             		 ventanaPrincipal.setVisible(false);
+		                	 ventanaInicioCliente.setVisible(true);
+		                	 
+		                 }
+		           }
+		       );
+		
+		
+		
 		
 		
 		// aniadir componentes al contenedor
@@ -52,22 +85,39 @@ public class vistaSystem extends JFrame{
 		ventanaPrincipal.add(iniciar);
 		ventanaPrincipal.add(clienteReg);
 		ventanaPrincipal.setVisible(true);
-		contenedor.add(ventanaPrincipal);
+		ventanaPrincipal.setBackground(Color.blue);
+		contenedor.setSize(1920, 1080);
+		contenedor.setBackground(Color.BLACK);
+
+        // Agregar paneles al contenedor principal
+        contenedor.add(ventanaPrincipal);
+        contenedor.add(ventanaCliente);
+        contenedor.add(ventanaInicioSesion);
+        contenedor.add(ventanaInicioCliente);
 		
-	
-		contenedor.add(ventanaCliente);
-		contenedor.add(ventanaInicioSesion);
-		ventanaInicioSesion.setVisible(false);
+		
+		
 		// mostrar ventana
-		ventanaCliente.setVisible(false);	
+		ventanaCliente.setVisible(false);
+		ventanaInicioSesion.setVisible(false);
+		ventanaInicioCliente.setVisible(false	);
 		
 		
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setSize(250,140);
-		ventana.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(1920,1080);
+		this.setVisible(true);
 		
 	}
 	
+	public void returnToMain(JPanel actual) {
+		actual.setVisible(false);
+		this.ventanaPrincipal.setVisible(true);
+	}
+	
+	public void goToInicioCliente(JPanel actual) {
+		actual.setVisible(false);
+		this.ventanaInicioCliente.setVisible(true);
+	}
 	
 }
 

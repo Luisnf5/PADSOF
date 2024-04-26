@@ -1,6 +1,7 @@
 
 package controladores;
 
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -10,13 +11,28 @@ import users.User;
 
 public class ControladorCliente {
 
-	public Set<User> addCliente(String name, String surname, String nif, String gender, String dia, String mes, String ano, String password) {
-		LocalDate date = LocalDate.of(Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia));
-		ArtGallery.getSystem().newClient(name, surname, nif, Gender.OTHER, date, password);
-		return this.printTest();
+	public boolean addCliente(String name, String surname, String nif, Gender gender, int dia, int mes, int ano, String password) {
+		
+		
+		LocalDate date = LocalDate.of(ano, mes, dia);
+		return ArtGallery.getSystem().newClient(name, surname, nif, gender, date, password);
 	}
 	
-	public Set<User> printTest() {
-		return ArtGallery.getSystem().getUsers();
+	
+	public static boolean iniciarSesion(String nif, String pwd) {
+		User u = ArtGallery.getSystem().getUserFromNif(nif);
+		if (u == null) {
+			return false;
+		}else {
+			if (u.getPassword().equals(pwd)) {
+				ArtGallery.getSystem().setLoggedUser(u);
+				return true;
+			}else {
+				return false;
+			}
+			
+
+		}
 	}
+
 }
