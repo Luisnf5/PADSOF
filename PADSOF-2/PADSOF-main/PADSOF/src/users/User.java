@@ -163,6 +163,37 @@ public abstract class User implements Serializable{
     }
     
     /**
+     * Checks if a given password is valid.
+     * 
+     * @param pwd the password to validate
+     * @return true if the password is valid, false otherwise
+     */
+    public static boolean isPwdValidStatic(String pwd) {
+        char c;
+        Boolean hasUppCase = false;
+        Boolean hasLowCase = false;
+        Boolean hasNumb = false;
+        
+        for (int i=0 ; i<pwd.length(); i++) {
+            c = pwd.charAt(i);
+            if (c >= 'A' && c <= 'Z') {
+                hasUppCase = true;
+            }
+            if (c >= 'a' && c <= 'z') {
+                hasLowCase = true;
+            }
+            if (c >= '0' && c <= '9') {
+                hasNumb = true;
+            }
+        }
+        
+        if (hasUppCase && hasLowCase && hasNumb) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
      * Changes the name of the user.
      * 
      * @param newName the new name to set

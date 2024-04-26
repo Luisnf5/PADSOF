@@ -96,6 +96,7 @@ public class ArtGallery implements Serializable{
 	public static ArtGallery getSystem() {
 		if (system == null) {
 			system = new ArtGallery();
+			system.readSistem();
 			return system;
 		}
 		return system;
@@ -121,14 +122,15 @@ public class ArtGallery implements Serializable{
 		this.notifications.remove(noti);
 	}
 
-	public void newClient(String name, String surname, String nif, Gender gender, LocalDate date, String password){
+	public boolean newClient(String name, String surname, String nif, Gender gender, LocalDate date, String password){
 		Client c = new Client(name, surname, nif, gender, date, password);
 		for(User u: this.users) {
 			if(u instanceof Client && u.getNif().equals(nif))
-				return;
+				return false;
 			
 		}
 		this.users.add(c);
+		return true;
 
 	}
 	
@@ -256,5 +258,14 @@ public class ArtGallery implements Serializable{
 		this.rooms.add(s);
 		
 	}*/
+	
+	public User getUserFromNif(String nif) {
+		for (User u : this.users) {
+			if (u.getNif().equals(nif)){
+				return u;
+			}
+		}
+		return null;
+	}
 	
 }

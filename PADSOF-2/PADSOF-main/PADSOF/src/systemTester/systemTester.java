@@ -9,6 +9,7 @@ import java.util.Scanner;
 import system.ArtGallery;
 import users.*;
 import works.*;
+import vistasUsers.*;
 
 public class systemTester implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -53,7 +54,8 @@ public class systemTester implements Serializable {
 		 System.out.println("POR FAVOR INDIQUE SI QUIERE REGISTRARSE(R) O INICIAR SESION(I):");
 		 System.out.println("R o I?\n");
 		 
-		 while(st) {
+		 VistaClienteReg vc = new VistaClienteReg();
+;		 while(st) {
 			 String entradaUsuario = scanner.nextLine().toUpperCase();
 			 switch(entradaUsuario) {
 			 	case "R":
