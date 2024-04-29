@@ -96,7 +96,6 @@ public class ArtGallery implements Serializable{
 	public static ArtGallery getSystem() {
 		if (system == null) {
 			system = new ArtGallery();
-			system.readSistem();
 			return system;
 		}
 		return system;

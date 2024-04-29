@@ -1,5 +1,7 @@
 package vistasUsers;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,52 +21,32 @@ import vistasSystem.VistaSystem;
 
 public class VistaInicioSesion extends JPanel {
 	VistaSystem parent;
-
+	
+	JLabel etiquetaNif;
+	JTextField campoNif;
+	
+	JLabel etiquetaContraseña;
+	JTextField campoContraseña;
+	
+	JButton iniciarSesion;
+	JButton volver;
+	
 	public VistaInicioSesion(VistaSystem parent) {
 		this.parent = parent;
 		
 		this.setLayout(new GridLayout(4,1));
 		
-		JLabel etiquetaNif = new JLabel("NIF");
-		JTextField campoNif = new JTextField(10);
+		this.etiquetaNif = new JLabel("NIF");
+		this.campoNif = new JTextField(10);
 		
-		JLabel etiquetaContraseña = new JLabel("Contraseña");
-		JTextField campoContraseña = new JTextField(10);
+		this.etiquetaContraseña = new JLabel("Contraseña");
+		this.campoContraseña = new JTextField(10);
 		
-		JButton iniciarSesion = new JButton("Iniciar Sesión");
-		JButton volver = new JButton("Volver");
+		this.iniciarSesion = new JButton("Iniciar Sesión");
+		this.volver = new JButton("Volver");
 		
-		volver.addActionListener(
-		           new ActionListener() {
-		                 public void actionPerformed(ActionEvent e) {
-		                	returnToMain();
-		                 }
-		           }
-		       );
 		
-		iniciarSesion.addActionListener(
-		           new ActionListener() {
-		                 public void actionPerformed(ActionEvent e) {
-
-		            		String pwd = campoContraseña.getText();
-		            		String nif = campoNif.getText();
-							
-							if (nif.equals("")) {
-								JOptionPane.showMessageDialog(null, "introduzca un NIF");
-								return;
-							}
-							else if (pwd.equals("")) {
-								JOptionPane.showMessageDialog(null, "Introduzca una contraseña");
-								return;
-							}else if (!ControladorClienteReg.iniciarSesion(nif, pwd)) {
-								JOptionPane.showMessageDialog(null, "La contraseña es incorrecta");
-								return;
-							}
-							JOptionPane.showMessageDialog(null, "Bienvenido");
-							goToInicioCliente();
-		                 }
-		           }
-		       );
+		
 		
 		this.add(etiquetaNif);
 		this.add(campoNif);
@@ -74,11 +56,18 @@ public class VistaInicioSesion extends JPanel {
 		this.add(volver);
 	}
 	
-	private void returnToMain() {
-		this.parent.returnToMain(this);
+	public void setControlador(ActionListener c) {
+		iniciarSesion.addActionListener(c);
+		volver.addActionListener(c);
 	}
 	
-	private void goToInicioCliente() {
-		parent.goToInicioCliente(this);
+	public JTextField getCampoContraseña() {
+		return this.campoContraseña;
 	}
+
+	public JTextField getCampoNif() {
+		return campoNif;
+	}
+	
+
 }

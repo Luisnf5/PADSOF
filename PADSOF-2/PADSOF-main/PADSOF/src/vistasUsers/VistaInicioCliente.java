@@ -64,4 +64,6 @@ public class VistaInicioCliente extends JPanel{
 		this.add(eventosProximo);
 		
 	}
+	
+	
 }

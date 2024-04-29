@@ -20,138 +20,71 @@ import java.util.Properties;
 
 public class VistaClienteReg extends JPanel {
 		private static final long serialVersionUID = 1L;
-		ControladorClienteReg controlador = new ControladorClienteReg();
-		VistaSystem parent;
+		VistaSystem parent; 
+		
+		JButton registrarse;
+		JButton volver;
+		
+		JLabel etiquetaNombre;
+		JTextField campoNombre;
+		JLabel etiquetaApellido;
+		JTextField campoApellido;
+		JLabel etiquetaNie;
+		JTextField campoNie;
+		JLabel etiquetaPwd;
+		JTextField campoPwd;
+		JLabel etiquetaDia;
+		JTextField campoDia;
+		JLabel etiquetaGender;
+		ButtonGroup genderGroup;
+		
+		JRadioButton male;
+		JRadioButton female;
+		JRadioButton other;
 
 		public VistaClienteReg(VistaSystem parent) {
-			
-		
-			
 			
 			
 			super(new GridLayout(6, 1));
 			this.parent = parent;
-			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			
 			this.setLocation(0, 0);
-			setPreferredSize(new Dimension((int)screenSize.getWidth()/3, (int)screenSize.getHeight()/3));
+			setPreferredSize(new Dimension(600, 400));
 			
 			JPanel row1 = new JPanel(new GridLayout(2,2));
 			JPanel row2 = new JPanel(new GridLayout(2,4));
 			JPanel row3 = new JPanel(new GridLayout(1,3));
 			JPanel row4 = new JPanel(new GridLayout(1,3));
-			JPanel row5 = new JPanel(new BorderLayout());
 			
 			
 			
 			// crear componentes
-			JLabel etiquetaNombre = new JLabel("Nombre");
-			JTextField campoNombre = new JTextField(10);
-			JLabel etiquetaApellido = new JLabel("Apellido");
-			JTextField campoApellido = new JTextField(10);
-			JLabel etiquetaNie = new JLabel("NIF");
-			JTextField campoNie = new JTextField(10);
-			JLabel etiquetaPwd = new JLabel("new Password");
-			JTextField campoPwd = new JTextField(10);
-			JLabel etiquetaDia = new JLabel("Fecha de Nacimiento \n (DD/MM/YYYY)");
+			etiquetaNombre = new JLabel("Nombre");
+			campoNombre = new JTextField(10);
+			etiquetaApellido = new JLabel("Apellido");
+			campoApellido = new JTextField(10);
+			etiquetaNie = new JLabel("NIF");
+			campoNie = new JTextField(10);
+			etiquetaPwd = new JLabel("new Password");
+			campoPwd = new JTextField(10);
+			etiquetaDia = new JLabel("Fecha de Nacimiento \n (DD/MM/YYYY)");
 			etiquetaDia.setHorizontalAlignment(SwingConstants.CENTER);
-			JTextField campoDia = new JTextField(10);
-			JTextField campoGender = new JTextField(10);
-			JLabel etiquetaGender = new JLabel("Gender");
+			campoDia = new JTextField(10);
+			etiquetaGender = new JLabel("Gender");
 			
-			JRadioButton male = new JRadioButton("Masculino");
-			JRadioButton female = new JRadioButton("Femenino");
-			JRadioButton other = new JRadioButton("Otro");
+			male = new JRadioButton("Masculino");
+			female = new JRadioButton("Femenino");
+			other = new JRadioButton("Otro");
 			
-			ButtonGroup genderGroup = new ButtonGroup();
+			genderGroup = new ButtonGroup();
 			genderGroup.add(male);
 			genderGroup.add(female);
 			genderGroup.add(other);
 			
-			JButton registrarse = new JButton("Resgistrarse");
-			JButton volver = new JButton("Volver");
+			this.registrarse = new JButton("Resgistrarse");
+			this.volver = new JButton("Volver");
 			
-			registrarse.setPreferredSize(new Dimension(150, 25));
 			
-			// asociar acciones a componentes
-			registrarse.addActionListener(
-			           new ActionListener() {
-			                 public void actionPerformed(ActionEvent e) {
-			                	String fecha = campoDia.getText();
-			            		String nombre = campoNombre.getText();
-			            		String apellido = campoApellido.getText();
-			            		String pwd = campoPwd.getText();
-			            		String nie = campoNie.getText();
-			            		String patronFecha = "\\d{2}/\\d{2}/\\d{4}";
-			            		String patronNif = "\\d{8}[A-Za-z]";
-			            		ButtonModel selected = genderGroup.getSelection();
-								Gender genderSelected = null;
-								
-								if (fecha.equals("")) {
-									JOptionPane.showMessageDialog(null, "Introduzca una fecha de nacimiento");
-									return;
-								}else if (nombre.equals("")) {
-									JOptionPane.showMessageDialog(null, "Introduzca un nombre");
-									return;
-								}
-								else if (apellido.equals("")) {
-									JOptionPane.showMessageDialog(null, "Introduzca un apellido");
-									return;
-								}
-								else if (nie.equals("")) {
-									JOptionPane.showMessageDialog(null, "introduzca un NIF");
-									return;
-								}
-								else if (pwd.equals("")) {
-									JOptionPane.showMessageDialog(null, "Introduzca una contraseña");
-									return;
-								}else if (!fecha.matches(patronFecha)) {
-									JOptionPane.showMessageDialog(null, "Introduzca una fecha con un formato valido \n(DD/MM/YYYY)");
-									return;
-								}else if (!User.isPwdValidStatic(pwd)) {
-									JOptionPane.showMessageDialog(null, "Introduzca una contraseña valida. Debe contener:\n\tUn numero\n\tUna letra minúscula\n\tUna letra mayúscula\n\tSu longitud debe ser mayor o igual a 8");
-									return;
-								}else if (!nie.matches(patronNif)) {
-									JOptionPane.showMessageDialog(null, "Introduzca un NIF valido con 8 numeros y una letra mayúscula");
-									return;
-								}else if (selected == null) {
-									JOptionPane.showMessageDialog(null, "Seleccione un genero");
-									return;
-								}
-								 
-								if (selected == male.getModel()) {
-									genderSelected = Gender.MALE;
-								}else if (selected == female.getModel()) {
-									genderSelected = Gender.MALE;
-								}else if (selected == other.getModel()) {
-									genderSelected = Gender.OTHER;
-								}
- 
-
-								int dia_f = Integer.parseInt(fecha.split("/")[0]);
-								int mes_f = Integer.parseInt(fecha.split("/")[1]);
-								int ano_f = Integer.parseInt(fecha.split("/")[2]);
-
-								if (controlador.addCliente(nombre, apellido, nie, genderSelected, dia_f, mes_f, ano_f, pwd)) {
-									JOptionPane.showMessageDialog(null, "Nuevo cliente creado con éxito");
-									returnToMain();
-								}else {
-									JOptionPane.showMessageDialog(null, "Error, ya existe un cliente con ese NIF");
-									return;
-								}
-							
-		
-			                 }
-			           }
-			       );
-			
-			volver.addActionListener(
-			           new ActionListener() {
-			                 public void actionPerformed(ActionEvent e) {
-			                	returnToMain();
-			                 }
-			           }
-			       );
 			
 			// aniadir componentes al contenedor
 			
@@ -159,13 +92,15 @@ public class VistaClienteReg extends JPanel {
 			row1.add(etiquetaNie);
 			row1.add(campoDia);
 			row1.add(campoNie);
-
+			row1.setBackground(Color.cyan);
 			this.add(row1);
+			this.setBackground(Color.cyan);
 			
 			row2.add(etiquetaNombre);
 			row2.add(etiquetaApellido);
 			row2.add(campoNombre);
 			row2.add(campoApellido);
+			row2.setBackground(Color.cyan);
 			this.add(row2);
 			
 			
@@ -173,22 +108,51 @@ public class VistaClienteReg extends JPanel {
 			row3.add(male);
 			row3.add(female);
 			row3.add(other);
+			row3.setBackground(Color.cyan);
 			this.add(row3);
 			
 			
 			
 			row4.add(etiquetaPwd);
 			row4.add(campoPwd);
+			row4.setBackground(Color.cyan);
 			this.add(row4);
 			
-			row5.add(registrarse, BorderLayout.EAST);
-			row5.add(volver, BorderLayout.WEST);
-			this.add(row5);
+			this.add(registrarse);
+			this.add(volver);
 			
+		}
+		public void setControlador(ActionListener c) {
+			this.registrarse.addActionListener(c);
+			this.volver.addActionListener(c);
 			
+		}
+		public JTextField getCampoNombre() {
+			return campoNombre;
+		}
+		public JTextField getCampoApellido() {
+			return campoApellido;
+		}
+		public JTextField getCampoNie() {
+			return campoNie;
+		}
+		public JTextField getCampoPwd() {
+			return campoPwd;
+		}
+		public JTextField getCampoDia() {
+			return campoDia;
+		}
+		public ButtonGroup getGenderGroup() {
+			return genderGroup;
+		}
+		public JRadioButton getMale() {
+			return male;
+		}
+		public JRadioButton getFemale() {
+			return female;
+		}
+		public JRadioButton getOther() {
+			return other;
 		}
 		
-		private void returnToMain() {
-			this.parent.returnToMain(this);
-		}
 }

@@ -15,93 +15,120 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
+import controladores.Controlador;
 import controladores.ControladorClienteReg;
+import controladores.ControladorInicioSesion;
+import controladores.ControladorVistaPrincipal;
 import vistasUsers.*;
 
 public class VistaSystem extends JFrame{
-	private JPanel ventanaPrincipal;
+
+	private ControladorClienteReg controladorClienteReg;
+	private ControladorVistaPrincipal controladorVistaPrincipal;
+	private ControladorInicioSesion controladorInicioSesion;
+	
 	private VistaClienteReg vistaClienteReg;
 	private VistaInicioSesion vistaInicioSesion;
 	private VistaInicioCliente vistaInicioCliente;
 	private VistaPrincipal vistaPrincipal;
+	private VistaExposicion vistaExposicion;
+	
+	private JButton clienteReg;
+	private JButton iniciar;
+	private JButton boton;
 	
 	public VistaSystem() {
 		super("ArtGallery");
-		this.ventanaPrincipal = new VistaPrincipal();
+		
+		
+		
+		setLayout(new FlowLayout());
+		
+		this.vistaPrincipal = new VistaPrincipal(this);
 		this.vistaClienteReg = new VistaClienteReg(this);
 		this.vistaInicioSesion = new VistaInicioSesion(this);
 		this.vistaInicioCliente = new VistaInicioCliente(this);
-		
-		
-		// obtener contenedor, asignar layout
-		Container contenedor = this.getContentPane();
-		contenedor.setLayout(new FlowLayout(1, 900, 1));
-		contenedor.setLocation(500, 500);
+		this.vistaExposicion = new VistaExposicion(this);
 		
 		
 		// crear componentes
 
 		
 		// asociar acciones a componentes
-		clienteReg.addActionListener(
-		           new ActionListener() {
-		                 public void actionPerformed(ActionEvent e) {
-		             		 ventanaPrincipal.setVisible(false);
-		                	 vistaClienteReg.setVisible(true);
-		                	 
-		                 }
-		           }
-		       );	
-		
-		iniciar.addActionListener(
-		           new ActionListener() {
-		                 public void actionPerformed(ActionEvent e) {
-		             		 ventanaPrincipal.setVisible(false);
-		                	 ventanaInicioSesion.setVisible(true);
-		                	 
-		                 }
-		           }
-		       );
-		
-		boton.addActionListener(
-		           new ActionListener() {
-		                 public void actionPerformed(ActionEvent e) {
-		             		 ventanaPrincipal.setVisible(false);
-		                	 ventanaInicioCliente.setVisible(true);
-		                	 
-		                 }
-		           }
-		       );
+		vistaPrincipal.setVisible(true);
 
 
 		// mostrar ventana
 		vistaClienteReg.setVisible(false);
-		ventanaInicioSesion.setVisible(false);
-		ventanaInicioCliente.setVisible(false	);
+		vistaInicioSesion.setVisible(false);
+		vistaInicioCliente.setVisible(false);
+		vistaExposicion.setVisible(false);
 		
+		
+
+		
+		
+		
+		this.add(vistaClienteReg);
+		this.add(vistaInicioCliente);
+		this.add(vistaInicioSesion);
+		this.add(vistaExposicion);
+		this.add(vistaPrincipal);
+		
+		vistaPrincipal.setBackground(Color.black);
+		
+		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		this.setVisible(true);
 		
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-		        ControladorClienteReg.saveSystem();
+		        controladorVistaPrincipal.saveSystem();
 				System.exit(0);
 			}
 		});
 		
-		this.setSize(1920,1080);
-		this.setVisible(true);
+	}
+	public void setControlador(Controlador controlador) {
+		this.controladorVistaPrincipal = controlador.getControladorVistaPrincipal();
+		this.vistaPrincipal.setControlador(controladorVistaPrincipal);
+		this.controladorInicioSesion = controlador.getControladorInicioSesion();
+		this.vistaInicioSesion.setControlador(controladorInicioSesion);
+		this.controladorClienteReg = controlador.getControladorClienteReg();
+		this.vistaClienteReg.setControlador(controladorClienteReg);
+		
 		
 	}
 	
 	public void returnToMain(JPanel actual) {
 		actual.setVisible(false);
-		this.ventanaPrincipal.setVisible(true);
+		this.vistaPrincipal.setVisible(true);
 	}
 	
 	public void goToInicioCliente(JPanel actual) {
 		actual.setVisible(false);
-		this.ventanaInicioCliente.setVisible(true);
+		this.vistaInicioCliente.setVisible(true);
 	}
+	
+	public VistaClienteReg getVistaClienteReg() {
+		return this.vistaClienteReg;
+	}
+	
+	public VistaInicioCliente getVistaInicioCliente() {
+		return this.vistaInicioCliente;
+	}
+	public VistaExposicion getVistaExposicion() {
+		return this.vistaExposicion;
+	}
+	public VistaInicioSesion getVistaInicioSesion() {
+		return this.vistaInicioSesion;
+	}
+
+	public VistaPrincipal getVistaPrincipal() {
+		return this.vistaPrincipal;
+	}
+	
+	
 	
 }
 
