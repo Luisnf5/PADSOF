@@ -31,11 +31,11 @@ public class ControladorVistaPrincipal implements ActionListener {
 		
 		if(selected.getText().equals("Iniciar Sesión")) {
 			this.vistaPrincipal.setVisible(false);
-			this.vistaSystem.getInicioSesion().setVisible(true);
+			this.vistaSystem.getVistaInicioSesion().setVisible(true);
 		}
 		else if(selected.getText().equals("Registrarse")) {
 			this.vistaPrincipal.setVisible(false);
-			this.vistaSystem.getClienteReg().setVisible(true);
+			this.vistaSystem.getVistaClienteReg().setVisible(true);
 		}
 		
 	}

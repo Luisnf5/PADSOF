@@ -106,13 +106,11 @@ public class VistaClienteReg extends JPanel {
 			this.add(volver);
 			
 		}
+		
 		public void setControlador(ActionListener c) {
-			this.registrarse.addActionListener(c);
-			this.volver.addActionListener(c);
+			registrarse.addActionListener(c);
+			volver.addActionListener(c);
 			
 		}
 		
-		private void returnToMain() {
-			this.parent.returnToMain(this);
-		}
 }

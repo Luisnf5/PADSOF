@@ -1,8 +1,10 @@
 package vistasUsers;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,7 +35,7 @@ public class VistaInicioSesion extends JPanel {
 	public VistaInicioSesion(VistaSystem parent) {
 		this.parent = parent;
 		
-		this.setLayout(new GridLayout(4,1));
+		this.setLayout(new GridLayout(3,2));
 		
 		this.etiquetaNif = new JLabel("NIF");
 		this.campoNif = new JTextField(10);
@@ -51,18 +53,12 @@ public class VistaInicioSesion extends JPanel {
 		this.add(campoContraseña);
 		this.add(iniciarSesion);
 		this.add(volver);
+		
 	}
 	
 	public void setControlador(ActionListener c) {
 		iniciarSesion.addActionListener(c);
 		volver.addActionListener(c);
 	}
-	
-	private void returnToMain() {
-		this.parent.returnToMain(this);
-	}
-	
-	private void goToInicioCliente() {
-		parent.goToInicioCliente(this);
-	}
+
 }

@@ -27,7 +27,7 @@ public class ControladorClienteReg implements ActionListener{
 		this.vistaSystem = vistaSystem;
 		this.system = system;
 		
-		this.vistaClienteReg = vistaSystem.getClienteReg();	
+		this.vistaClienteReg = vistaSystem.getVistaClienteReg();	
 	}
 	
 	@Override
@@ -35,7 +35,9 @@ public class ControladorClienteReg implements ActionListener{
 		JButton selected;
 		selected = (JButton) e.getSource();
 		
-		selected.getText().equals("");
+		if(selected.getText().equals("Volver")) {
+			this.vistaSystem.returnToMain(this.vistaClienteReg);
+		}
 		
 		
 

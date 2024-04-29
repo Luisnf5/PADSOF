@@ -19,6 +19,7 @@ public class Controlador {
 		this.ventana = vistaSystem;
 		this.controladorInicioSesion = new ControladorInicioSesion(vistaSystem, system);
 		this.controladorVistaPrincipal = new ControladorVistaPrincipal(vistaSystem, system);
+		this.controladorClienteReg = new ControladorClienteReg(vistaSystem, system);
 	}
 
 	public ControladorClienteReg getControladorClienteReg() {

@@ -1,6 +1,7 @@
 	package vistasSystem;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -17,6 +18,7 @@ import javax.swing.*;
 
 import controladores.Controlador;
 import controladores.ControladorClienteReg;
+import controladores.ControladorExposicion;
 import controladores.ControladorInicioSesion;
 import controladores.ControladorVistaPrincipal;
 import vistasUsers.*;
@@ -26,6 +28,7 @@ public class VistaSystem extends JFrame{
 	private ControladorClienteReg controladorClienteReg;
 	private ControladorVistaPrincipal controladorVistaPrincipal;
 	private ControladorInicioSesion controladorInicioSesion;
+	private ControladorExposicion controladorExposicion;
 	
 	private VistaClienteReg vistaClienteReg;
 	private VistaInicioSesion vistaInicioSesion;
@@ -40,22 +43,17 @@ public class VistaSystem extends JFrame{
 	public VistaSystem() {
 		super("ArtGallery");
 		
+		this.setLayout(new FlowLayout());
 		
 		this.vistaPrincipal = new VistaPrincipal(this);
 		this.vistaClienteReg = new VistaClienteReg(this);
 		this.vistaInicioSesion = new VistaInicioSesion(this);
 		this.vistaInicioCliente = new VistaInicioCliente(this);
 		this.vistaExposicion = new VistaExposicion(this);
-		
-		
-		// crear componentes
-
-		
-		// asociar acciones a componentes
-		vistaPrincipal.setVisible(true);
-
+	
 
 		// mostrar ventana
+		vistaPrincipal.setVisible(true);
 		vistaClienteReg.setVisible(false);
 		vistaInicioSesion.setVisible(false);
 		vistaInicioCliente.setVisible(false);
@@ -79,8 +77,8 @@ public class VistaSystem extends JFrame{
 		this.add(vistaPrincipal);
 		
 		vistaPrincipal.setBackground(Color.black);
-		
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		
 		this.setVisible(true);
 		
 	}
@@ -105,17 +103,26 @@ public class VistaSystem extends JFrame{
 		this.vistaInicioCliente.setVisible(true);
 	}
 	
-	public VistaClienteReg getClienteReg() {
+	public VistaClienteReg getVistaClienteReg() {
 		return this.vistaClienteReg;
 	}
 	
-	public VistaInicioSesion getInicioSesion() {
+	public VistaInicioSesion getVistaInicioSesion() {
 		return this.vistaInicioSesion;
 	}
 
 	public VistaPrincipal getVistaPrincipal() {
 		return this.vistaPrincipal;
 	}
+	
+	public VistaInicioCliente getVistaInicioCliente() {
+		return vistaInicioCliente;
+	}
+	
+	public VistaExposicion getVistaExposicion() {
+		return vistaExposicion;
+	}
+	
 	
 }
 

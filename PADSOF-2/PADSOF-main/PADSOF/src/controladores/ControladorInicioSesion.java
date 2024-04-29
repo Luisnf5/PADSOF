@@ -22,7 +22,7 @@ public class ControladorInicioSesion implements ActionListener{
 		this.vistaSystem = vistaSystem;
 		this.system = system;
 		
-		this.vistaInicioSesion = vistaSystem.getInicioSesion();
+		this.vistaInicioSesion = vistaSystem.getVistaInicioSesion();
 		
 	} 
 		
@@ -34,11 +34,6 @@ public class ControladorInicioSesion implements ActionListener{
 		if(selected.getText().equals("Volver")) {
 			vistaSystem.returnToMain(this.vistaInicioSesion);
 		}
-		
-		
-		
-		this.vistaInicioSesion.setVisible(true);
-		this.vistaSystem.getVistaPrincipal().setVisible(false);
 		
 		
 	}

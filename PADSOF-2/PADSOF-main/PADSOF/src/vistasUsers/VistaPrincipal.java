@@ -13,6 +13,7 @@ public class VistaPrincipal extends JPanel {
 	JButton boton;
 	JButton iniciar;
 	JButton clienteReg;
+	JButton expo;
 	
 	public VistaPrincipal(VistaSystem parent) {
 		this.parent = parent;

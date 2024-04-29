@@ -14,6 +14,7 @@ public class systemVision {
 				try {						
 					VistaSystem frame = new VistaSystem();
 					ArtGallery system = ArtGallery.getSystem();
+					ArtGallery.getSystem().readSistem();
 					Controlador controlador = new Controlador(frame, system);
 					frame.setControlador(controlador);
 					frame.setVisible(true);
