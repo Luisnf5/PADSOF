@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -196,11 +197,19 @@ public class Exhibition implements Serializable {
         LocalDateTime auxNow = LocalDateTime.now();
         LocalDateTime aux = LocalDateTime.of(auxNow.getYear(), auxNow.getMonth(), auxNow.getDayOfMonth(), this.endDate.getHour(), this.endDate.getMinute());
         this.endDate = aux.plusDays(7);
-
-        for (SubroomExhibition sbe : this.roomexhibitions){
-            sbe.setWorkStatus(Status.INVENTORY);
+        
+        for (LocalDateTime ld : this.tickets.keySet()){
+            if (ld.isAfter(aux.plusDays(7))){
+                this.returnTickets(this.tickets.get(ld), "exhibition canceled.");
+                this.tickets.remove(ld);
+            }
         }
         
+    }
+    
+    public void returnTickets(Set<Ticket> tickets, String reason) {
+    	for(Ticket t : tickets)
+    		t.returnTicket(reason);
     }
     
     /**
@@ -241,21 +250,15 @@ public class Exhibition implements Serializable {
      * @return true if the exhibition is successfully shortened, false otherwise
      */
     public boolean shortenExhibition(LocalDateTime newDate){
-        Boolean ticketsExist = false;
-
+        this.endDate = newDate;
+        
         for (LocalDateTime ld : this.tickets.keySet()){
             if (ld.isAfter(newDate)){
-                if (this.tickets.get(ld).size() != 0){
-                    ticketsExist = true;
-                }
+                this.returnTickets(this.tickets.get(ld), "exhibition shortened.");
+                this.tickets.remove(ld);
             }
         }
-
-        if (ticketsExist){
-            return false;
-        }
-
-        this.endDate = newDate;
+        
         return true;
     }
 

@@ -22,7 +22,6 @@ public class Staff extends User implements Serializable {
 		return false;
 	}
 	
-	//GMM comprobar que es el empleado el que esta logeado
 	public void setBankAccount(String bankAccount) {
 		if(this.equals(ArtGallery.getSystem().getLoggedUser()))
 			this.bankAccount = bankAccount;

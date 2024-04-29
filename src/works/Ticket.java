@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import users.Client;
+import users.Notification;
 
 public class Ticket implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -82,5 +83,13 @@ public class Ticket implements Serializable {
      */
     public Exhibition getExhibition() {
         return exhibition;
-    }  
+    }
+    
+    public void returnTicket() {
+    	this.client.addNotification(new Notification("Ticket returned", "Your ticket for the exhibition dated " + this.hour + "has been returned."));
+    }
+    
+    public void returnTicket(String reason) {
+    	this.client.addNotification(new Notification("Ticket returned", "Your ticket for the exhibition dated " + this.hour + "has been returned due to " + reason));
+    }
 }
