@@ -17,7 +17,12 @@ import javax.swing.*;
 
 import controladores.Controlador;
 import controladores.ControladorClienteReg;
+import controladores.ControladorExposicion;
+import controladores.ControladorInicioCliente;
 import controladores.ControladorInicioSesion;
+import controladores.ControladorNotificaciones;
+import controladores.ControladorPerfil;
+import controladores.ControladorSorteos;
 import controladores.ControladorVistaPrincipal;
 import vistasUsers.*;
 
@@ -26,16 +31,21 @@ public class VistaSystem extends JFrame{
 	private ControladorClienteReg controladorClienteReg;
 	private ControladorVistaPrincipal controladorVistaPrincipal;
 	private ControladorInicioSesion controladorInicioSesion;
+	private ControladorExposicion controladorExposicion;
+	private ControladorSorteos controladorSorteos;
+	private ControladorInicioCliente controladorInicioCliente;
+	private ControladorNotificaciones controladorNotificaciones;
+	private ControladorPerfil controladorPerfil;
 	
 	private VistaClienteReg vistaClienteReg;
 	private VistaInicioSesion vistaInicioSesion;
 	private VistaInicioCliente vistaInicioCliente;
 	private VistaPrincipal vistaPrincipal;
 	private VistaExposicion vistaExposicion;
+	private VistaSorteos vistaSorteos;
+	private VistaNotificaciones vistaNotificaciones;
+	private VistaPerfil vistaPerfil;
 	
-	private JButton clienteReg;
-	private JButton iniciar;
-	private JButton boton;
 	
 	public VistaSystem() {
 		super("ArtGallery");
@@ -49,6 +59,9 @@ public class VistaSystem extends JFrame{
 		this.vistaInicioSesion = new VistaInicioSesion(this);
 		this.vistaInicioCliente = new VistaInicioCliente(this);
 		this.vistaExposicion = new VistaExposicion(this);
+		this.vistaSorteos = new VistaSorteos(this);
+		this.vistaNotificaciones = new VistaNotificaciones(this);
+		this.vistaPerfil = new VistaPerfil(this);
 		
 		
 		// crear componentes
@@ -63,7 +76,9 @@ public class VistaSystem extends JFrame{
 		vistaInicioSesion.setVisible(false);
 		vistaInicioCliente.setVisible(false);
 		vistaExposicion.setVisible(false);
-		
+		vistaSorteos.setVisible(false);
+		vistaNotificaciones.setVisible(false);
+		vistaPerfil.setVisible(false);
 		
 
 		
@@ -74,6 +89,9 @@ public class VistaSystem extends JFrame{
 		this.add(vistaInicioSesion);
 		this.add(vistaExposicion);
 		this.add(vistaPrincipal);
+		this.add(vistaSorteos);
+		this.add(vistaNotificaciones);
+		this.add(vistaPerfil);
 		
 		vistaPrincipal.setBackground(Color.black);
 		
@@ -96,18 +114,22 @@ public class VistaSystem extends JFrame{
 		this.vistaInicioSesion.setControlador(controladorInicioSesion);
 		this.controladorClienteReg = controlador.getControladorClienteReg();
 		this.vistaClienteReg.setControlador(controladorClienteReg);
-		
+		this.controladorExposicion = controlador.getControladorExpo();
+		//set controladorExpo
+		this.controladorSorteos = controlador.getControladorSorteos();
+		this.vistaSorteos.setControlador(controladorSorteos);
+		this.controladorInicioCliente = controlador.getControladorInicioCliente();
+		this.vistaInicioCliente.setControlador(controladorInicioCliente);
+		this.controladorNotificaciones = controlador.getControladorNotificaciones();
+		this.vistaNotificaciones.setControlador(controladorNotificaciones);
+		this.controladorPerfil = controlador.getControladorPerfil();
+		this.vistaPerfil.setControlador(controladorPerfil);
 		
 	}
 	
 	public void returnToMain(JPanel actual) {
 		actual.setVisible(false);
 		this.vistaPrincipal.setVisible(true);
-	}
-	
-	public void goToInicioCliente(JPanel actual) {
-		actual.setVisible(false);
-		this.vistaInicioCliente.setVisible(true);
 	}
 	
 	public VistaClienteReg getVistaClienteReg() {
@@ -126,6 +148,15 @@ public class VistaSystem extends JFrame{
 
 	public VistaPrincipal getVistaPrincipal() {
 		return this.vistaPrincipal;
+	}
+	public VistaSorteos getVistaSorteos() {
+		return vistaSorteos;
+	}
+	public VistaNotificaciones getVistaNotificaciones() {
+		return vistaNotificaciones;
+	}
+	public VistaPerfil getVistaPerfil() {
+		return vistaPerfil;
 	}
 	
 	

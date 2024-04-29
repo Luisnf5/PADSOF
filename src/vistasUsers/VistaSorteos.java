@@ -1,47 +1,37 @@
 package vistasUsers;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import controladores.ControladorSorteos;
 import vistasSystem.VistaSystem;
 
-public class VistaInicioCliente extends JPanel{
+public class VistaSorteos extends JPanel{
+
 	private VistaSystem parent;
 	
 	private JButton notificaciones;
-	private JButton sorteos;
 	private JButton perfil;
 	private JButton buscar;
-
 	
-	public VistaInicioCliente(VistaSystem parent) {
-		super();
+	public VistaSorteos(VistaSystem parent) {
+		
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
 		
 		this.parent = parent;
 		
 		this.notificaciones = new JButton("Notificaciones");
-		this.sorteos = new JButton("Sorteos");
 		this.perfil = new JButton("Mi Perfil");
 		this.buscar = new JButton("Buscar");
 		
-		
-		layout.putConstraint(SpringLayout.NORTH, sorteos, 10, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.EAST, sorteos, -250, SpringLayout.EAST, this);
-		this.add(sorteos);
+
 		
 		layout.putConstraint(SpringLayout.NORTH, notificaciones, 10, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, notificaciones, -130, SpringLayout.EAST, this);
@@ -57,14 +47,12 @@ public class VistaInicioCliente extends JPanel{
 		this.add(buscar);
 		
 		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		
 	}
-	
+
 	public void setControlador(ActionListener c) {
-		sorteos.addActionListener(c);
 		notificaciones.addActionListener(c);
 		perfil.addActionListener(c);
 		buscar.addActionListener(c);
 	}
-	
-	
 }

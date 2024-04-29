@@ -7,27 +7,22 @@ import javax.swing.JButton;
 
 import system.ArtGallery;
 import vistasSystem.VistaSystem;
-import vistasUsers.VistaInicioCliente;
+import vistasUsers.VistaNotificaciones;
+import vistasUsers.VistaSorteos;
 
-public class ControladorInicioCliente implements ActionListener{
+public class ControladorNotificaciones implements ActionListener{
 	private ArtGallery system;
 	private VistaSystem vistaSystem;
 	
-	private VistaInicioCliente vistaInicioCliente;
-	
-	
-	
-	
-	public ControladorInicioCliente(VistaSystem vistaSystem, ArtGallery system) {
-		super();
-		this.system = system;
+	private VistaNotificaciones vistaNotificaciones;
+
+	public ControladorNotificaciones(VistaSystem vistaSystem, ArtGallery system) {
 		this.vistaSystem = vistaSystem;
+		this.system = system;
 		
-		this.vistaInicioCliente = vistaSystem.getVistaInicioCliente();
+		this.vistaNotificaciones = vistaSystem.getVistaNotificaciones();	
+		
 	}
-
-
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -35,16 +30,13 @@ public class ControladorInicioCliente implements ActionListener{
 		selected = (JButton) e.getSource();
 		
 		if (selected.getText().equals("Sorteos")) {
-			vistaInicioCliente.setVisible(false);
+			vistaNotificaciones.setVisible(false);
 			vistaSystem.getVistaSorteos().setVisible(true);
-		}else if (selected.getText().equals("Notificaciones")) {
-			vistaInicioCliente.setVisible(false);
-			vistaSystem.getVistaNotificaciones().setVisible(true);
 		}else if (selected.getText().equals("Mi Perfil")) {
-			vistaInicioCliente.setVisible(false);
+			vistaNotificaciones.setVisible(false);
 			vistaSystem.getVistaPerfil().setVisible(true);
-			System.out.println("sioqqqqqqq");
 		}
-		
 	}
+	
+	
 }

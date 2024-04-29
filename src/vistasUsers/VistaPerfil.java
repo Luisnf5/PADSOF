@@ -1,43 +1,36 @@
 package vistasUsers;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import vistasSystem.VistaSystem;
 
-public class VistaInicioCliente extends JPanel{
-	private VistaSystem parent;
+public class VistaPerfil extends JPanel{
+private VistaSystem parent;
 	
-	private JButton notificaciones;
 	private JButton sorteos;
-	private JButton perfil;
+	private JButton notificaciones;
 	private JButton buscar;
 
 	
-	public VistaInicioCliente(VistaSystem parent) {
+	public VistaPerfil(VistaSystem parent) {
 		super();
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
 		
 		this.parent = parent;
 		
-		this.notificaciones = new JButton("Notificaciones");
-		this.sorteos = new JButton("Sorteos");
-		this.perfil = new JButton("Mi Perfil");
-		this.buscar = new JButton("Buscar");
 		
+		this.sorteos = new JButton("Sorteos");
+		this.notificaciones = new JButton("Notificaciones");
+		this.buscar = new JButton("Buscar");
+				
 		
 		layout.putConstraint(SpringLayout.NORTH, sorteos, 10, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, sorteos, -250, SpringLayout.EAST, this);
@@ -47,9 +40,6 @@ public class VistaInicioCliente extends JPanel{
 		layout.putConstraint(SpringLayout.EAST, notificaciones, -130, SpringLayout.EAST, this);
 		this.add(notificaciones);
 		
-		layout.putConstraint(SpringLayout.NORTH, perfil, 10, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.EAST, perfil, -45, SpringLayout.EAST, this);
-		this.add(perfil);
 		
 		layout.putConstraint(SpringLayout.NORTH, buscar, 10, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, buscar, -800, SpringLayout.EAST, this);
@@ -62,9 +52,6 @@ public class VistaInicioCliente extends JPanel{
 	public void setControlador(ActionListener c) {
 		sorteos.addActionListener(c);
 		notificaciones.addActionListener(c);
-		perfil.addActionListener(c);
 		buscar.addActionListener(c);
 	}
-	
-	
 }

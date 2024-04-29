@@ -37,13 +37,15 @@ public class ControladorVistaPrincipal implements ActionListener {
 		else if(selected.getText().equals("Registrarse")) {
 			this.vistaPrincipal.setVisible(false);
 			this.vistaSystem.getVistaClienteReg().setVisible(true);
+		}else if (selected.getText().equals("Prueba")) {
+			this.vistaPrincipal.setVisible(false);
+			this.vistaSystem.getVistaInicioCliente().setVisible(true);
 		}
 		
 	}
 	
 	public void saveSystem() {
 		ArtGallery.getSystem().saveSistem();
-		System.out.println("HUUUUUUUUUUUUUUUUUUUUUUUUUH");
 	}
 
 }

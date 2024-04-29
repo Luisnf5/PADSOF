@@ -17,7 +17,7 @@ public class VistaPrincipal extends JPanel {
 	public VistaPrincipal(VistaSystem parent) {
 		this.parent = parent;
 		
-		boton = new JButton("Haz click");
+		boton = new JButton("Prueba");
 		iniciar = new JButton("Iniciar Sesión");
 		clienteReg = new JButton("Registrarse");
 		

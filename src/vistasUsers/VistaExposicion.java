@@ -22,7 +22,7 @@ public class VistaExposicion extends JPanel {
 	
 	public VistaExposicion(VistaSystem parent) {
 		
-		this.parent = parent;
+this.parent = parent;
 		
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
