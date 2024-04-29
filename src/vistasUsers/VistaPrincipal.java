@@ -13,17 +13,20 @@ public class VistaPrincipal extends JPanel {
 	JButton boton;
 	JButton iniciar;
 	JButton clienteReg;
+	JButton expo;
 	
 	public VistaPrincipal(VistaSystem parent) {
 		this.parent = parent;
 		
-		boton = new JButton("Prueba");
+		boton = new JButton("Haz click");
 		iniciar = new JButton("Iniciar Sesión");
 		clienteReg = new JButton("Registrarse");
+		expo = new JButton("IR");
 		
 		this.add(boton);
 		this.add(iniciar);
 		this.add(clienteReg);
+		this.add(expo);
 		
 		
 		
@@ -34,5 +37,6 @@ public class VistaPrincipal extends JPanel {
 		boton.addActionListener(c);
 		iniciar.addActionListener(c);
 		clienteReg.addActionListener(c);
+		expo.addActionListener(c);
 	}
 }

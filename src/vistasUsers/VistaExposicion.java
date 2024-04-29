@@ -1,9 +1,16 @@
 package vistasUsers;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.ScrollPane;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.border.EmptyBorder;
 
 import vistasSystem.VistaSystem;
@@ -18,29 +25,32 @@ public class VistaExposicion extends JPanel {
 	private JLabel fecha;
 	private VistaSystem parent;
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private JButton buton;
 	
 	public VistaExposicion(VistaSystem parent) {
-		
-this.parent = parent;
+		this.parent = parent;
+
 		
 		SpringLayout springLayout = new SpringLayout();
-		setLayout(springLayout);
+		buton = new JButton("DOnt give");
+		add(buton);
 		
-		fecha = new JLabel("Fecha de la exposicion");
-		springLayout.putConstraint(SpringLayout.WEST, fecha, 20, SpringLayout.EAST, this);
+		for(int i = 0; i < 10; i++) {
+			this.add(new VistaExposicionPanel(parent));
+		}
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 37, SpringLayout.NORTH, this);
-		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel, -192, SpringLayout.EAST, this);
-		add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("New button");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton, 110, SpringLayout.SOUTH, lblNewLabel);
-		springLayout.putConstraint(SpringLayout.EAST, btnNewButton, -177, SpringLayout.EAST, this);
-		add(btnNewButton);
+		
+		
+		
+		
+		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		
 	}
 	
+	public void setControlador(ActionListener c) {
+		
+	}
 
 	
 }

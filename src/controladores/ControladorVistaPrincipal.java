@@ -1,6 +1,5 @@
 package controladores;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,15 +36,15 @@ public class ControladorVistaPrincipal implements ActionListener {
 		else if(selected.getText().equals("Registrarse")) {
 			this.vistaPrincipal.setVisible(false);
 			this.vistaSystem.getVistaClienteReg().setVisible(true);
-		}else if (selected.getText().equals("Prueba")) {
-			this.vistaPrincipal.setVisible(false);
-			this.vistaSystem.getVistaInicioCliente().setVisible(true);
 		}
-		
+		else if(selected.getText().equals("IR")) {
+			this.vistaPrincipal.setVisible(false);
+			this.vistaSystem.getVistaExposicion().setVisible(true);
+		}
 	}
+	
 	
 	public void saveSystem() {
 		ArtGallery.getSystem().saveSistem();
 	}
-
 }

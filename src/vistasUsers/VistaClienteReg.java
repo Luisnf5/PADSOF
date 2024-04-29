@@ -1,4 +1,5 @@
 
+
 package vistasUsers;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ import java.util.Properties;
 
 
 public class VistaClienteReg extends JPanel {
+		private static final long serialVersionUID = 1L;
 		VistaSystem parent; 
 		
 		JButton registrarse;

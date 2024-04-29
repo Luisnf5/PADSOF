@@ -1,3 +1,4 @@
+
 package controladores;
 
 import java.awt.event.ActionEvent;
@@ -43,8 +44,9 @@ public class ControladorInicioCliente implements ActionListener{
 		}else if (selected.getText().equals("Mi Perfil")) {
 			vistaInicioCliente.setVisible(false);
 			vistaSystem.getVistaPerfil().setVisible(true);
-			System.out.println("sioqqqqqqq");
 		}
 		
 	}
+	
+	
 }
