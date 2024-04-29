@@ -1,0 +1,16 @@
+Exhibition.java:
+
+- cancelExhibition:
+no hay que devolver las obras hasta que lleguen los 7 días
+
+falta deolver entradas
+
+- shortenExhibition:
+no se hacen comprobaciones de fechas ni devuelves entradas
+
+RoomComposite.java:
+para que sirve esta clase?
+
+SubRoom.java:
+para que sirve esta clase?
+
