@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import system.ArtGallery;
-import users.Client;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaNotificaciones;
 import vistasUsers.VistaPerfil;
@@ -30,24 +29,25 @@ public class ControladorPerfil implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton selected;
 		selected = (JButton) e.getSource();
-		Client cl;
 		
-		if (selected.getText().equals("Notificaciones") && system.getLoggedUser() != null) {
-			cl = (Client) system.getLoggedUser();
+		if (selected.getText().equals("Notificaciones")) {
 			vistaPerfil.setVisible(false);
-			vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
 			vistaSystem.getVistaNotificaciones().setVisible(true);
 		}else if (selected.getText().equals("Sorteos")) {
 			vistaPerfil.setVisible(false);
-			vistaSystem.getVistaSorteos().updateSorteos(vistaSystem.getControladorSorteos().getSorteos());;
 			vistaSystem.getVistaSorteos().setVisible(true);
 		}else if (selected.getText().equals("Principal")) {
 			vistaPerfil.setVisible(false);
 			vistaSystem.getVistaInicioCliente().setVisible(true);
 		}else if (selected.getText().equals("Buscar")) {
 			vistaPerfil.setVisible(false);
-			this.vistaSystem.getVistaExposicion().updateExhibitions(system.getExhibitions());
 			vistaSystem.getVistaExposicion().setVisible(true);
+		}else if(selected.getText().equals("Datos Personales")) {
+			vistaPerfil.showDatos(ArtGallery.getSystem().getLoggedUser());
+		}else if(selected.getText().equals("Cambiar contraseña")) {
+			vistaPerfil.showChangePwd(ArtGallery.getSystem().getLoggedUser());
+		}else if(selected.getText().equals("Cerrar Sesion")) {
+			vistaPerfil.showLogOut(ArtGallery.getSystem().getLoggedUser());
 		}
 	}
 
