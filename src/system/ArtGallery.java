@@ -163,7 +163,7 @@ public class ArtGallery implements Serializable{
 		this.exhibitions = new LinkedHashSet<>(last.exhibitions);
 		this.rooms = new LinkedHashSet<>(last.rooms);
 		
-	}
+	} 
 	public void newStaff(String name, String surname, String nif, Gender gender, LocalDate date){
 		Staff s = new Staff(name, surname, nif, gender, date);
 		for(User u: this.users) {

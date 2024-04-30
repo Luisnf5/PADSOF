@@ -133,6 +133,32 @@ public class VistaSystem extends JFrame{
 		this.vistaPrincipal.setVisible(true);
 	}
 	
+	
+	
+	public ControladorClienteReg getControladorClienteReg() {
+		return controladorClienteReg;
+	}
+	public ControladorVistaPrincipal getControladorVistaPrincipal() {
+		return controladorVistaPrincipal;
+	}
+	public ControladorInicioSesion getControladorInicioSesion() {
+		return controladorInicioSesion;
+	}
+	public ControladorExposicion getControladorExposicion() {
+		return controladorExposicion;
+	}
+	public ControladorSorteos getControladorSorteos() {
+		return controladorSorteos;
+	}
+	public ControladorInicioCliente getControladorInicioCliente() {
+		return controladorInicioCliente;
+	}
+	public ControladorNotificaciones getControladorNotificaciones() {
+		return controladorNotificaciones;
+	}
+	public ControladorPerfil getControladorPerfil() {
+		return controladorPerfil;
+	}
 	public VistaClienteReg getVistaClienteReg() {
 		return this.vistaClienteReg;
 	}
