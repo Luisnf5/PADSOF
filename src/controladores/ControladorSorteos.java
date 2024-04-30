@@ -56,12 +56,16 @@ public class ControladorSorteos implements ActionListener{
 	public Set<Raffle> getSorteos() {
 		Set<Raffle> sorts = new LinkedHashSet<>();
 		for (Exhibition e : system.getExhibitions()){
-			sorts.add(e.getRaffle());
+			if (e.getRaffle() != null) {
+				sorts.add(e.getRaffle());
+			}
 			System.out.println("raff: " + e.getRaffle());
 		}
 		
 		return sorts;
 	}
+	
+	
 
 
 

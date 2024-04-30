@@ -121,4 +121,12 @@ public class Raffle implements Serializable {
 	public void setExhibition(Exhibition exhibition) {
 		this.exhibition = exhibition;
 	}
+	
+	public boolean isParticipating(Client cl) {
+		if (this.participants.containsKey(cl)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }

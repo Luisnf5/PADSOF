@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import system.ArtGallery;
+import users.Client;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaPrincipal;
 
@@ -44,6 +45,10 @@ public class ControladorVistaPrincipal implements ActionListener {
 			this.vistaPrincipal.setVisible(false);
 			this.vistaSystem.getVistaInicioCliente().setVisible(true);
 		}
+	}
+	
+	public Client getLoggedClient() {
+		return (Client) system.getLoggedUser();
 	}
 	
 	

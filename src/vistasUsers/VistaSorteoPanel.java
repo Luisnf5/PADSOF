@@ -16,11 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
 import users.Raffle;
+import vistasSystem.VistaSystem;
 import works.Exhibition;
 
 public class VistaSorteoPanel extends JPanel{
 	private Raffle sorteo;
 	
+	VistaSystem parent;
 	private JButton participar;
 	private JLabel titulo;
 	private JLabel descripcion;
@@ -30,9 +32,10 @@ public class VistaSorteoPanel extends JPanel{
 	private JFormattedTextField selectedHora;
 	
 	
-	public VistaSorteoPanel(Raffle sorteo) {
+	public VistaSorteoPanel(VistaSystem parent, Raffle sorteo) {
 		super();
 		this.sorteo = sorteo;
+		this.parent = parent;
 		
 		int anchoPanel = this.getWidth();
 		int altoPanel = this.getHeight();
@@ -76,12 +79,16 @@ public class VistaSorteoPanel extends JPanel{
 		
 		layout.putConstraint(SpringLayout.NORTH, participar, (int) ((altoPanel - participar.getHeight())/2), SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, participar, 20, SpringLayout.EAST, selectedHora);
+		this.participar.setVisible(false);
 		this.add(participar);
+		
 		
 		layout.putConstraint(SpringLayout.NORTH, participando, (int) ((altoPanel - participar.getHeight())/2), SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, participando, 20, SpringLayout.EAST, selectedHora);
-		this.setVisible(false);
+		this.participando.setVisible(false);
 		this.add(participando);
+		
+		updatePart();
 	}
 	
 	public void setControlador(ActionListener c) {
@@ -90,6 +97,16 @@ public class VistaSorteoPanel extends JPanel{
 	
 	public Raffle getSorteo() {
 		return sorteo;
+	}
+	
+	public void updatePart() {
+		if (this.sorteo.isParticipating(this.parent.getControladorVistaPrincipal().getLoggedClient())) {
+			this.participar.setVisible(false);
+			this.participando.setVisible(true);
+		}else {
+			this.participar.setVisible(true);
+			this.participando.setVisible(false);
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -102,7 +119,7 @@ public class VistaSorteoPanel extends JPanel{
 		}
 
         // Crear una instancia del JPanel
-        VistaSorteoPanel panel = new VistaSorteoPanel(sorteo);
+        VistaSorteoPanel panel = new VistaSorteoPanel(null, sorteo);
 
         // Crear un JFrame
         JFrame frame = new JFrame("Ejemplo de Vista de Sorteo");

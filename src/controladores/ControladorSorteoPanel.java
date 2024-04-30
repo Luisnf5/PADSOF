@@ -27,7 +27,7 @@ public class ControladorSorteoPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(null, "faaak");
+		JOptionPane.showMessageDialog(null, this.vistaSorteoPanel.getSorteo().getTitle());
 	}
 	
 

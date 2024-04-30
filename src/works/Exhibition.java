@@ -276,8 +276,7 @@ public class Exhibition implements Serializable {
      * @return true if the participant is successfully added, false otherwise
      */
     public boolean addParticipant(Client c, LocalDateTime date){
-        if (!this.isHourValid(date) || this.raffle == null){
-        	
+        if (!this.isHourValid(date) || this.raffle == null || this.raffle.isParticipating(c)){
             return false;
         }
 

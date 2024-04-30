@@ -81,7 +81,7 @@ public class VistaSorteos extends JPanel{
 		this.add(scroll);
 		
 		
-		scrollAux.add(emptySorteos);
+		this.add(emptySorteos);
 		emptySorteos.setVisible(false);
 		
 		
@@ -94,15 +94,16 @@ public class VistaSorteos extends JPanel{
 		VistaSorteoPanel aux;
 		if (sorteos.isEmpty()) {
 			this.emptySorteos.setVisible(true);
+			this.scroll.setVisible(false);
 		}else {
 			this.sorteos = sorteos;
 			for (Raffle sorteo : sorteos) {
-				System.out.println("hay un sorteo aqi");
-				aux = new VistaSorteoPanel(sorteo); 
+				aux = new VistaSorteoPanel(parent, sorteo); 
 				this.scrollAux.add(aux);
 				new ControladorSorteoPanel(parent, null, aux);
 			}
 			this.emptySorteos.setVisible(false);
+			this.scroll.setVisible(true);
 		}
 	}
 

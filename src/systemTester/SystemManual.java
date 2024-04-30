@@ -35,6 +35,7 @@ public class SystemManual implements Serializable {
 		
 		/* Creamos exhibiciones */
 		inicio.createExhibition("FIESTA CON EL JEFE", "La Nuit", LocalDateTime.of(2024, 5, 3, 8, 0),LocalDateTime.of(2024, 5, 7, 8, 0));
+		inicio.createExhibition("BOFFFF", "Mon(somo dosiento)", LocalDateTime.of(2024, 5, 3, 8, 0),LocalDateTime.of(2024, 5, 7, 8, 0));
 		
 		/* Creamos una sala */
 		SubRoom room1 = new SubRoom(1, true, 21.5, 48.00, 24.00, 5.00, 40.00, 100);
@@ -44,6 +45,7 @@ public class SystemManual implements Serializable {
 		inicio.addSubRoom(room2);
 
 		SubroomExhibition space1 = new SubroomExhibition(room1);
+		SubroomExhibition space2 = new SubroomExhibition(room2);
 
 		Painting p1 = new Painting("Guernika", "Pablo Picasso", false, 21.5, 0.180, 0, 0.180, 50, "Oleo sobre tela");
 		space1.addWorks(p1);
@@ -52,6 +54,11 @@ public class SystemManual implements Serializable {
 		boolean staux = exActual.addRoomExhibition(space1);
 		exActual.publishExposition();
 		exActual.createRaffle("Sorteo Bienvenida", "Participa para ganar las entradas que quieras", 1, LocalDateTime.of(2024, 5, 5, 8, 0), LocalDateTime.of(2024, 5, 6, 8, 0));
+		
+		exActual = inicio.searchExhibition("BOFFFF");
+		staux = exActual.addRoomExhibition(space2);
+		exActual.publishExposition();
+		exActual.createRaffle("Diablo", "Participa para ganar las entradas que quieras", 1, LocalDateTime.of(2024, 5, 5, 8, 0), LocalDateTime.of(2024, 5, 6, 8, 0));
 		
 		inicio.newClient("Luis", "Nuñez", "43229075T", Gender.MALE ,LocalDate.of(2004, 3, 11), "Hola123");
 		for (User u : inicio.getUsers()) {
