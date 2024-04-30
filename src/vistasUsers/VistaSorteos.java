@@ -1,16 +1,21 @@
+
 package vistasUsers;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SpringLayout;
 
+import controladores.ControladorSorteoPanel;
 import controladores.ControladorSorteos;
 import users.Raffle;
 import vistasSystem.VistaSystem;
@@ -24,6 +29,9 @@ public class VistaSorteos extends JPanel{
 	private JButton buscar;
 	private JButton principal;
 	private JScrollPane scroll;
+	private JLabel emptySorteos;
+	private JPanel scrollAux;
+	Set<Raffle> sorteos;
 	
 	public VistaSorteos(VistaSystem parent) {
 		
@@ -42,8 +50,11 @@ public class VistaSorteos extends JPanel{
 		String pathLogo = VistaPrincipal.class.getResource("logo.png").getPath();
 		ImageIcon logo = new ImageIcon(pathLogo);
 		this.principal.setIcon(logo);
-		this.scroll = new JScrollPane();
-		scroll.setPreferredSize(new Dimension(500, 500));
+		this.scrollAux = new JPanel(new GridLayout(10, 1));
+		this.scroll = new JScrollPane(scrollAux);
+		scroll.setPreferredSize(new Dimension(1000, 500));
+		this.emptySorteos = new JLabel("No existen sorteos");
+		
 		
 		layout.putConstraint(SpringLayout.NORTH, principal, 10, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, principal, 50, SpringLayout.WEST, this);
@@ -65,17 +76,34 @@ public class VistaSorteos extends JPanel{
 		
 		layout.putConstraint(SpringLayout.NORTH, scroll, 200, SpringLayout.SOUTH, buscar);
 		layout.putConstraint(SpringLayout.WEST, scroll, (int) ((anchoPanel - scroll.getWidth())/2), SpringLayout.WEST, this);
-		
-		for (Raffle sorteo : parent.getControladorSorteos().getSorteos()) {
-			scroll.add(new VistaSorteoPanel(sorteo)); //para cuando se crea esta vista el controlador aun no está creado por el orden en el que se crean las cosas en VistaSystem
-		}
-		
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.add(scroll);
+		
+		
+		scrollAux.add(emptySorteos);
+		emptySorteos.setVisible(false);
 		
 		
 		
 		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		
+	}
+	
+	public void updateSorteos(Set<Raffle> sorteos) {
+		VistaSorteoPanel aux;
+		if (sorteos.isEmpty()) {
+			this.emptySorteos.setVisible(true);
+		}else {
+			this.sorteos = sorteos;
+			for (Raffle sorteo : sorteos) {
+				System.out.println("hay un sorteo aqi");
+				aux = new VistaSorteoPanel(sorteo); 
+				this.scrollAux.add(aux);
+				new ControladorSorteoPanel(parent, null, aux);
+			}
+			this.emptySorteos.setVisible(false);
+		}
 	}
 
 	public void setControlador(ActionListener c) {

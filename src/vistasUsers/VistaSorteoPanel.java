@@ -2,6 +2,7 @@ package vistasUsers;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class VistaSorteoPanel extends JPanel{
 	private JLabel descripcion;
 	private JLabel fechaInicio;
 	private JLabel fechaFinal;
+	private JLabel participando;
 	private JFormattedTextField selectedHora;
 	
 	
@@ -50,6 +52,7 @@ public class VistaSorteoPanel extends JPanel{
 		this.selectedHora = new JFormattedTextField(format);
 		this.selectedHora.setPreferredSize(new Dimension(100, 25));
 		this.participar = new JButton("Participar");
+		this.participando = new JLabel("Ya estas participando\nen este sorteo");
 		
 		layout.putConstraint(SpringLayout.NORTH, titulo, (int) ((altoPanel - titulo.getHeight())/2), SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, titulo, 20, SpringLayout.WEST, this);
@@ -74,6 +77,19 @@ public class VistaSorteoPanel extends JPanel{
 		layout.putConstraint(SpringLayout.NORTH, participar, (int) ((altoPanel - participar.getHeight())/2), SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, participar, 20, SpringLayout.EAST, selectedHora);
 		this.add(participar);
+		
+		layout.putConstraint(SpringLayout.NORTH, participando, (int) ((altoPanel - participar.getHeight())/2), SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, participando, 20, SpringLayout.EAST, selectedHora);
+		this.setVisible(false);
+		this.add(participando);
+	}
+	
+	public void setControlador(ActionListener c) {
+		participar.addActionListener(c);
+	}
+	
+	public Raffle getSorteo() {
+		return sorteo;
 	}
 	
 	public static void main(String[] args) {
@@ -82,7 +98,7 @@ public class VistaSorteoPanel extends JPanel{
 		expoPrueba.createRaffle("prueba", "descripcion prueba", 1, LocalDateTime.of(2024, 03, 30, 19, 00), LocalDateTime.of(2024, 04, 30, 19, 00));
 		Raffle sorteo = expoPrueba.getRaffle();
 		if (sorteo == null) {
-			System.out.println("tonto qui no hay na");
+			System.out.println("tonto aqui no hay na");
 		}
 
         // Crear una instancia del JPanel

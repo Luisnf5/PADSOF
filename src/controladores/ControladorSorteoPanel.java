@@ -21,6 +21,8 @@ public class ControladorSorteoPanel implements ActionListener{
 		this.system = system;
 		this.vistaSystem = vistaSystem;
 		this.vistaSorteoPanel = vista;
+		
+		vista.setControlador(this);
 	}
 	
 	@Override

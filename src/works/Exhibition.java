@@ -122,9 +122,9 @@ public class Exhibition implements Serializable {
      * @return true if the hour is valid, false otherwise
      */
     public boolean isHourValid(LocalDateTime hour) {
-    	if(this.tickets.get(hour) == null)
+    	if(this.tickets.get(hour) == null) {
     		return false;
-        if (this.tickets.get(hour).size() >= this.capacity || !this.tickets.containsKey(hour)) {
+    	}else if (this.tickets.get(hour).size() >= this.capacity || !this.tickets.containsKey(hour)) {
             return false;
         } else {
             return true;
@@ -179,8 +179,10 @@ public class Exhibition implements Serializable {
         }
 
         for (SubroomExhibition sbe : this.roomexhibitions){
-            if(sbe != null) 
-                sbe.setWorkStatus(Status.EXHIBITED); 
+            if(sbe != null) {
+            	this.capacity += sbe.getCapacity();
+                sbe.setWorkStatus(Status.EXHIBITED);
+            }
         }
         
         this.status = ExhibitionStatus.PUBLISHED;
@@ -274,7 +276,8 @@ public class Exhibition implements Serializable {
      * @return true if the participant is successfully added, false otherwise
      */
     public boolean addParticipant(Client c, LocalDateTime date){
-        if (!this.isHourValid(date)){
+        if (!this.isHourValid(date) || this.raffle == null){
+        	
             return false;
         }
 

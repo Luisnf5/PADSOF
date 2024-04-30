@@ -64,6 +64,7 @@ public class Client extends User implements Serializable{
 	public boolean participateRaffle(Exhibition exp, LocalDateTime date){
 		if (exp.addParticipant(this, date) == true) {
 			this.raffles.add(exp.getRaffle());
+			
 			return true;
 		}else {
 			return false;

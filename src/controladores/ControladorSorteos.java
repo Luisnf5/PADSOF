@@ -2,6 +2,7 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -11,6 +12,7 @@ import users.Client;
 import users.Raffle;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaSorteos;
+import works.Exhibition;
 
 public class ControladorSorteos implements ActionListener{
 	private ArtGallery system;
@@ -52,13 +54,13 @@ public class ControladorSorteos implements ActionListener{
 	}
 	
 	public Set<Raffle> getSorteos() {
-		Client cl = (Client) this.system.getLoggedUser();
-		Set<Raffle> sorteos = cl.getRaffles();
+		Set<Raffle> sorts = new LinkedHashSet<>();
+		for (Exhibition e : system.getExhibitions()){
+			sorts.add(e.getRaffle());
+			System.out.println("raff: " + e.getRaffle());
+		}
 		
-		return sorteos;
-		
-	
-		
+		return sorts;
 	}
 
 

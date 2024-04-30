@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import system.ArtGallery;
+import users.Client;
+import users.User;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaNotificaciones;
 import vistasUsers.VistaSorteos;
@@ -30,7 +32,17 @@ public class ControladorNotificaciones implements ActionListener{
 		selected = (JButton) e.getSource();
 		
 		if (selected.getText().equals("Sorteos")) {
+			Client cl;
+			User u = system.getLoggedUser();
+			if (u instanceof Client) {
+				cl = (Client) u;
+			}else {
+				return;
+			}
 			vistaNotificaciones.setVisible(false);
+			System.out.println(cl);
+			System.out.println(cl.getRaffles());
+			vistaSystem.getVistaSorteos().updateSorteos(vistaSystem.getControladorSorteos().getSorteos());;
 			vistaSystem.getVistaSorteos().setVisible(true);
 		}else if (selected.getText().equals("Mi Perfil")) {
 			vistaNotificaciones.setVisible(false);
