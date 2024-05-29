@@ -1,0 +1,105 @@
+
+package controladoresAdmin;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import system.ArtGallery;
+import users.Admin;
+import users.Gender;
+import users.Staff;
+import vistasAdmin.VistaPerfilAdmin;
+import vistasAdmin.VistaStaffPanel;
+import vistasSystem.VistaSystem;
+
+public class ControladorPerfilAdmin implements ActionListener{
+	private ArtGallery system;
+	private VistaSystem vistaSystem;
+	
+	private VistaPerfilAdmin vistaPerfil;
+
+	public ControladorPerfilAdmin(VistaSystem vistaSystem, ArtGallery system) {
+		this.vistaSystem = vistaSystem;
+		this.system = system;
+		
+		this.vistaPerfil = vistaSystem.getVistaPerfilAdmin();	
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton selected;
+		selected = (JButton) e.getSource();
+		
+		if (selected.getText().equals("Notificaciones")) {
+			vistaPerfil.setVisible(false);
+			vistaSystem.getVistaNotificaciones().setVisible(true);
+		}else if (selected.getText().equals("Sorteos")) {
+			vistaPerfil.setVisible(false);
+			vistaSystem.getVistaSorteos().setVisible(true);
+		}else if (selected.getText().equals("Principal")) {
+			vistaPerfil.setVisible(false);
+			vistaSystem.getVistaInicioCliente().setVisible(true);
+		}else if (selected.getText().equals("Buscar")) {
+			vistaPerfil.setVisible(false);
+			vistaSystem.getVistaExposicion().setVisible(true);
+		}else if(selected.getText().equals("Datos Personales")) {
+			vistaPerfil.updateDatos(getActualAdmin());
+		}else if(selected.getText().equals("Cambiar Contraseña")) {
+			vistaPerfil.updateCambioContraseña();
+		}else if(selected.getText().equals("Ver Entradas")) {
+			vistaPerfil.updateEntradas(getActualAdmin());
+		}else if(selected.getText().equals("Gestionar Staff")) {
+			vistaPerfil.updateStaff(system.getStaffs());
+		}else if(selected.getText().equals("Gestionar Salas")) {
+			vistaPerfil.updateSalas();
+		}else if(selected.getText().equals("Gestionar Exposiciones")) {
+			vistaPerfil.updateExpos();
+		}else if(selected.getText().equals("Nuevo Empleado")) {
+			System.out.println("Nuevo empleado pulsado");
+			VistaStaffPanel aux = new VistaStaffPanel(vistaSystem, new Staff("", "", "", Gender.OTHER, LocalDate.of(2000, 1, 1))); 
+			new ControladorStaffPanel(vistaSystem, null, aux, true);
+			JOptionPane.showMessageDialog(new JFrame("Nuevo Empleado"), aux);
+			vistaPerfil.updateStaff(system.getStaffs());
+		}else if(selected.getText().equals("Cerrar Sesion")) {
+			system.setLoggedUser(null);
+			vistaPerfil.setVisible(false);
+			vistaSystem.getVistaPrincipal().setVisible(true);
+		}else if (selected.getText().equals("Confirmar")) {
+			char[] rawPwd1 = vistaPerfil.getNuevaContraseña().getPassword();
+            char[] rawPwd2 = vistaPerfil.getNuevaContraseñaRepite().getPassword();
+			String pwd1 = new String(rawPwd1);
+			String pwd2 = new String(rawPwd2);
+			
+			if (!(pwd1.equals(pwd2))) {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+				return;
+			}
+			
+			if(!system.getLoggedUser().changePwd(pwd1)) {
+				JOptionPane.showMessageDialog(null, "La contraseña no es valida. Debe contener:\n\tUn numero\n\tUna letra minúscula\n\tUna letra mayúscula\n\tSu longitud debe ser mayor o igual a 8");
+				return;
+			}else {
+				JOptionPane.showMessageDialog(null, "Contraseña cambiada con éxito");
+				 vistaPerfil.getNuevaContraseña().setText(null);
+				 vistaPerfil.getNuevaContraseñaRepite().setText(null);
+				return;
+			}
+			
+		}
+	}
+	
+	public Admin getActualAdmin() {
+		Admin cl;
+		cl = (Admin) this.vistaSystem.getControladorVistaPrincipal().getSystem().getLoggedUser();
+		return cl;
+	}
+
+}
+
