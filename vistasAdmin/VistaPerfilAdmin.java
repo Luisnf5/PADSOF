@@ -15,18 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
 import javax.swing.SpringLayout;
 
-import controladores.ControladorNotificacionPanel;
+import controladoresAdmin.ControladorClientPanel;
 import controladoresAdmin.ControladorStaffPanel;
 import users.Admin;
 import users.Client;
-import users.Notification;
 import users.Staff;
 import vistasSystem.VistaSystem;
-import vistasUsers.VistaNotificacionPanel;
 import vistasUsers.VistaPrincipal;
-import works.Ticket;
 
 public class VistaPerfilAdmin extends JPanel{
 private VistaSystem parent;
@@ -42,6 +40,7 @@ private VistaSystem parent;
 	private JButton staff;
 	private JButton salas;
 	private JButton expos;
+	private JButton users;
 	
 	//DATOS PERSONALES
 	private JPanel personales;
@@ -66,6 +65,12 @@ private VistaSystem parent;
 	private JScrollPane scrollStaff;
 	private JButton crearStaff;
 	
+	//GESTIONAR USUARIOS
+	private JPanel gestionUsuarios;
+	private JPanel scrollUsersAux;
+	private JScrollPane scrollUsers;
+	private JToggleButton blockedUsers;
+		
 	
 	
 	
@@ -159,13 +164,22 @@ private VistaSystem parent;
 		layout.putConstraint(SpringLayout.EAST, expos, -50, SpringLayout.EAST, this);
 		
 		
+		this.users = new JButton("Gestionar Usuarios");
+		this.users.setPreferredSize(new Dimension(150, 30));
+		
+		this.add(this.users);
+		
+		layout.putConstraint(SpringLayout.NORTH, users, 310, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.EAST, users, -50, SpringLayout.EAST, this);
+		
+		
 		
 		this.cerrar = new JButton("Cerrar Sesion");
 		this.cerrar.setPreferredSize(new Dimension(150, 30));
 		
 		this.add(this.cerrar);
 		
-		layout.putConstraint(SpringLayout.NORTH, cerrar, 400, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.NORTH, cerrar, 350, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, cerrar, -50, SpringLayout.EAST, this);
 		
 		
@@ -262,7 +276,7 @@ private VistaSystem parent;
 		
 		//GESTIONAR STAFF
 		this.crearStaff = new JButton("Nuevo Empleado");
-		crearStaff.setBackground(Color.GREEN);
+		crearStaff.setBackground(Color.CYAN);
 		crearStaff.setPreferredSize(new Dimension(200, 100));
 		this.scrollStaffAux = new JPanel(new GridLayout(0, 1));
 		this.scrollStaff = new JScrollPane(scrollStaffAux);
@@ -275,13 +289,40 @@ private VistaSystem parent;
         JScrollBar verticalscrollStaffBar = scrollStaff.getVerticalScrollBar();
         verticalscrollStaffBar.setUnitIncrement(40);
         this.add(scrollStaff);
+        scrollStaff.setVisible(false);
         
-       // layout.putConstraint(SpringLayout.NORTH, crearStaff, 30, SpringLayout.SOUTH, scrollStaff);
-       // layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, crearStaff, 950, SpringLayout.WEST, this);
-		//this.add(crearStaff);
-        
+        //GESTIONAR USUARIOS
+        this.gestionUsuarios = new JPanel();
+        SpringLayout usuariosLayout = new SpringLayout();
+		gestionUsuarios.setLayout(usuariosLayout);
+		gestionUsuarios.setPreferredSize(new Dimension(1100, 800));
 		
-		scrollStaff.setVisible(false);
+		this.blockedUsers = new JToggleButton("Bloqueados");
+		
+		this.scrollUsersAux = new JPanel(new GridLayout(0, 1));
+		this.scrollUsers = new JScrollPane(scrollUsersAux);
+		scrollUsers.setPreferredSize(new Dimension(1100, 700));
+	
+		layout.putConstraint(SpringLayout.NORTH, gestionUsuarios, 100, SpringLayout.SOUTH, buscar);
+		layout.putConstraint(SpringLayout.EAST, gestionUsuarios, -150, SpringLayout.WEST, cerrar);
+		gestionUsuarios.setBackground(Color.LIGHT_GRAY);
+		this.add(gestionUsuarios);
+		
+		usuariosLayout.putConstraint(SpringLayout.NORTH, blockedUsers, 30, SpringLayout.NORTH, gestionUsuarios);
+		usuariosLayout.putConstraint(SpringLayout.EAST, blockedUsers, -550, SpringLayout.EAST, gestionUsuarios);
+		gestionUsuarios.add(blockedUsers);
+		
+		usuariosLayout.putConstraint(SpringLayout.SOUTH, scrollUsers, 0, SpringLayout.SOUTH, gestionUsuarios);
+		usuariosLayout.putConstraint(SpringLayout.EAST, scrollUsers, 0, SpringLayout.EAST, gestionUsuarios);
+		scrollUsers.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollUsers.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        JScrollBar verticalScrollUsersBar = scrollUsers.getVerticalScrollBar();
+        verticalScrollUsersBar.setUnitIncrement(40);
+        gestionUsuarios.add(scrollUsers);
+        scrollUsers.setVisible(true);
+        
+		gestionUsuarios.setVisible(false);
+		
 		
 		
 		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -301,6 +342,8 @@ private VistaSystem parent;
 		salas.addActionListener(c);
 		expos.addActionListener(c);
 		crearStaff.addActionListener(c);
+		blockedUsers.addActionListener(c);
+		users.addActionListener(c);
 	}
 	
 	public void updateDatos(Admin cl) {
@@ -317,6 +360,7 @@ private VistaSystem parent;
 		cambioContraseña.setVisible(false);
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
+		gestionUsuarios.setVisible(false);
 	}
 	
 	public void updateCambioContraseña() {
@@ -325,6 +369,7 @@ private VistaSystem parent;
 		cambioContraseña.setVisible(true);
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
+		gestionUsuarios.setVisible(false);
 		
 	}
 	
@@ -355,6 +400,38 @@ private VistaSystem parent;
 		cambioContraseña.setVisible(false);
 		scrollStaff.setVisible(true);
 		crearStaff.setVisible(true);
+		gestionUsuarios.setVisible(false);
+		
+	}
+	
+	public void updateUsers(Set<Client> clientes) {
+		VistaClientPanel aux;
+		
+		scrollUsersAux.removeAll();
+		System.out.println("all removed");
+		
+		
+		if (clientes.isEmpty() || clientes == null) {
+			System.out.println("esta vacio");
+		}else {
+			for (Client e : clientes) {
+				System.out.println("added client");
+				aux = new VistaClientPanel(parent, e); 
+				this.scrollUsersAux.add(aux);
+				new ControladorClientPanel(parent, null, aux);
+			}
+			this.revalidate();
+			this.repaint();
+			
+		}
+		
+		
+		personales.setVisible(false);
+		entradasCliente.setVisible(false);
+		cambioContraseña.setVisible(false);
+		scrollStaff.setVisible(false);
+		crearStaff.setVisible(false);
+		gestionUsuarios.setVisible(true);
 		
 	}
 	
@@ -364,6 +441,7 @@ private VistaSystem parent;
 		cambioContraseña.setVisible(false);
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
+		gestionUsuarios.setVisible(false);
 		
 	}
 	
@@ -373,6 +451,7 @@ private VistaSystem parent;
 		cambioContraseña.setVisible(false);
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
+		gestionUsuarios.setVisible(false);
 		
 	}
 	
@@ -382,6 +461,7 @@ private VistaSystem parent;
 		entradasCliente.setVisible(true);
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
+		gestionUsuarios.setVisible(false);
 	}
 
 	public JPasswordField getNuevaContraseña() {
@@ -390,6 +470,10 @@ private VistaSystem parent;
 
 	public JPasswordField getNuevaContraseñaRepite() {
 		return nuevaContraseñaRepite;
+	}
+
+	public JToggleButton getBlockedUsers() {
+		return blockedUsers;
 	}
 
 	
