@@ -68,6 +68,30 @@ public class ArtGallery implements Serializable{
 		
 		return staffs;
 	}
+	
+	public Set<Client> getClients(){
+		Set<Client> clients = new LinkedHashSet<>();
+		
+		for (User u : this.users) {
+			if (u instanceof Client) {
+				clients.add((Client)u);
+			}
+		}
+		
+		return clients;
+	}
+	
+	public Set<Client> getBlockedClients(){
+		Set<Client> clients = new LinkedHashSet<>();
+		
+		for (User u : this.users) {
+			if (u instanceof Client && u.isBlocked()) {
+				clients.add((Client)u);
+			}
+		}
+		
+		return clients;
+	}
 
 
 	public Set<Exhibition> getExhibitions() {

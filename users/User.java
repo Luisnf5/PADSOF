@@ -27,6 +27,8 @@ public abstract class User implements Serializable{
     private LocalDate birthDate;
     private String password;
     Set<Privileges> privileges = new LinkedHashSet<>();
+    private boolean blocked = false;
+    private boolean resetPwd = false;
 
     /**
      * Constructs a User object with the specified personal information and password.
@@ -45,6 +47,8 @@ public abstract class User implements Serializable{
         this.gender = gender;
         this.birthDate = birthDate;
         this.password = password;
+        this.blocked = false;
+        this.resetPwd = false;
     }   
     
     /**
@@ -226,16 +230,23 @@ public abstract class User implements Serializable{
      *
 
  @param newBirthDate the new birth date to set
-     * @return true if the birth date is changed successfully, false otherwise
      */
-    public boolean changeBirthDate(LocalDate newBirthDate) {
-        if (newBirthDate.isBefore(LocalDate.now()) || this == ArtGallery.getSystem().getLoggedUser()) {
+    public void changeBirthDate(LocalDate newBirthDate) {
             this.birthDate = newBirthDate;
-            return true;
-        }
-        
-        return false;
     }
+    
+    /**
+     * Changes the gender date of the user.
+     * 
+     *
+
+ @param newGender the new birth date to set
+     */
+    public void changeGender(Gender newGender) {
+            this.gender = newGender;
+    }
+    
+    
     
     /**
      * Checks if the user has a specific privilege.
@@ -259,5 +270,26 @@ public abstract class User implements Serializable{
     public void deletePrivilege(Privileges p) {
     	this.privileges.remove(p);
     }
+
+	public boolean isBlocked() {
+		return blocked;
+	}
+    
+	public void block(boolean b) {
+		this.blocked = b;
+	}
+
+	public boolean isResetPwd() {
+		return resetPwd;
+	}
+
+	public void setResetPwd(boolean resetPwd) {
+		this.resetPwd = resetPwd;
+	}
+	
+	public void deleteUser() {
+		ArtGallery.getSystem().deleteUser(this);
+	}
+    
 
 }

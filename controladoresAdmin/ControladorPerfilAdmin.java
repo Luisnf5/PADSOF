@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import system.ArtGallery;
 import users.Admin;
@@ -34,8 +34,8 @@ public class ControladorPerfilAdmin implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton selected;
-		selected = (JButton) e.getSource();
+		AbstractButton selected;
+		selected = (AbstractButton) e.getSource();
 		
 		if (selected.getText().equals("Notificaciones")) {
 			vistaPerfil.setVisible(false);
@@ -61,6 +61,20 @@ public class ControladorPerfilAdmin implements ActionListener{
 			vistaPerfil.updateSalas();
 		}else if(selected.getText().equals("Gestionar Exposiciones")) {
 			vistaPerfil.updateExpos();
+		}else if(selected.getText().equals("Gestionar Usuarios")) {
+			System.out.println("Gestion Usuartios pulsado");
+			if (vistaPerfil.getBlockedUsers().isSelected()) {
+				vistaPerfil.updateUsers(system.getBlockedClients());
+			}else {
+				vistaPerfil.updateUsers(system.getClients());
+			}
+		}else if(selected.getText().equals("Bloqueados")) {
+			System.out.println("Gestion Usuartios pulsado");
+			if (vistaPerfil.getBlockedUsers().isSelected()) {
+				vistaPerfil.updateUsers(system.getBlockedClients());
+			}else {
+				vistaPerfil.updateUsers(system.getClients());
+			}
 		}else if(selected.getText().equals("Nuevo Empleado")) {
 			System.out.println("Nuevo empleado pulsado");
 			VistaStaffPanel aux = new VistaStaffPanel(vistaSystem, new Staff("", "", "", Gender.OTHER, LocalDate.of(2000, 1, 1))); 
