@@ -29,6 +29,7 @@ public abstract class User implements Serializable{
     Set<Privileges> privileges = new LinkedHashSet<>();
     private boolean blocked = false;
     private boolean resetPwd = false;
+    private int intentos = 0;
 
     /**
      * Constructs a User object with the specified personal information and password.
@@ -77,7 +78,26 @@ public abstract class User implements Serializable{
         return name;
     }
 
-    /**
+    public int getIntentos() {
+		return intentos;
+	}
+    
+    public void restartIntentos() {
+    	intentos = 0;
+    }
+    
+    public void incrementarIntentos() {
+    	if (intentos == 2) {
+    		intentos = 3;
+    		blocked = true;
+    	}else if (intentos < 2) {
+    		intentos++;
+    	}else if (intentos == 3) {
+    		return;
+    	}
+    }
+
+	/**
      * Retrieves the NIF (National Identification Number) of the user.
      * 
      * @return the NIF of the user
@@ -95,7 +115,11 @@ public abstract class User implements Serializable{
         return password;
     }
     
-    public String getSurname() {
+    public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getSurname() {
 		return surname;
 	}
 

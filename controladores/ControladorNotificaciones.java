@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.swing.JButton;
 
 import system.ArtGallery;
+import users.Admin;
 import users.Client;
 import users.Notification;
 import users.Raffle;
@@ -44,7 +45,10 @@ public class ControladorNotificaciones implements ActionListener{
 			if (system.getLoggedUser() == null) {
 				vistaNotificaciones.setVisible(false);
 				vistaSystem.getVistaPrincipal().setVisible(true);
-			}else {
+			}else if (system.getLoggedUser() instanceof Admin) {
+				vistaNotificaciones.setVisible(false);
+				vistaSystem.getVistaPerfilAdmin().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Client){
 				vistaNotificaciones.setVisible(false);
 				vistaSystem.getVistaPerfil().setVisible(true);
 			}

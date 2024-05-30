@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -42,6 +43,13 @@ public class ControladorStaffPanel implements ActionListener{
 		Staff cl;
 		cl = vistaStaffPanel.getStaff();
 		String patronNif = "\\d{8}[A-Za-z]";
+		String patronFecha = "\\d{2}/\\d{2}/\\d{4}";
+		String fecha = vistaStaffPanel.getFecha().getText();
+		ButtonModel genderButonSelected = this.vistaStaffPanel.getGenderGroup().getSelection();
+		Gender genderSelected = null;
+		int dia;
+		int mes;
+		int año;
 
 		if (selected.getText().equals("Confirmar Cambios")){
 			if (vistaStaffPanel.getNombre().getText().length() < 1) {
@@ -57,14 +65,31 @@ public class ControladorStaffPanel implements ActionListener{
 				JOptionPane.showMessageDialog(null, "Introduzca un NIF valido con 8 numeros y una letra mayúscula");
 				System.out.println(vistaStaffPanel.getNombre().getText());
 				return;
+			}else if (!(fecha.matches(patronFecha))) {
+				JOptionPane.showMessageDialog(null, "Introduzca una Fecha válida con el formato: DD/MM/YYYY");
+				return;
+			}
+			
+			dia = Integer.parseInt(fecha.split("/")[0]);
+			mes = Integer.parseInt(fecha.split("/")[1]);
+			año = Integer.parseInt(fecha.split("/")[2]);
+			
+			if (genderButonSelected == vistaStaffPanel.getMale().getModel()) {
+				genderSelected = Gender.MALE;
+			}else if (genderButonSelected == vistaStaffPanel.getFemale().getModel()) {
+				genderSelected = Gender.FEMALE;
+			}else if (genderButonSelected == vistaStaffPanel.getOther().getModel()) {
+				genderSelected = Gender.OTHER;
 			}
 			if (newStaff) {
-				cl = new Staff(vistaStaffPanel.getNombre().getText(), vistaStaffPanel.getApellido().getText(), vistaStaffPanel.getDni().getText(), Gender.OTHER, LocalDate.of(2000, 1, 1));
+				cl = new Staff(vistaStaffPanel.getNombre().getText(), vistaStaffPanel.getApellido().getText(), vistaStaffPanel.getDni().getText(), genderSelected, LocalDate.of(año, mes, dia));
 				system.newStaff(cl);
 			}else{
 				cl.changeName(vistaStaffPanel.getNombre().getText());
 				cl.changeSurname(vistaStaffPanel.getApellido().getText());
 				cl.changeNif(vistaStaffPanel.getDni().getText());
+				cl.changeBirthDate(LocalDate.of(año, mes, dia));
+				cl.changeGender(genderSelected);
 				if (vistaStaffPanel.getTemp().isSelected()) {
 					cl.addPrivilege(Privileges.TEMPERATURA);
 				}else {

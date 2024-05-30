@@ -4,9 +4,10 @@ package controladoresAdmin;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.swing.AbstractButton;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -14,9 +15,11 @@ import system.ArtGallery;
 import users.Admin;
 import users.Gender;
 import users.Staff;
+import vistasAdmin.VistaExposicionEditPanel;
 import vistasAdmin.VistaPerfilAdmin;
 import vistasAdmin.VistaStaffPanel;
 import vistasSystem.VistaSystem;
+import works.Exhibition;
 
 public class ControladorPerfilAdmin implements ActionListener{
 	private ArtGallery system;
@@ -81,6 +84,12 @@ public class ControladorPerfilAdmin implements ActionListener{
 			new ControladorStaffPanel(vistaSystem, null, aux, true);
 			JOptionPane.showMessageDialog(new JFrame("Nuevo Empleado"), aux);
 			vistaPerfil.updateStaff(system.getStaffs());
+		}else if(selected.getText().equals("Nueva Exposición")) {
+			System.out.println("Nueva expo pulsado");
+			VistaExposicionEditPanel aux = new VistaExposicionEditPanel(vistaSystem, new Exhibition("ejemplo", "ejemplo", LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)),  LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0))), true); 
+			new ControladorExposicionEditPanel(vistaSystem, null, aux);
+			JOptionPane.showMessageDialog(new JFrame("Nuevo Empleado"), aux);
+			vistaPerfil.updateExpos(system.getExhibitions());
 		}else if(selected.getText().equals("Cerrar Sesion")) {
 			system.setLoggedUser(null);
 			vistaPerfil.setVisible(false);

@@ -288,6 +288,15 @@ public class ArtGallery implements Serializable{
 		}
 		return this.exhibitions.add(e);
 	}
+	
+	public boolean createExhibition(Exhibition e){
+		for(Exhibition u: this.exhibitions) {
+			if(u.getTitle().equals(e.getTitle()))
+				return false;
+			
+		}
+		return this.exhibitions.add(e);
+	}
 
 	public Exhibition searchExhibition(String title) {
 		for(Exhibition e: this.exhibitions) {

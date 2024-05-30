@@ -54,7 +54,6 @@ public class ControladorInicioCliente implements ActionListener{
 			}else if (system.getLoggedUser() instanceof Admin) {
 				vistaInicioCliente.setVisible(false);
 				vistaSystem.getVistaPerfilAdmin().setVisible(true);
-				System.out.println("ADMIN DETECTADO");
 			}else if (system.getLoggedUser() instanceof Client){
 				vistaInicioCliente.setVisible(false);
 				vistaSystem.getVistaPerfil().setVisible(true);

@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.swing.JButton;
 
 import system.ArtGallery;
+import users.Admin;
 import users.Client;
 import users.Raffle;
 import vistasSystem.VistaSystem;
@@ -49,7 +50,10 @@ public class ControladorSorteos implements ActionListener{
 			if (system.getLoggedUser() == null) {
 				vistaSorteos.setVisible(false);
 				vistaSystem.getVistaPrincipal().setVisible(true);
-			}else {
+			}else if (system.getLoggedUser() instanceof Admin) {
+				vistaSorteos.setVisible(false);
+				vistaSystem.getVistaPerfilAdmin().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Client){
 				vistaSorteos.setVisible(false);
 				vistaSystem.getVistaPerfil().setVisible(true);
 			}

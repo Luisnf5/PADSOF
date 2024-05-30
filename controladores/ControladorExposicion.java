@@ -1,19 +1,15 @@
 package controladores;
-import works.Exhibition;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.swing.JButton;
 
 import system.ArtGallery;
+import users.Admin;
 import users.Client;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaExposicion;
-import vistasUsers.VistaInicioSesion;
 import works.Exhibition;
 
 public class ControladorExposicion implements ActionListener{
@@ -54,7 +50,10 @@ public class ControladorExposicion implements ActionListener{
 			if (system.getLoggedUser() == null) {
 				vistaExposicion.setVisible(false);
 				vistaSystem.getVistaPrincipal().setVisible(true);
-			}else {
+			}else if (system.getLoggedUser() instanceof Admin) {
+				vistaExposicion.setVisible(false);
+				vistaSystem.getVistaPerfilAdmin().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Client){
 				vistaExposicion.setVisible(false);
 				vistaSystem.getVistaPerfil().setVisible(true);
 			}
