@@ -19,12 +19,14 @@ import javax.swing.JToggleButton;
 import javax.swing.SpringLayout;
 
 import controladoresAdmin.ControladorClientPanel;
+import controladoresAdmin.ControladorExposicionEditPanel;
 import controladoresAdmin.ControladorStaffPanel;
 import users.Admin;
 import users.Client;
 import users.Staff;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaPrincipal;
+import works.Exhibition;
 
 public class VistaPerfilAdmin extends JPanel{
 private VistaSystem parent;
@@ -70,6 +72,11 @@ private VistaSystem parent;
 	private JPanel scrollUsersAux;
 	private JScrollPane scrollUsers;
 	private JToggleButton blockedUsers;
+	
+	//GESTIONAR EXPOSICIONES
+		private JPanel scrollExpoAux;
+		private JScrollPane scrollExpo;
+		private JButton crearExpo;
 		
 	
 	
@@ -323,6 +330,23 @@ private VistaSystem parent;
         
 		gestionUsuarios.setVisible(false);
 		
+		//GESTIONAR EXPOSICIONES
+		this.crearExpo = new JButton("Nueva Exposición");
+		crearExpo.setBackground(Color.CYAN);
+		crearExpo.setPreferredSize(new Dimension(200, 100));
+		this.scrollExpoAux = new JPanel(new GridLayout(0, 1));
+		this.scrollExpo = new JScrollPane(scrollExpoAux);
+		scrollExpo.setPreferredSize(new Dimension(1200, 700));
+	
+		layout.putConstraint(SpringLayout.NORTH, scrollExpo, 150, SpringLayout.SOUTH, buscar);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollExpo, 950, SpringLayout.WEST, this);
+		scrollExpo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollExpo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        JScrollBar verticalScrollExpoBar = scrollStaff.getVerticalScrollBar();
+        verticalScrollExpoBar.setUnitIncrement(40);
+        this.add(scrollExpo);
+        scrollExpo.setVisible(false);
+		
 		
 		
 		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -344,6 +368,8 @@ private VistaSystem parent;
 		crearStaff.addActionListener(c);
 		blockedUsers.addActionListener(c);
 		users.addActionListener(c);
+		crearStaff.addActionListener(c);
+		
 	}
 	
 	public void updateDatos(Admin cl) {
@@ -361,6 +387,7 @@ private VistaSystem parent;
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
+		scrollExpo.setVisible(false);
 	}
 	
 	public void updateCambioContraseña() {
@@ -370,7 +397,7 @@ private VistaSystem parent;
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
-		
+		scrollExpo.setVisible(false);
 	}
 	
 	public void updateStaff(Set<Staff> empleados) {
@@ -401,6 +428,38 @@ private VistaSystem parent;
 		scrollStaff.setVisible(true);
 		crearStaff.setVisible(true);
 		gestionUsuarios.setVisible(false);
+		scrollExpo.setVisible(false);
+	}
+	
+	public void updateExpos(Set<Exhibition> expos) {
+		VistaExposicionEditPanel aux;
+		
+		scrollStaffAux.removeAll();
+		
+		
+		if (expos.isEmpty() || expos == null) {
+			System.out.println("esta vacio");
+			scrollExpoAux.add(crearExpo);
+		}else {
+			for (Exhibition e : expos) {
+				aux = new VistaExposicionEditPanel(parent, e, false); 
+				this.scrollExpoAux.add(aux);
+				new ControladorExposicionEditPanel(parent, null, aux);
+			}
+			scrollExpoAux.add(crearExpo);
+			this.revalidate();
+			this.repaint();
+			
+		}
+		
+		
+		personales.setVisible(false);
+		entradasCliente.setVisible(false);
+		cambioContraseña.setVisible(false);
+		scrollStaff.setVisible(false);
+		crearStaff.setVisible(true);
+		gestionUsuarios.setVisible(false);
+		scrollExpo.setVisible(true);
 		
 	}
 	
@@ -432,7 +491,7 @@ private VistaSystem parent;
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(true);
-		
+		scrollExpo.setVisible(false);
 	}
 	
 	public void updateSalas() {
@@ -442,7 +501,7 @@ private VistaSystem parent;
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
-		
+		scrollExpo.setVisible(false);
 	}
 	
 	public void updateExpos() {
@@ -452,7 +511,7 @@ private VistaSystem parent;
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
-		
+		scrollExpo.setVisible(false);
 	}
 	
 	public void updateEntradas(Admin cl) {
@@ -462,6 +521,7 @@ private VistaSystem parent;
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
+		scrollExpo.setVisible(false);
 	}
 
 	public JPasswordField getNuevaContraseña() {

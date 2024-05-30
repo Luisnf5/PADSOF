@@ -9,11 +9,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SpringLayout;
@@ -34,12 +37,20 @@ public class VistaStaffPanel extends JPanel{
 	private JTextField nombre;
 	private JTextField apellido;
 	private JTextField dni;
+	private JTextField fecha;
 	
 	private JLabel nombreLabel;
 	private JLabel apellidoLabel;
 	private JLabel dniLabel;
+	private JLabel fechaLabel;
+	private JLabel genderLabel;
 	
 	private JLabel privilegios;
+	
+	private ButtonGroup genderGroup;
+	private JRadioButton male;
+	private JRadioButton female;
+	private JRadioButton other;
 	
 	
 	private JCheckBox temp;
@@ -66,9 +77,28 @@ public class VistaStaffPanel extends JPanel{
 		this.nombreLabel = new JLabel("Nombre");
 		this.apellidoLabel = new JLabel("Apellido");
 		this.dniLabel = new JLabel("NIF");
+		this.fechaLabel = new JLabel("Fecha de Nacimiento");
+		this.genderLabel = new JLabel("Género");
+		String fechaString = String.format("%02d/%02d/%04d", staff.getBirthDate().getDayOfMonth(), staff.getBirthDate().getMonthValue(), staff.getBirthDate().getYear());
+		this.fecha = new JTextField(fechaString);
+		this.male = new JRadioButton("Masculino");
+		this.female = new JRadioButton("Femenino");
+		this.other = new JRadioButton("Otro");
+		genderGroup = new ButtonGroup();
+		genderGroup.add(male);
+		genderGroup.add(female);
+		genderGroup.add(other);
 		this.privilegios = new JLabel("Privilegios");
 		temp = new JCheckBox("Temperatura");
 		temp.setSelected(staff.hasPrivilege(Privileges.TEMPERATURA));
+		
+		if (staff.getGender() == Gender.MALE) {
+			male.setSelected(true);
+		}else if (staff.getGender() == Gender.FEMALE) {
+			female.setSelected(true);
+		}else if (staff.getGender() == Gender.OTHER) {
+			other.setSelected(true);
+		}
 		
 		this.confirmar = new JButton("Confirmar Cambios");
 		confirmar.setBackground(Color.green);
@@ -107,15 +137,45 @@ public class VistaStaffPanel extends JPanel{
 		dni.setPreferredSize(new Dimension(100, 20));
 		this.add(dni);
 		
+		layout.putConstraint(SpringLayout.NORTH, fechaLabel, (int) ((altoPanel - fechaLabel.getHeight())/2)+15, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, fechaLabel, 20, SpringLayout.EAST, dni);
+		fechaLabel.setPreferredSize(new Dimension(130, 20));
+		this.add(fechaLabel);
+		
+		layout.putConstraint(SpringLayout.NORTH, fecha, 0, SpringLayout.SOUTH, fechaLabel);
+		layout.putConstraint(SpringLayout.WEST, fecha, 20, SpringLayout.EAST, dni);
+		fecha.setPreferredSize(new Dimension(130, 20));
+		this.add(fecha);
+		
+		layout.putConstraint(SpringLayout.NORTH, genderLabel, (int) ((altoPanel - genderLabel.getHeight())/2), SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, genderLabel, 40, SpringLayout.EAST, fechaLabel);
+		genderLabel.setPreferredSize(new Dimension(130, 20));
+		this.add(genderLabel);
+		
+		layout.putConstraint(SpringLayout.NORTH, male, 20, SpringLayout.NORTH, genderLabel);
+		layout.putConstraint(SpringLayout.WEST, male, 30, SpringLayout.EAST, fecha);
+		male.setPreferredSize(new Dimension(90, 20));
+		this.add(male);
+		
+		layout.putConstraint(SpringLayout.NORTH, female, 20, SpringLayout.NORTH, male);
+		layout.putConstraint(SpringLayout.WEST, female, 30, SpringLayout.EAST, fecha);
+		female.setPreferredSize(new Dimension(90, 20));
+		this.add(female);
+		
+		layout.putConstraint(SpringLayout.NORTH, other, 20, SpringLayout.NORTH, female);
+		layout.putConstraint(SpringLayout.WEST, other, 30, SpringLayout.EAST, fecha);
+		other.setPreferredSize(new Dimension(90, 20));
+		this.add(other);
+		
 		layout.putConstraint(SpringLayout.NORTH, privilegios, (int) ((altoPanel - privilegios.getHeight())/2), SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, privilegios, 70, SpringLayout.EAST, dni);
+		layout.putConstraint(SpringLayout.WEST, privilegios, 70, SpringLayout.EAST, other);
 		privilegios.setPreferredSize(new Dimension(100, 20));
 		this.add(privilegios);
 		
 		
 
 		layout.putConstraint(SpringLayout.NORTH, temp, 10, SpringLayout.SOUTH, privilegios);
-		layout.putConstraint(SpringLayout.WEST, temp, 50, SpringLayout.EAST, dni);
+		layout.putConstraint(SpringLayout.WEST, temp, 50, SpringLayout.EAST, other);
 		this.add(temp);
 		
 		layout.putConstraint(SpringLayout.NORTH, confirmar, (int) ((altoPanel - confirmar.getHeight())/2+30), SpringLayout.NORTH, this);
@@ -157,6 +217,26 @@ public class VistaStaffPanel extends JPanel{
 		return temp;
 	}
 
+	public JTextField getFecha() {
+		return fecha;
+	}
+
+	public ButtonGroup getGenderGroup() {
+		return genderGroup;
+	}
+
+	public JRadioButton getMale() {
+		return male;
+	}
+
+	public JRadioButton getFemale() {
+		return female;
+	}
+
+	public JRadioButton getOther() {
+		return other;
+	}
+
 	public static void main(String[] args) {
         // Crear una instancia de Notification para usar en VistaStaffPanel
         Staff staff = new Staff("Luis", "Nuñez", "12345678A", Gender.MALE, LocalDate.of(2000, 1, 1));
@@ -175,5 +255,6 @@ public class VistaStaffPanel extends JPanel{
         frame.setLocationRelativeTo(null); // Centrar en la pantalla
         frame.setVisible(true);
     }
-	
+
+
 }
