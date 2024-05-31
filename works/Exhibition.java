@@ -15,22 +15,18 @@
 package works;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
+import system.ArtGallery;
 import users.Client;
 import users.Raffle;
-
-import es.uam.eps.padsof.telecard.*;
-import es.uam.eps.padsof.tickets.*;
 
 public class Exhibition implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -193,6 +189,9 @@ public class Exhibition implements Serializable {
     public void cancelExibition() {
         if (this.status != ExhibitionStatus.PUBLISHED) {
             return;
+        }else if (this.endDate.isBefore(LocalDateTime.of(LocalDate.now().plusDays(7), LocalTime.of(20, 0)))) {
+        	this.status = ExhibitionStatus.ENDING;
+        	return;
         }
         
         this.status = ExhibitionStatus.ENDING;
@@ -301,6 +300,10 @@ public class Exhibition implements Serializable {
     public void createRaffle(String title, String description, int num, LocalDateTime startDate, LocalDateTime endDate){
         this.raffle = new Raffle(title, description, num, startDate, endDate, this);
     }
+    
+    public void createRaffle(Raffle s){
+        this.raffle = s;
+    }
 
     /**
      * Deletes the raffle of the exhibition.
@@ -399,5 +402,9 @@ public class Exhibition implements Serializable {
 	
 	public Raffle getRaffle() {
 		return raffle;
+	}
+
+	public void delete() {
+		ArtGallery.getSystem().removeExhibition(this);
 	}
 }
