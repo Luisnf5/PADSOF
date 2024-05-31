@@ -50,6 +50,26 @@ public class ControladorExposicionEditPanel implements ActionListener{
 		int diaFinal;
 		int mesFinal;
 		int añoFinal;
+		
+		String precioStr = vistaExposicionEditPanel.getPrecio().getText().replaceAll(",", ".");
+		double precio = 0;
+		
+		try {
+			precio = Double.parseDouble(precioStr);
+		}catch (NumberFormatException exc) {
+			if (precioStr.charAt(precioStr.length()-1) == '€') {
+				String aux = precioStr.substring(0, precioStr.length()-1);
+				try {
+					precio = Double.parseDouble(aux);
+				}catch (NumberFormatException exc1) {
+					JOptionPane.showMessageDialog(null, "El precio no es un valor válido.\nDebe tener formato XX,XX ó XX,XX€");
+					return;
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "El precio no es un valor válido.\nDebe tener formato XX,XX ó XX,XX€");
+				return;
+			}
+		}
 
 		if (selected.getText().equals("Publicar Exposición")){
 			if (vistaExposicionEditPanel.getNombre().getText().length() < 1) {
@@ -82,6 +102,9 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			}else if (fechaInicioLDT.isBefore(LocalDate.now())) {
 				JOptionPane.showMessageDialog(null, "No se puede poner una fecha de inicio anterior a la fecha actual");
 				return;
+			}else if (fechaFinalLDT.isBefore(fechaInicioLDT)) {
+				JOptionPane.showMessageDialog(null, "No se puede poner una fecha final anterior a la fecha inicial");
+				return;
 			}else if (fechaFinalLDT.isBefore(LocalDate.now())) {
 				JOptionPane.showMessageDialog(null, "No se puede poner una fecha final anterior a la fecha actual");
 				return;
@@ -97,10 +120,12 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			ex.setAuthor(vistaExposicionEditPanel.getAutor().getText());
 			ex.setStartDate(LocalDateTime.of(añoInicio, mesInicio, diaInicio, 10, 0));
 			ex.setEndDate(LocalDateTime.of(añoFinal, mesFinal, diaFinal, 20, 0));
+			ex.setPrice(precio);
 			ex.publishExposition();
 			
-
+			
 			JOptionPane.showMessageDialog(null, "La exposición se ha publicado correctamente");
+			vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
 		}else if (selected.getText().equals("Editar Exposición")) {
 			if (vistaExposicionEditPanel.getNombre().getText().length() < 1) {
 				JOptionPane.showMessageDialog(null, "El título no puede estar vacío");
@@ -147,12 +172,15 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			ex.setAuthor(vistaExposicionEditPanel.getAutor().getText());
 			ex.setStartDate(LocalDateTime.of(añoInicio, mesInicio, diaInicio, 10, 0));
 			ex.setEndDate(LocalDateTime.of(añoFinal, mesFinal, diaFinal, 20, 0));
+			ex.setPrice(precio);
 			
 
-			JOptionPane.showMessageDialog(null, "La exposición se ha publicado correctamente");
+			JOptionPane.showMessageDialog(null, "La exposición se ha editado correctamente");
+			vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
 		}else if (selected.getText().equals("Cancelar Exposición")) {
 			ex.cancelExibition();
 			JOptionPane.showMessageDialog(null, "La exposición se ha cancelado correctamente y terminará de aqui a 7 días");
+			vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
 		}else if (selected.getText().equals("Crear Exposición")) {
 			if (vistaExposicionEditPanel.getNombre().getText().length() < 1) {
 				JOptionPane.showMessageDialog(null, "El título no puede estar vacío");
@@ -200,6 +228,7 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			ex.setStartDate(LocalDateTime.of(añoInicio, mesInicio, diaInicio, 10, 0));
 			ex.setEndDate(LocalDateTime.of(añoFinal, mesFinal, diaFinal, 20, 0));
 			ex.setStatus(ExhibitionStatus.DRAFT);
+			ex.setPrice(precio);
 			
 			system.createExhibition(ex);
 			

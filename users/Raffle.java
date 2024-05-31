@@ -87,6 +87,9 @@ public class Raffle implements Serializable {
 	}
 
 	public void setStartDate(LocalDateTime startDate) {
+		if (startDate == null) {
+			return;
+		}
 		this.startDate = startDate;
 	}
 
@@ -95,6 +98,9 @@ public class Raffle implements Serializable {
 	}
 
 	public void setEndDate(LocalDateTime endDate) {
+		if (endDate == null) {
+			return;
+		}
 		this.endDate = endDate;
 	}
 

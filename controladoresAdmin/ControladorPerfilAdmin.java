@@ -45,11 +45,13 @@ public class ControladorPerfilAdmin implements ActionListener{
 			vistaSystem.getVistaNotificaciones().setVisible(true);
 		}else if (selected.getText().equals("Sorteos")) {
 			vistaPerfil.setVisible(false);
+			vistaSystem.getVistaSorteos().updateSorteos(vistaSystem.getControladorSorteos().getSorteos());
 			vistaSystem.getVistaSorteos().setVisible(true);
 		}else if (selected.getText().equals("Principal")) {
 			vistaPerfil.setVisible(false);
 			vistaSystem.getVistaInicioCliente().setVisible(true);
 		}else if (selected.getText().equals("Buscar")) {
+			this.vistaSystem.getVistaExposicion().updateExhibitions(system.getExhibitions());
 			vistaPerfil.setVisible(false);
 			vistaSystem.getVistaExposicion().setVisible(true);
 		}else if(selected.getText().equals("Datos Personales")) {
@@ -63,7 +65,7 @@ public class ControladorPerfilAdmin implements ActionListener{
 		}else if(selected.getText().equals("Gestionar Salas")) {
 			vistaPerfil.updateSalas();
 		}else if(selected.getText().equals("Gestionar Exposiciones")) {
-			vistaPerfil.updateExpos();
+			vistaPerfil.updateExpos(system.getExhibitions());
 		}else if(selected.getText().equals("Gestionar Usuarios")) {
 			System.out.println("Gestion Usuartios pulsado");
 			if (vistaPerfil.getBlockedUsers().isSelected()) {
@@ -82,7 +84,7 @@ public class ControladorPerfilAdmin implements ActionListener{
 			System.out.println("Nuevo empleado pulsado");
 			VistaStaffPanel aux = new VistaStaffPanel(vistaSystem, new Staff("", "", "", Gender.OTHER, LocalDate.of(2000, 1, 1))); 
 			new ControladorStaffPanel(vistaSystem, null, aux, true);
-			JOptionPane.showMessageDialog(new JFrame("Nuevo Empleado"), aux);
+			JOptionPane.showMessageDialog(null, aux);
 			vistaPerfil.updateStaff(system.getStaffs());
 		}else if(selected.getText().equals("Nueva Exposición")) {
 			System.out.println("Nueva expo pulsado");

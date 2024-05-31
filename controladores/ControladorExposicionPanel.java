@@ -35,7 +35,7 @@ public class ControladorExposicionPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Client cl;
 		if (!(system.getLoggedUser() instanceof Client)) {
-			JOptionPane.showMessageDialog(null, "Debe registrase como Cliente \npara poder registrarse en un sorteo");
+			JOptionPane.showMessageDialog(null, "Debe registrase como Cliente \npara poder comprar una entrada");
 			return;
 		}else {
 			cl = (Client) system.getLoggedUser();

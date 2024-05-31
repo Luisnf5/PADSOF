@@ -95,7 +95,19 @@ public class ArtGallery implements Serializable{
 
 
 	public Set<Exhibition> getExhibitions() {
-		return exhibitions;
+		Set<Exhibition> exs = new LinkedHashSet<>();
+		Set<Exhibition> deleteExs = new LinkedHashSet<>();
+		
+		for (Exhibition e : this.exhibitions) {
+			if (e.getEndDate().isBefore(LocalDateTime.now())) {
+				deleteExs.add(e);
+			}else {
+				exs.add(e);
+			}
+		}
+		
+		this.exhibitions.removeAll(deleteExs);
+		return exs;
 	}
 	
 	public void addSubRoom(SubRoom e) {
@@ -171,7 +183,7 @@ public class ArtGallery implements Serializable{
 	
 	public void saveSistem() {
 		try {
-		    ObjectOutputStream oss = new ObjectOutputStream(new FileOutputStream(sistemTxt));
+			ObjectOutputStream oss = new ObjectOutputStream(new FileOutputStream(sistemTxt));
 		    oss.writeObject(this);
 		} catch (IOException e) {
 		    e.printStackTrace(); 
@@ -323,6 +335,20 @@ public class ArtGallery implements Serializable{
 	
 	public void deleteUser(User u) {
 		this.users.remove(u);
+	}
+	
+	public void removeExhibition(Exhibition e) {
+		this.exhibitions.remove(e);
+	}
+	
+	public Exhibition getExhibitionFromName(String name) {
+		for (Exhibition e : this.getExhibitions()) {
+			if (e.getTitle().equals(name)) {
+				return e;
+			}
+		}
+		
+		return null;
 	}
 	
 }

@@ -2,15 +2,19 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
+import controladoresAdmin.ControladorSorteoEditPanel;
 import system.ArtGallery;
 import users.Admin;
 import users.Client;
 import users.Raffle;
+import vistasAdmin.VistaSorteoEditPanel;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaSorteos;
 import works.Exhibition;
@@ -64,6 +68,12 @@ public class ControladorSorteos implements ActionListener{
 			vistaSorteos.setVisible(false);
 			this.vistaSystem.getVistaExposicion().updateExhibitions(system.getExhibitions());
 			vistaSystem.getVistaExposicion().setVisible(true);
+		}else if (selected.getText().equals("Crear Sorteo")) {
+			System.out.println("Nuevo sorteo pulsado");
+			VistaSorteoEditPanel aux = new VistaSorteoEditPanel(vistaSystem, new Raffle("titulo ejemplo", "descripción ejemplo", 1, LocalDateTime.now(), LocalDateTime.now(), null), true); 
+			new ControladorSorteoEditPanel(vistaSystem, null, aux);
+			JOptionPane.showMessageDialog(null, aux);
+			vistaSorteos.updateSorteos(vistaSystem.getControladorSorteos().getSorteos());
 		}
 		
 	}
@@ -73,6 +83,9 @@ public class ControladorSorteos implements ActionListener{
 		for (Exhibition e : system.getExhibitions()){
 			if (e.getRaffle() != null) {
 				sorts.add(e.getRaffle());
+				if (e.getRaffle().getStartDate() == null) {
+					System.out.println(e.getRaffle().getTitle() + " START DATE IS NULLLLLLLLL");
+				}
 			}
 			System.out.println("raff: " + e.getRaffle());
 		}

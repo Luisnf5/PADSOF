@@ -37,6 +37,7 @@ public class ControladorPerfil implements ActionListener{
 			vistaSystem.getVistaNotificaciones().setVisible(true);
 		}else if (selected.getText().equals("Sorteos")) {
 			vistaPerfil.setVisible(false);
+			vistaSystem.getVistaSorteos().updateSorteos(vistaSystem.getControladorSorteos().getSorteos());
 			vistaSystem.getVistaSorteos().setVisible(true);
 		}else if (selected.getText().equals("Principal")) {
 			vistaPerfil.setVisible(false);
