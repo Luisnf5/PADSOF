@@ -74,9 +74,9 @@ private VistaSystem parent;
 	private JToggleButton blockedUsers;
 	
 	//GESTIONAR EXPOSICIONES
-		private JPanel scrollExpoAux;
-		private JScrollPane scrollExpo;
-		private JButton crearExpo;
+	private JPanel scrollExpoAux;
+	private JScrollPane scrollExpo;
+	private JButton crearExpo;
 		
 	
 	
@@ -368,7 +368,7 @@ private VistaSystem parent;
 		crearStaff.addActionListener(c);
 		blockedUsers.addActionListener(c);
 		users.addActionListener(c);
-		crearStaff.addActionListener(c);
+		crearExpo.addActionListener(c);
 		
 	}
 	
@@ -434,7 +434,7 @@ private VistaSystem parent;
 	public void updateExpos(Set<Exhibition> expos) {
 		VistaExposicionEditPanel aux;
 		
-		scrollStaffAux.removeAll();
+		scrollExpoAux.removeAll();
 		
 		
 		if (expos.isEmpty() || expos == null) {
@@ -504,15 +504,6 @@ private VistaSystem parent;
 		scrollExpo.setVisible(false);
 	}
 	
-	public void updateExpos() {
-		personales.setVisible(false);
-		entradasCliente.setVisible(false);
-		cambioContraseña.setVisible(false);
-		scrollStaff.setVisible(false);
-		crearStaff.setVisible(false);
-		gestionUsuarios.setVisible(false);
-		scrollExpo.setVisible(false);
-	}
 	
 	public void updateEntradas(Admin cl) {
 		cambioContraseña.setVisible(false);

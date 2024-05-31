@@ -51,8 +51,8 @@ public class VistaSorteoPanel extends JPanel{
 		
 		this.titulo = new JLabel(sorteo.getTitle());
 		this.descripcion = new JLabel(sorteo.getDescription());
-		this.fechaInicio = new JLabel(sorteo.getExhibition().getStartDate().toString());
-		this.fechaFinal = new JLabel(sorteo.getExhibition().getEndDate().toString());
+		this.fechaInicio = new JLabel(sorteo.getStartDate().toString());
+		this.fechaFinal = new JLabel(sorteo.getEndDate().toString());
 		this.selectedHora = new JTextField("DD/MM/YYYY/HH");
 		this.selectedHora.setPreferredSize(new Dimension(100, 25));
 		this.participar = new JButton("Participar");

@@ -35,11 +35,13 @@ public class VistaExposicionEditPanel extends JPanel{
 	private JTextField autor;
 	private JTextField fechaInicio;
 	private JTextField fechaFinal;
+	private JTextField precio;
 	
 	private JLabel nombreLabel;
 	private JLabel autorLabel;
 	private JLabel fechaInicioLabel;
 	private JLabel fechaFinalLabel;
+	private JLabel precioLabel;
 	
 	
 	public VistaExposicionEditPanel(VistaSystem parent, Exhibition ex, boolean newExhibition) {
@@ -63,11 +65,14 @@ public class VistaExposicionEditPanel extends JPanel{
 		this.fechaInicio = new JTextField(fechaInicioString);
 		String fechaFinalString = String.format("%02d/%02d/%04d", exhibition.getEndDate().getDayOfMonth(), exhibition.getEndDate().getMonthValue(), exhibition.getEndDate().getYear());
 		this.fechaFinal = new JTextField(fechaFinalString);
+		String precioString = String.format("%.2f€", ex.getPrice());
+		this.precio = new JTextField(precioString);
 		
 		this.nombreLabel = new JLabel("Título");
 		this.autorLabel = new JLabel("Autor");
 		this.fechaInicioLabel = new JLabel("Inicio");
 		this.fechaFinalLabel = new JLabel("Final");
+		this.precioLabel = new JLabel("Precio");
 		
 		if (newExhibition) {
 			this.confirmar = new JButton("Crear Exposición");
@@ -82,6 +87,8 @@ public class VistaExposicionEditPanel extends JPanel{
 		}
 		
 		this.editar = new JButton("Editar Exposición");
+		this.editar.setBackground(Color.BLUE);
+		this.editar.setForeground(Color.WHITE);
 		
 		
 		
@@ -125,15 +132,30 @@ public class VistaExposicionEditPanel extends JPanel{
 		layout.putConstraint(SpringLayout.WEST, fechaFinal, 5, SpringLayout.EAST, fechaFinalLabel);
 		fechaFinal.setPreferredSize(new Dimension(130, 20));
 		this.add(fechaFinal);
+		
+		layout.putConstraint(SpringLayout.NORTH, precioLabel, (int) ((altoPanel - nombreLabel.getHeight())/2+40)-20, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, precioLabel, 10, SpringLayout.EAST, fechaFinal);
+		precioLabel.setPreferredSize(new Dimension(40, 20));
+		this.add(precioLabel);
+		
+		layout.putConstraint(SpringLayout.NORTH, precio, (int) ((altoPanel - nombreLabel.getHeight())/2+40)-20, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, precio, 10, SpringLayout.EAST, precioLabel);
+		precio.setPreferredSize(new Dimension(40, 20));
+		this.add(precio);
 	
 		layout.putConstraint(SpringLayout.NORTH, confirmar, (int) ((altoPanel - confirmar.getHeight())/2+30), SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, confirmar, 20, SpringLayout.EAST, fechaFinal);
+		layout.putConstraint(SpringLayout.WEST, confirmar, 20, SpringLayout.EAST, precio);
 		this.add(confirmar);
+		
+		layout.putConstraint(SpringLayout.NORTH, editar, (int) ((altoPanel - editar.getHeight())/2+30), SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, editar, 10, SpringLayout.EAST, confirmar);
+		this.add(editar);
 		
 	}
 	
 	public void setControlador(ActionListener c) {
 		confirmar.addActionListener(c);
+		editar.addActionListener(c);
 	}
 
 	public Exhibition getExposicion() {
@@ -161,10 +183,14 @@ public class VistaExposicionEditPanel extends JPanel{
 	}
 
 
+	public JTextField getPrecio() {
+		return precio;
+	}
+
 	public static void main(String[] args) {
         // Crear una instancia de Notification para usar en VistaStaffPanel
         Exhibition client = new Exhibition("EX1", "Picasso", LocalDateTime.of(2024, 11, 29, 10, 0), LocalDateTime.of(2024, 11, 30, 20, 0));
-
+        client.publishExposition();
         // Crear una instancia de VistaSystem (suponiendo que existe un constructor adecuado)
         VistaSystem parent = new VistaSystem();
 

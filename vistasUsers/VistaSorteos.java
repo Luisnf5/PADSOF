@@ -1,4 +1,4 @@
-
+  
 package vistasUsers;
 
 import java.awt.Color;
@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
@@ -17,8 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.SpringLayout;
 
 import controladores.ControladorSorteoPanel;
-import controladores.ControladorSorteos;
+import controladoresAdmin.ControladorSorteoEditPanel;
+import system.ArtGallery;
+import users.Client;
 import users.Raffle;
+import vistasAdmin.VistaSorteoEditPanel;
 import vistasSystem.VistaSystem;
 
 public class VistaSorteos extends JPanel{
@@ -29,6 +33,7 @@ public class VistaSorteos extends JPanel{
 	private JButton perfil;
 	private JButton buscar;
 	private JButton principal;
+	private JButton crearSorteo;
 	private JScrollPane scroll;
 	private JLabel emptySorteos;
 	private JPanel scrollAux;
@@ -45,6 +50,8 @@ public class VistaSorteos extends JPanel{
 		this.parent = parent;
 		
 		this.notificaciones = new JButton("Notificaciones");
+		this.crearSorteo = new JButton("Crear Sorteo");
+		crearSorteo.setBackground(Color.CYAN);
 		this.perfil = new JButton("Mi Perfil");
 		this.buscar = new JButton("Buscar");
 		this.principal = new JButton("Principal");
@@ -79,9 +86,10 @@ public class VistaSorteos extends JPanel{
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scroll, 950, SpringLayout.WEST, this);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
-        verticalScrollBar.setUnitIncrement(40);
-		this.add(scroll);
+        JScrollBar verticalscrollStaffBar = scroll.getVerticalScrollBar();
+        verticalscrollStaffBar.setUnitIncrement(40);
+        this.add(scroll);
+        scroll.setVisible(true);
 		
 		
 		this.add(emptySorteos);
@@ -94,23 +102,49 @@ public class VistaSorteos extends JPanel{
 	}
 	
 	public void updateSorteos(Set<Raffle> sorteos) {
-		VistaSorteoPanel aux;
-		
-		scrollAux.removeAll();
-		scrollAux.add(emptySorteos);
-		
-		if (sorteos.isEmpty()) {
-			this.emptySorteos.setVisible(true);
-			this.scroll.setVisible(false);
-		}else {
-			this.sorteos = sorteos;
-			for (Raffle sorteo : sorteos) {
-				aux = new VistaSorteoPanel(parent, sorteo); 
-				this.scrollAux.add(aux);
-				new ControladorSorteoPanel(parent, null, aux);
+		if (ArtGallery.getSystem().getLoggedUser() instanceof Client) {
+			VistaSorteoPanel aux;
+			
+			scrollAux.removeAll();
+			scrollAux.add(emptySorteos);
+			
+			if (sorteos.isEmpty()) {
+				this.emptySorteos.setVisible(true);
+				this.scroll.setVisible(true);
+			}else {
+				this.sorteos = sorteos;
+				for (Raffle sorteo : sorteos) {
+					if (sorteo.getStartDate().isBefore(LocalDateTime.now()) && sorteo.getEndDate().isAfter(LocalDateTime.now())) {
+						aux = new VistaSorteoPanel(parent, sorteo); 
+						this.scrollAux.add(aux);
+						new ControladorSorteoPanel(parent, null, aux);
+					}
+				}
+				this.emptySorteos.setVisible(false);
+				this.scroll.setVisible(true);
 			}
-			this.emptySorteos.setVisible(false);
-			this.scroll.setVisible(true);
+		}else {
+			VistaSorteoEditPanel aux;
+			
+			scrollAux.removeAll();
+			scrollAux.add(emptySorteos);
+			
+			if (sorteos.isEmpty()) {
+				this.emptySorteos.setVisible(true);
+				this.scroll.setVisible(true);
+			}else {
+				this.sorteos = sorteos;
+				for (Raffle sorteo : sorteos) {
+					aux = new VistaSorteoEditPanel(parent, sorteo, false); 
+					this.scrollAux.add(aux);
+					new ControladorSorteoEditPanel(parent, null, aux);
+				}
+				this.emptySorteos.setVisible(false);
+				this.scroll.setVisible(true);
+			}
+			
+			scrollAux.add(crearSorteo);
+			
 		}
 	}
 
@@ -119,5 +153,6 @@ public class VistaSorteos extends JPanel{
 		perfil.addActionListener(c);
 		buscar.addActionListener(c);
 		principal.addActionListener(c);
+		crearSorteo.addActionListener(c);
 	}
 }

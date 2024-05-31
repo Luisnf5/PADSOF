@@ -26,6 +26,7 @@ import vistasSystem.VistaSystem;
 pero preferimos que funcione */
 
 import works.Exhibition;
+import works.ExhibitionStatus;
 
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
@@ -113,10 +114,11 @@ public class VistaExposicion extends JPanel {
 		panelContenido.removeAll();
 		
 		for(Exhibition e: ex) {
-			VistaExposicionPanel v = new VistaExposicionPanel(parent, e);
-			new ControladorExposicionPanel(null, parent, v);
-			panelContenido.add(v);
-			
+			if (e.getStatus() != ExhibitionStatus.DRAFT) {
+				VistaExposicionPanel v = new VistaExposicionPanel(parent, e);
+				new ControladorExposicionPanel(null, parent, v);
+				panelContenido.add(v);
+			}
 		}
 	}
 	
