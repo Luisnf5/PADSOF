@@ -1,5 +1,0 @@
-RoomComposite.java:
-para que sirve esta clase?
-
-SubRoom.java:
-para que sirve esta clase?
