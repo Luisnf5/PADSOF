@@ -27,6 +27,8 @@ import users.Staff;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaPrincipal;
 import works.Exhibition;
+import works.Inventory;
+import works.Work;
 
 public class VistaPerfilAdmin extends JPanel{
 private VistaSystem parent;
@@ -43,6 +45,7 @@ private VistaSystem parent;
 	private JButton salas;
 	private JButton expos;
 	private JButton users;
+	private JButton inv;
 	
 	//DATOS PERSONALES
 	private JPanel personales;
@@ -77,6 +80,11 @@ private VistaSystem parent;
 	private JPanel scrollExpoAux;
 	private JScrollPane scrollExpo;
 	private JButton crearExpo;
+	
+	//GESTIONAR INVENTARIO
+	private JPanel scrollInvAux;
+	private JScrollPane scrollInv;
+	private JButton crearObra;
 		
 	
 	
@@ -179,6 +187,13 @@ private VistaSystem parent;
 		layout.putConstraint(SpringLayout.NORTH, users, 310, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, users, -50, SpringLayout.EAST, this);
 		
+		this.inv = new JButton("Gestionar Inventario");
+		this.inv.setPreferredSize(new Dimension(150, 30));
+		
+		this.add(this.inv);
+		
+		layout.putConstraint(SpringLayout.NORTH, inv, 350, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.EAST, inv, -50, SpringLayout.EAST, this);
 		
 		
 		this.cerrar = new JButton("Cerrar Sesion");
@@ -186,7 +201,7 @@ private VistaSystem parent;
 		
 		this.add(this.cerrar);
 		
-		layout.putConstraint(SpringLayout.NORTH, cerrar, 350, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.NORTH, cerrar, 390, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, cerrar, -50, SpringLayout.EAST, this);
 		
 		
@@ -287,10 +302,13 @@ private VistaSystem parent;
 		crearStaff.setPreferredSize(new Dimension(200, 100));
 		this.scrollStaffAux = new JPanel(new GridLayout(0, 1));
 		this.scrollStaff = new JScrollPane(scrollStaffAux);
-		scrollStaff.setPreferredSize(new Dimension(1200, 700));
 	
-		layout.putConstraint(SpringLayout.NORTH, scrollStaff, 150, SpringLayout.SOUTH, buscar);
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollStaff, 950, SpringLayout.WEST, this);
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+        d.width -= 450;
+        d.height -= 300;
+        scrollStaff.setPreferredSize(d);
+        layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollStaff, 0, SpringLayout.VERTICAL_CENTER, this);
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollStaff, -70, SpringLayout.HORIZONTAL_CENTER, this);
 		scrollStaff.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollStaff.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         JScrollBar verticalscrollStaffBar = scrollStaff.getVerticalScrollBar();
@@ -346,7 +364,24 @@ private VistaSystem parent;
         verticalScrollExpoBar.setUnitIncrement(40);
         this.add(scrollExpo);
         scrollExpo.setVisible(false);
-		
+        
+      //GESTIONAR INVENTARIO
+  		this.crearObra = new JButton("Nueva Obra");
+  		crearObra.setBackground(Color.CYAN);
+  		crearObra.setPreferredSize(new Dimension(200, 100));
+  		this.scrollInvAux = new JPanel(new GridLayout(0, 1));
+  		this.scrollInv = new JScrollPane(scrollInvAux);
+  		scrollInv.setPreferredSize(new Dimension(1200, 700));
+  	
+  		layout.putConstraint(SpringLayout.NORTH, scrollInv, 150, SpringLayout.SOUTH, buscar);
+  		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollInv, 950, SpringLayout.WEST, this);
+  		scrollInv.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	    scrollInv.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	    JScrollBar verticalScrollInvBar = scrollStaff.getVerticalScrollBar();
+	    verticalScrollInvBar.setUnitIncrement(40);
+	    this.add(scrollInv);
+	    scrollInv.setVisible(false);
+	
 		
 		
 		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -369,6 +404,7 @@ private VistaSystem parent;
 		blockedUsers.addActionListener(c);
 		users.addActionListener(c);
 		crearExpo.addActionListener(c);
+		crearObra.addActionListener(c);
 		
 	}
 	
@@ -388,6 +424,7 @@ private VistaSystem parent;
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
+		scrollInv.setVisible(false);
 	}
 	
 	public void updateCambioContraseña() {
@@ -398,6 +435,7 @@ private VistaSystem parent;
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
+		scrollInv.setVisible(false);
 	}
 	
 	public void updateStaff(Set<Staff> empleados) {
@@ -429,6 +467,7 @@ private VistaSystem parent;
 		crearStaff.setVisible(true);
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
+		scrollInv.setVisible(false);
 	}
 	
 	public void updateExpos(Set<Exhibition> expos) {
@@ -459,7 +498,42 @@ private VistaSystem parent;
 		scrollStaff.setVisible(false);
 		crearStaff.setVisible(true);
 		gestionUsuarios.setVisible(false);
+		scrollInv.setVisible(false);
 		scrollExpo.setVisible(true);
+		
+	}
+	
+	
+	public void updateInv(Inventory inv) {
+		VistaWorkEditPanel aux;
+		
+		scrollInvAux.removeAll();
+		
+		
+		if (inv.isEmpty() || inv == null) {
+			System.out.println("esta vacio");
+			scrollExpoAux.add(crearExpo);
+		}else {
+			for (Work e : inv.getWorks()) {
+				aux = new VistaWorkEditPanel(parent, e, false); 
+				this.scrollInvAux.add(aux);
+				new ControladorInvEditPanel(parent, null, aux);
+			}
+			scrollInvAux.add(crearExpo);
+			this.revalidate();
+			this.repaint();
+			
+		}
+		
+		
+		personales.setVisible(false);
+		entradasCliente.setVisible(false);
+		cambioContraseña.setVisible(false);
+		scrollStaff.setVisible(false);
+		crearStaff.setVisible(false);
+		gestionUsuarios.setVisible(false);
+		scrollExpo.setVisible(false);
+		scrollInv.setVisible(true);
 		
 	}
 	
@@ -492,6 +566,7 @@ private VistaSystem parent;
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(true);
 		scrollExpo.setVisible(false);
+		scrollInv.setVisible(false);
 	}
 	
 	public void updateSalas() {
@@ -502,6 +577,7 @@ private VistaSystem parent;
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
+		scrollInv.setVisible(false);
 	}
 	
 	
@@ -513,6 +589,7 @@ private VistaSystem parent;
 		crearStaff.setVisible(false);
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
+		scrollInv.setVisible(false);
 	}
 
 	public JPasswordField getNuevaContraseña() {
