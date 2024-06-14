@@ -48,16 +48,16 @@ public class SystemManual implements Serializable {
 		inicio.createExhibition("Pablo Picasso", "Francisco", LocalDateTime.of(2024, 5, 3, 8, 0),LocalDateTime.of(2024, 5, 7, 10, 0));
 		
 		/* Creamos una sala */
-		SubRoom room1 = new SubRoom(1, true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
+		SubRoom room1 = new SubRoom(true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
 		inicio.addSubRoom(room1);
 
-		SubRoom room2 = new SubRoom(1, true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
+		SubRoom room2 = new SubRoom(true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
 		inicio.addSubRoom(room2);
 
 		SubroomExhibition space1 = new SubroomExhibition(room1);
 		SubroomExhibition space2 = new SubroomExhibition(room2);
 
-		Painting p1 = new Painting("Guernika", "Pablo Picasso", false, 21.5, 0.180, 0, 0.180, 50, "Oleo sobre tela");
+		Painting p1 = new Painting("Guernika", "Pablo Picasso", false, 21.5, 0.180, 0, 0.180, 50);
 		space1.addWorks(p1);
 
 		exActual = inicio.searchExhibition("Van Gogh");

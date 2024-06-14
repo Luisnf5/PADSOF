@@ -66,6 +66,8 @@ public class ControladorPerfilAdmin implements ActionListener{
 			vistaPerfil.updateSalas();
 		}else if(selected.getText().equals("Gestionar Exposiciones")) {
 			vistaPerfil.updateExpos(system.getExhibitions());
+		}else if(selected.getText().equals("Gestionar Inventario")) {
+			vistaPerfil.updateInv(system.getInventory());
 		}else if(selected.getText().equals("Gestionar Usuarios")) {
 			System.out.println("Gestion Usuartios pulsado");
 			if (vistaPerfil.getBlockedUsers().isSelected()) {
