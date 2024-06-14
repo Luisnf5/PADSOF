@@ -304,7 +304,7 @@ private VistaSystem parent;
 		this.scrollStaff = new JScrollPane(scrollStaffAux);
 	
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        d.width -= 450;
+        d.width -= 415;
         d.height -= 300;
         scrollStaff.setPreferredSize(d);
         layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollStaff, 0, SpringLayout.VERTICAL_CENTER, this);
@@ -317,16 +317,21 @@ private VistaSystem parent;
         scrollStaff.setVisible(false);
         
         //GESTIONAR USUARIOS
+        Dimension d3 = Toolkit.getDefaultToolkit().getScreenSize();
+		d3.height -= 300;
+		d3.width -= 400;
         this.gestionUsuarios = new JPanel();
         SpringLayout usuariosLayout = new SpringLayout();
 		gestionUsuarios.setLayout(usuariosLayout);
-		gestionUsuarios.setPreferredSize(new Dimension(1100, 800));
+		gestionUsuarios.setPreferredSize(d3);
 		
 		this.blockedUsers = new JToggleButton("Bloqueados");
 		
 		this.scrollUsersAux = new JPanel(new GridLayout(0, 1));
 		this.scrollUsers = new JScrollPane(scrollUsersAux);
-		scrollUsers.setPreferredSize(new Dimension(1100, 700));
+		
+		
+		scrollUsers.setPreferredSize(new Dimension(d3.width, d3.height -100));
 	
 		layout.putConstraint(SpringLayout.NORTH, gestionUsuarios, 100, SpringLayout.SOUTH, buscar);
 		layout.putConstraint(SpringLayout.EAST, gestionUsuarios, -150, SpringLayout.WEST, cerrar);
@@ -349,15 +354,21 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		
 		//GESTIONAR EXPOSICIONES
+		Dimension d2 = Toolkit.getDefaultToolkit().getScreenSize();
+        d2.width -= 400;
+        d2.height -= 300;
+        
 		this.crearExpo = new JButton("Nueva Exposición");
 		crearExpo.setBackground(Color.CYAN);
-		crearExpo.setPreferredSize(new Dimension(200, 100));
+		crearExpo.setPreferredSize(new Dimension(d.width -20, 100));
 		this.scrollExpoAux = new JPanel(new GridLayout(0, 1));
 		this.scrollExpo = new JScrollPane(scrollExpoAux);
-		scrollExpo.setPreferredSize(new Dimension(1200, 700));
-	
-		layout.putConstraint(SpringLayout.NORTH, scrollExpo, 150, SpringLayout.SOUTH, buscar);
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollExpo, 950, SpringLayout.WEST, this);
+		
+		
+		scrollExpo.setPreferredSize(d2);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollExpo, 0, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollExpo, -70, SpringLayout.HORIZONTAL_CENTER, this);
+		
 		scrollExpo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollExpo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         JScrollBar verticalScrollExpoBar = scrollStaff.getVerticalScrollBar();

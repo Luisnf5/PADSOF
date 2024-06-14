@@ -2,6 +2,7 @@ package vistasAdmin;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,8 +57,11 @@ public class VistaExposicionEditPanel extends JPanel{
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
 		
+		Dimension d2 = Toolkit.getDefaultToolkit().getScreenSize();
+        d2.width -= 450;
+        d2.height = 100;
 		
-		this.setPreferredSize(new Dimension(1100, 100));
+		this.setPreferredSize(d2);
 		
 		this.nombre = new JTextField(exhibition.getTitle());
 		this.autor = new JTextField(exhibition.getAuthor());

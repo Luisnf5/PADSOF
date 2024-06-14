@@ -31,9 +31,11 @@ public class SystemManual implements Serializable {
 		ArtGallery inicio = ArtGallery.getSystem();
 		inicio.readSistem();
 		/* Creamos nuevos usuarios */
-		inicio.newClient("Paco", "Fiestas", "51546798A", Gender.OTHER, LocalDate.of(2004, 10, 2), "SOY-EL-JEFE");
-		
-		inicio.newClient("Juan", "Lopez", "12345678X", Gender.OTHER, LocalDate.of(1998, 1, 1), "Password123");
+		inicio.newClient("Paco", "Fiestas", "51546798A", Gender.MALE, LocalDate.of(2004, 10, 2), "SOY-EL-JEFE");
+		inicio.newClient("Pepe", "Cocas", "51546797A", Gender.MALE, LocalDate.of(2004, 6, 23), "SOY-EL-JEFE");
+		inicio.newClient("Silvia", "De la Calle", "51546796A", Gender.FEMALE, LocalDate.of(2005, 5, 25), "SOY-EL-JEFE");
+		inicio.newClient("Juan Jose", "Vieira", "51546795A", Gender.MALE, LocalDate.of(2004, 7, 22), "SOY-EL-JEFE");
+		inicio.newClient("Juan", "Lopez", "12345678X", Gender.MALE, LocalDate.of(1998, 1, 1), "Password123");
 		
 		inicio.newAdmin("Admin", "Sistema", "99999999X", Gender.OTHER, LocalDate.of(2000, 1, 1), "Admin123");
 		

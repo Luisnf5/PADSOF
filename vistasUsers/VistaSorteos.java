@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.function.ToLongBiFunction;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,9 +42,6 @@ public class VistaSorteos extends JPanel{
 	
 	public VistaSorteos(VistaSystem parent) {
 		
-		int anchoPanel = this.getWidth();
-		int altoPanel = this.getHeight();
-		
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
 		
@@ -60,7 +58,12 @@ public class VistaSorteos extends JPanel{
 		this.principal.setIcon(logo);
 		this.scrollAux = new JPanel(new GridLayout(0, 1));
 		this.scroll = new JScrollPane(scrollAux);
-		scroll.setPreferredSize(new Dimension(1200, 700));
+		
+		Dimension dScroll = Toolkit.getDefaultToolkit().getScreenSize();
+		dScroll.height -= 300;
+		dScroll.width -= 450;
+		
+		scroll.setPreferredSize(dScroll);
 		this.emptySorteos = new JLabel("No existen sorteos");
 		
 		
@@ -82,8 +85,8 @@ public class VistaSorteos extends JPanel{
 		buscar.setPreferredSize(new Dimension(300, 25));
 		this.add(buscar);
 		
-		layout.putConstraint(SpringLayout.NORTH, scroll, 150, SpringLayout.SOUTH, buscar);
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scroll, 950, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scroll, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scroll, 0, SpringLayout.VERTICAL_CENTER, this);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         JScrollBar verticalscrollStaffBar = scroll.getVerticalScrollBar();

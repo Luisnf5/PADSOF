@@ -56,6 +56,8 @@ public class ControladorInicioSesion implements ActionListener{
 				return;
 			}else if (ControladorClienteReg.iniciarSesion(nif, pwd) && system.getUserFromNif(nif).isResetPwd() == false) {
 				JOptionPane.showMessageDialog(null, "Bienvenido");
+				this.vistaInicioSesion.getCampoNif().setText("");
+				this.vistaInicioSesion.getCampoContraseña().setText("");
 				system.getUserFromNif(nif).restartIntentos();
 				this.vistaSystem.getVistaInicioCliente().setVisible(true);
 				this.vistaInicioSesion.setVisible(false);
