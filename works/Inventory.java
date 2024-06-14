@@ -80,6 +80,10 @@ public class Inventory implements Serializable{
 	public Set<Work> getWorks() {
 		return works;
 	}
+	
+	public boolean isEmpty() {
+		return this.works.isEmpty();
+	}
     
     
 }

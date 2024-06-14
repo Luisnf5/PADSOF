@@ -22,7 +22,7 @@ public class SubRoom extends Room implements Serializable {
      * @param height the height of the subroom
      * @param humidity the humidity conditions of the subroom
      */
-    public SubRoom(int roomID, boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity){
-        super(roomID, electricity, temperature, width, length, height, humidity, capacity);
+    public SubRoom(boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity){
+        super(electricity, temperature, width, length, height, humidity, capacity);
     }
 }

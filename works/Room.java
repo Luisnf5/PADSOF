@@ -22,6 +22,7 @@ import java.util.Set;
 
 public abstract class Room implements Serializable {
     private static final long serialVersionUID = 1L;
+    static int cont = 1;
     private int roomID;
     private boolean electricity; 
     private double temperature; 
@@ -30,6 +31,7 @@ public abstract class Room implements Serializable {
     private double height;
     private double humidity;
     protected int capacity;
+    private boolean divided;
 
     /**
      * Constructs a Room object with specified parameters.
@@ -42,9 +44,10 @@ public abstract class Room implements Serializable {
      * @param height the height of the room
      * @param humidity the humidity conditions of the room
      */
-    public Room(int roomID, boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity) { 
+    public Room(boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity) { 
         super();
-        this.roomID = roomID;
+        this.roomID = cont;
+        cont++;
         this.electricity = electricity;
         this.temperature = temperature;
         this.width = width;
@@ -52,28 +55,31 @@ public abstract class Room implements Serializable {
         this.height = height;
         this.humidity = humidity;
         this.capacity = capacity;
+        this.divided = false;
+    }
+        
+    public void add(Room room) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    public void remove(Room room) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    public Room getChild(int index) {
+    	throw new UnsupportedOperationException();
     }
     
     public int getCapacity() {
 		return capacity;
 	}
-
-    /**
-     * Gets the temperature of the room.
-     * 
-     * @return the temperature of the room
-     */
-    public double isTemperature() {
-        return temperature;
+    
+    public boolean getDivided() {
+    	return this.divided;
     }
     
-    /**
-     * Sets the temperature of the room.
-     * 
-     * @param temperature the temperature to be set
-     */
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
+    public void setDivided(boolean divided) {
+    	this.divided = divided;
     }
     
     /**
@@ -86,15 +92,6 @@ public abstract class Room implements Serializable {
     }
     
     /**
-     * Sets the width of the room.
-     * 
-     * @param width the width to be set
-     */
-    public void setWidth(float width) {
-        this.width = width;
-    }
-    
-    /**
      * Gets the length of the room.
      * 
      * @return the length of the room
@@ -103,31 +100,8 @@ public abstract class Room implements Serializable {
         return length;
     }
     
-    /**
-     * Sets the length of the room.
-     * 
-     * @param length the length to be set
-     */
-    public void setLength(float length) {
-        this.length = length;
-    }
-    
-    /**
-     * Gets the height of the room.
-     * 
-     * @return the height of the room
-     */
-    public double getHeihgt() {
-        return height;
-    }
-    
-    /**
-     * Sets the height of the room.
-     * 
-     * @param heihgt the height to be set
-     */
-    public void setHeihgt(float heihgt) {
-        this.height = heihgt;
+    public void setLength(double length) {
+    	this.length = length;
     }
 
     /**

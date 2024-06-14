@@ -32,9 +32,8 @@ public class Painting extends Work implements Serializable{
      * @param technique the technique used for the painting
      */
     public Painting(String title, String author, Boolean elctricity, double temperature, double width, double lenght,
-            double height, double humidity, String technique) {
+            double height, double humidity) {
         super(title, author, elctricity, temperature, width, lenght, height, humidity);
-        this.technique = technique;
         this.setStatus(Status.INVENTORY);
     }
 }
