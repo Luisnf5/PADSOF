@@ -96,7 +96,7 @@ public class VistaNotificaciones extends JPanel{
 		
 		scrollAux.removeAll();
 		scrollAux.add(empty);
-		
+		 
 		if (notis.isEmpty() || notis == null) {
 			this.empty.setVisible(true);
 			System.out.println("esta vacio");
@@ -111,7 +111,6 @@ public class VistaNotificaciones extends JPanel{
 			this.scroll.setVisible(true);
 			this.revalidate();
 			this.repaint();
-			
 		}
 	}
 	

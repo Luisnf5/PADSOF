@@ -20,7 +20,9 @@ import controladores.ControladorNotificaciones;
 import controladores.ControladorPerfil;
 import controladores.ControladorSorteos;
 import controladores.ControladorVistaPrincipal;
+import controladoresAdmin.ControladorNotificacionesAdmin;
 import controladoresAdmin.ControladorPerfilAdmin;
+import vistasAdmin.VistaNotificacionesAdmin;
 import vistasAdmin.VistaPerfilAdmin;
 import vistasUsers.VistaClienteReg;
 import vistasUsers.VistaCompraEntradas;
@@ -44,6 +46,7 @@ public class VistaSystem extends JFrame{
 	private ControladorPerfil controladorPerfil;
 	private ControladorCompraEntradas controladorCompraEntradas;
 	private ControladorPerfilAdmin controladorPerfilAdmin;
+	private ControladorNotificacionesAdmin controladorNorificacionesAdmin;
 	
 	private VistaClienteReg vistaClienteReg;
 	private VistaInicioSesion vistaInicioSesion;
@@ -55,6 +58,7 @@ public class VistaSystem extends JFrame{
 	private VistaPerfil vistaPerfil;
 	private VistaCompraEntradas vistaCompraEntradas;
 	private VistaPerfilAdmin vistaPerfilAdmin;
+	private VistaNotificacionesAdmin vistaNotificacionesAdmin;
 	
 	
 	public VistaSystem() {
@@ -74,6 +78,7 @@ public class VistaSystem extends JFrame{
 		this.vistaPerfil = new VistaPerfil(this);
 		this.vistaCompraEntradas = new VistaCompraEntradas(this);
 		this.vistaPerfilAdmin = new VistaPerfilAdmin(this);
+		this.vistaNotificacionesAdmin = new VistaNotificacionesAdmin(this);
 		
 		
 		// crear componentes
@@ -93,6 +98,7 @@ public class VistaSystem extends JFrame{
 		vistaPerfil.setVisible(false);
 		vistaCompraEntradas.setVisible(false);
 		vistaPerfilAdmin.setVisible(false);
+		vistaNotificacionesAdmin.setVisible(false);
 
 		
 		
@@ -107,6 +113,7 @@ public class VistaSystem extends JFrame{
 		this.add(vistaPerfil);
 		this.add(vistaCompraEntradas);
 		this.add(vistaPerfilAdmin);
+		this.add(vistaNotificacionesAdmin);
 		
 		vistaPrincipal.setBackground(Color.black);
 		
@@ -117,7 +124,7 @@ public class VistaSystem extends JFrame{
 			@Override
 			public void windowClosing(WindowEvent e) {
 		        controladorVistaPrincipal.saveSystem();
-				System.exit(0);
+				System.exit(0); 
 			}
 		});
 		
@@ -153,6 +160,9 @@ public class VistaSystem extends JFrame{
 		//Vista Perfil Admin
 		this.controladorPerfilAdmin = controlador.getControladorPerfilAdmin();
 		this.vistaPerfilAdmin.setControlador(controladorPerfilAdmin);
+		//Vista Notificaciones Admin
+		this.controladorNorificacionesAdmin = controlador.getControladorNotificacionesAdmin();
+		this.vistaNotificacionesAdmin.setControlador(controladorNorificacionesAdmin);
 	}
 	
 	public ControladorCompraEntradas getControladorCompraEntradas() {
@@ -221,6 +231,9 @@ public class VistaSystem extends JFrame{
 	}
 	public ControladorPerfil getControladorPerfil() {
 		return controladorPerfil;
+	}
+	public VistaNotificacionesAdmin getVistaNotificacionesAdmin() {
+		return vistaNotificacionesAdmin;
 	}
 	
 	
