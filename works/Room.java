@@ -59,7 +59,7 @@ public abstract class Room implements Serializable {
         this.divided = false;
     }
         
-    public void add(Room room) {
+    public void add(Room...room) {
     	throw new UnsupportedOperationException();
     }
     

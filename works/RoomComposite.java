@@ -20,6 +20,7 @@ public class RoomComposite extends Room {
     	return sbr;
     }
     
+    @Override
     public void add(Room...rooms) {
     	if(!this.getDivided()) {
     		for(Room r : rooms)
@@ -28,6 +29,7 @@ public class RoomComposite extends Room {
     	}
     }
     
+    @Override
     public void remove(Room room) {
     	this.subRooms.remove(room);
     	if(this.subRooms.isEmpty()) {
