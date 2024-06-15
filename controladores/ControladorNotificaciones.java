@@ -2,21 +2,15 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import javax.swing.JButton;
 
 import system.ArtGallery;
 import users.Admin;
 import users.Client;
-import users.Notification;
-import users.Raffle;
-import users.User;
+import users.Staff;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaNotificaciones;
-import vistasUsers.VistaSorteos;
-import works.Exhibition;
 
 public class ControladorNotificaciones implements ActionListener{
 	private ArtGallery system;
@@ -51,6 +45,9 @@ public class ControladorNotificaciones implements ActionListener{
 			}else if (system.getLoggedUser() instanceof Client){
 				vistaNotificaciones.setVisible(false);
 				vistaSystem.getVistaPerfil().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Staff){
+				vistaNotificaciones.setVisible(false);
+				vistaSystem.getVistaPerfilStaff().setVisible(true);
 			}
 		}else if (selected.getText().equals("Principal")) {
 			vistaNotificaciones.setVisible(false);

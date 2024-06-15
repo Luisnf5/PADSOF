@@ -10,12 +10,5 @@ public class Admin extends User implements Serializable{
         super(name, surname, nif, gender, date, password);
     }
     
-    public Boolean changeStaffPwd(String newPwd) {
-		if (this.isPwdValid(newPwd) && this == ArtGallery.getSystem().getLoggedUser()) {
-			Staff.password = newPwd;
-			return true;
-		}
-		return false;
-	}
 	
 }

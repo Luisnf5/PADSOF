@@ -14,6 +14,7 @@ import system.ArtGallery;
 import users.Admin;
 import users.Client;
 import users.Raffle;
+import users.Staff;
 import vistasAdmin.VistaSorteoEditPanel;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaSorteos;
@@ -49,7 +50,7 @@ public class ControladorSorteos implements ActionListener{
 				vistaSorteos.setVisible(false);
 				vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
 				vistaSystem.getVistaNotificaciones().setVisible(true);
-			}else if (system.getLoggedUser() instanceof Admin) {
+			}else if (system.getLoggedUser() instanceof Admin || system.getLoggedUser() instanceof Staff) {
 				vistaSorteos.setVisible(false);
 				vistaSystem.getVistaNotificacionesAdmin().updateClients(system.getClientsStrings());
 				vistaSystem.getVistaNotificacionesAdmin().setVisible(true);
@@ -64,6 +65,9 @@ public class ControladorSorteos implements ActionListener{
 			}else if (system.getLoggedUser() instanceof Client){
 				vistaSorteos.setVisible(false);
 				vistaSystem.getVistaPerfil().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Staff){
+				vistaSorteos.setVisible(false);
+				vistaSystem.getVistaPerfilStaff().setVisible(true);
 			}
 		}else if (selected.getText().equals("Principal")) {
 			vistaSorteos.setVisible(false);

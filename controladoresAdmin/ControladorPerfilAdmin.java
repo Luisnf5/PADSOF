@@ -121,6 +121,27 @@ public class ControladorPerfilAdmin implements ActionListener{
 				return;
 			}
 			
+		}else if(selected.getText().equals("Cambiar Contraseña Staff")) {
+			vistaPerfil.updateCambioContraseñaStaff();
+			System.out.println("sioq");
+		}else if (selected.getText().equals("Confirmar Contraseña")) {
+			char[] rawPwd1 = vistaPerfil.getNuevaContraseñaStaff().getPassword();
+            char[] rawPwd2 = vistaPerfil.getNuevaContraseñaRepiteStaff().getPassword();
+			String pwd1 = new String(rawPwd1);
+			String pwd2 = new String(rawPwd2);
+			
+			if (!(pwd1.equals(pwd2))) {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+				return;
+			}
+			
+			Staff.changeStaffPwd(pwd2);
+			JOptionPane.showMessageDialog(null, "Contraseña cambiada con éxito");
+			vistaPerfil.getNuevaContraseña().setText(null);
+			vistaPerfil.getNuevaContraseñaRepite().setText(null);
+			return;
+			
+			
 		}
 	}
 	

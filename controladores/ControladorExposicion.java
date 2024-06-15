@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import system.ArtGallery;
 import users.Admin;
 import users.Client;
+import users.Staff;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaExposicion;
 import works.Exhibition;
@@ -47,7 +48,7 @@ public class ControladorExposicion implements ActionListener{
 				vistaExposicion.setVisible(false);
 				vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
 				vistaSystem.getVistaNotificaciones().setVisible(true);
-			}else if (system.getLoggedUser() instanceof Admin) {
+			}else if (system.getLoggedUser() instanceof Admin || system.getLoggedUser() instanceof Staff) {
 				vistaExposicion.setVisible(false);
 				vistaSystem.getVistaNotificacionesAdmin().updateClients(system.getClientsStrings());
 				vistaSystem.getVistaNotificacionesAdmin().setVisible(true);
@@ -62,6 +63,9 @@ public class ControladorExposicion implements ActionListener{
 			}else if (system.getLoggedUser() instanceof Client){
 				vistaExposicion.setVisible(false);
 				vistaSystem.getVistaPerfil().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Staff){
+				vistaExposicion.setVisible(false);
+				vistaSystem.getVistaPerfilStaff().setVisible(true);
 			}
 		}else if (selected.getText().equals("Principal")) {
 			vistaExposicion.setVisible(false);

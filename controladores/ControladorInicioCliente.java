@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import system.ArtGallery;
 import users.Admin;
 import users.Client;
+import users.Staff;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaInicioCliente;
 
@@ -49,7 +50,7 @@ public class ControladorInicioCliente implements ActionListener{
 				vistaInicioCliente.setVisible(false);
 				vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
 				vistaSystem.getVistaNotificaciones().setVisible(true);
-			}else if (system.getLoggedUser() instanceof Admin) {
+			}else if (system.getLoggedUser() instanceof Admin || system.getLoggedUser() instanceof Staff) {
 				vistaInicioCliente.setVisible(false);
 				vistaSystem.getVistaNotificacionesAdmin().updateClients(system.getClientsStrings());
 				vistaSystem.getVistaNotificacionesAdmin().setVisible(true);
@@ -64,6 +65,9 @@ public class ControladorInicioCliente implements ActionListener{
 			}else if (system.getLoggedUser() instanceof Client){
 				vistaInicioCliente.setVisible(false);
 				vistaSystem.getVistaPerfil().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Staff) {
+				vistaInicioCliente.setVisible(false);
+				vistaSystem.getVistaPerfilStaff().setVisible(true);
 			}
 		}else if (selected.getText().equals("Buscar")) {
 			vistaInicioCliente.setVisible(false);

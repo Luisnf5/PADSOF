@@ -90,10 +90,30 @@ public class ControladorStaffPanel implements ActionListener{
 				cl.changeNif(vistaStaffPanel.getDni().getText());
 				cl.changeBirthDate(LocalDate.of(año, mes, dia));
 				cl.changeGender(genderSelected);
-				if (vistaStaffPanel.getTemp().isSelected()) {
-					cl.addPrivilege(Privileges.TEMPERATURA);
+				if (vistaStaffPanel.getSalas().isSelected()) {
+					cl.addPrivilege(Privileges.GESTION_SALAS);
 				}else {
-					cl.deletePrivilege(Privileges.TEMPERATURA);
+					cl.deletePrivilege(Privileges.GESTION_SALAS);
+				}
+				if (vistaStaffPanel.getEntradas().isSelected()) {
+					cl.addPrivilege(Privileges.COMPRA_ENTRADAS);
+				}else {
+					cl.deletePrivilege(Privileges.COMPRA_ENTRADAS);
+				}
+				if (vistaStaffPanel.getInv().isSelected()) {
+					cl.addPrivilege(Privileges.GESTION_INVENTARIO);
+				}else {
+					cl.deletePrivilege(Privileges.GESTION_INVENTARIO);
+				}
+				if (vistaStaffPanel.getUsers().isSelected()) {
+					cl.addPrivilege(Privileges.GESTION_USUARIOS);
+				}else {
+					cl.deletePrivilege(Privileges.GESTION_USUARIOS);
+				}
+				if (vistaStaffPanel.getExpos().isSelected()) {
+					cl.addPrivilege(Privileges.GESTION_EXPOSICIONES);
+				}else {
+					cl.deletePrivilege(Privileges.GESTION_EXPOSICIONES);
 				}
 			}
 			JOptionPane.showMessageDialog(null, "Se han confirmado los cambios de forma exitosa");

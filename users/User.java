@@ -25,7 +25,7 @@ public abstract class User implements Serializable{
     private String nif;
     private Gender gender;
     private LocalDate birthDate;
-    private String password;
+    protected String password;
     Set<Privileges> privileges = new LinkedHashSet<>();
     private boolean blocked = false;
     private boolean resetPwd = false;

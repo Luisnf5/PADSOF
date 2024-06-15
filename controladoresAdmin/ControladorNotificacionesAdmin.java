@@ -2,7 +2,6 @@ package controladoresAdmin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -10,7 +9,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
 import system.ArtGallery;
+import users.Admin;
 import users.Client;
+import users.Staff;
 import vistasAdmin.VistaNotificacionesAdmin;
 import vistasSystem.VistaSystem;
 
@@ -38,8 +39,13 @@ public class ControladorNotificacionesAdmin implements ActionListener{
 			vistaSystem.getVistaSorteos().updateSorteos(vistaSystem.getControladorSorteos().getSorteos());;
 			vistaSystem.getVistaSorteos().setVisible(true);
 		}else if (selected.getText().equals("Mi Perfil")) {
-			vistaNotificacionesAdmin.setVisible(false);
-			vistaSystem.getVistaPerfilAdmin().setVisible(true);
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaNotificacionesAdmin.setVisible(false);
+				vistaSystem.getVistaPerfilAdmin().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Staff) {
+				vistaNotificacionesAdmin.setVisible(false);
+				vistaSystem.getVistaPerfilStaff().setVisible(true);
+			}
 		}else if (selected.getText().equals("Principal")) {
 			vistaNotificacionesAdmin.setVisible(false);
 			vistaSystem.getVistaInicioCliente().setVisible(true);

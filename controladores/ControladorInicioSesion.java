@@ -8,9 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import system.ArtGallery;
+import users.Client;
 import users.User;
 import vistasSystem.VistaSystem;
-import vistasUsers.VistaClienteReg;
 import vistasUsers.VistaInicioSesion;
 
 public class ControladorInicioSesion implements ActionListener{
@@ -25,9 +25,8 @@ public class ControladorInicioSesion implements ActionListener{
 		this.system = system;
 		
 		this.vistaInicioSesion = vistaSystem.getVistaInicioSesion();
-		
-	} 
-		
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton selected;
@@ -64,7 +63,7 @@ public class ControladorInicioSesion implements ActionListener{
 				return;
 			}else if (!ControladorClienteReg.iniciarSesion(nif, pwd) && system.getUserFromNif(nif).isResetPwd() == false) {
 				JOptionPane.showMessageDialog(null, "La contraseña es incorrecta");
-				system.getUserFromNif(nif).incrementarIntentos();
+				if (system.getUserFromNif(nif) instanceof Client) system.getUserFromNif(nif).incrementarIntentos();
 				return;
 			}else if (system.getUserFromNif(nif).isResetPwd() && User.isPwdValidStatic(pwd)) {
 				system.getUserFromNif(nif).setPassword(pwd);

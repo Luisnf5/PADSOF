@@ -47,6 +47,7 @@ private VistaSystem parent;
 	private JButton expos;
 	private JButton users;
 	private JButton inv;
+	private JButton contraStaff;
 	
 	//DATOS PERSONALES
 	private JPanel personales;
@@ -63,6 +64,14 @@ private VistaSystem parent;
 	private JPasswordField nuevaContraseña;
 	private JPasswordField nuevaContraseñaRepite;
 	private JButton confirmarContraseña;
+	
+	//CAMBIO CONTRASEÑA STAFF
+	private JPanel cambioContraseñaStaff;
+	private JLabel contraseña1Staff;
+	private JLabel contraseña2Staff;
+	private JPasswordField nuevaContraseñaStaff;
+	private JPasswordField nuevaContraseñaRepiteStaff;
+	private JButton confirmarContraseñaStaff;
 	
 	private JLabel entradasCliente;
 
@@ -196,13 +205,21 @@ private VistaSystem parent;
 		layout.putConstraint(SpringLayout.NORTH, inv, 350, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, inv, -50, SpringLayout.EAST, this);
 		
+		this.contraStaff = new JButton("Cambiar Contraseña Staff");
+		this.contraStaff.setPreferredSize(new Dimension(190, 30));
+		
+		this.add(this.contraStaff);
+		
+		layout.putConstraint(SpringLayout.NORTH, contraStaff, 390, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.EAST, contraStaff, -50, SpringLayout.EAST, this);
+		
 		
 		this.cerrar = new JButton("Cerrar Sesion");
 		this.cerrar.setPreferredSize(new Dimension(150, 30));
 		
 		this.add(this.cerrar);
 		
-		layout.putConstraint(SpringLayout.NORTH, cerrar, 390, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.NORTH, cerrar, 430, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.EAST, cerrar, -50, SpringLayout.EAST, this);
 		
 		
@@ -393,7 +410,47 @@ private VistaSystem parent;
 	    verticalScrollInvBar.setUnitIncrement(40);
 	    this.add(scrollInv);
 	    scrollInv.setVisible(false);
-	
+	    
+	  //CAMBIO CONTRASEÑA STAFF
+  		cambioContraseñaStaff = new JPanel();
+  		
+  		SpringLayout cambioContraseñaStaffLayout = new SpringLayout();
+  		cambioContraseñaStaff.setLayout(cambioContraseñaStaffLayout);
+  		cambioContraseñaStaff.setPreferredSize(new Dimension(400, 400));
+  		
+  		contraseña1Staff = new JLabel("Nueva Contraseña");
+  		contraseña2Staff = new JLabel("Repita la Contraseña");
+  		nuevaContraseñaStaff = new JPasswordField(20);
+  		nuevaContraseñaRepiteStaff = new JPasswordField(20);
+  		confirmarContraseñaStaff = new JButton("Confirmar Contraseña");
+  		
+  		layout.putConstraint(SpringLayout.NORTH, cambioContraseñaStaff, 50, SpringLayout.SOUTH, buscar);
+  		layout.putConstraint(SpringLayout.EAST, cambioContraseñaStaff, -300, SpringLayout.EAST, this);
+  		cambioContraseñaStaff.setBackground(Color.pink);
+  		this.add(cambioContraseñaStaff);
+  		
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.NORTH, contraseña1Staff, 20, SpringLayout.NORTH, cambioContraseñaStaff);
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.EAST, contraseña1Staff, -50, SpringLayout.EAST, cambioContraseñaStaff);
+  		cambioContraseñaStaff.add(contraseña1Staff);
+  		
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.NORTH, nuevaContraseñaStaff, 5, SpringLayout.SOUTH, contraseña1Staff);
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.EAST, nuevaContraseñaStaff, -50, SpringLayout.EAST, cambioContraseñaStaff);
+  		cambioContraseñaStaff.add(nuevaContraseñaStaff);
+  		
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.NORTH, contraseña2Staff, 50, SpringLayout.SOUTH, nuevaContraseñaStaff);
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.EAST, contraseña2Staff, -50, SpringLayout.EAST, cambioContraseñaStaff);
+  		cambioContraseñaStaff.add(contraseña2Staff);
+  		
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.NORTH, nuevaContraseñaRepiteStaff, 5, SpringLayout.SOUTH, contraseña2Staff);
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.EAST, nuevaContraseñaRepiteStaff, -50, SpringLayout.EAST, cambioContraseñaStaff);
+  		cambioContraseñaStaff.add(nuevaContraseñaRepiteStaff);
+  		
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.NORTH, confirmarContraseñaStaff, 30, SpringLayout.SOUTH, nuevaContraseñaRepiteStaff);
+  		cambioContraseñaStaffLayout.putConstraint(SpringLayout.EAST, confirmarContraseñaStaff, -50, SpringLayout.EAST, cambioContraseñaStaff);
+  		cambioContraseñaStaff.add(confirmarContraseñaStaff);
+  		
+  		cambioContraseñaStaff.setVisible(false);
+
 		
 		
 		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -418,6 +475,8 @@ private VistaSystem parent;
 		crearExpo.addActionListener(c);
 		crearObra.addActionListener(c);
 		inv.addActionListener(c);
+		confirmarContraseñaStaff.addActionListener(c);
+		contraStaff.addActionListener(c);
 		
 	}
 	
@@ -438,6 +497,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		cambioContraseñaStaff.setVisible(false);
 	}
 	
 	public void updateCambioContraseña() {
@@ -449,6 +509,19 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		cambioContraseñaStaff.setVisible(false);
+	}
+	
+	public void updateCambioContraseñaStaff() {
+		personales.setVisible(false);
+		entradasCliente.setVisible(false);
+		cambioContraseña.setVisible(false);
+		scrollStaff.setVisible(false);
+		crearStaff.setVisible(false);
+		gestionUsuarios.setVisible(false);
+		scrollExpo.setVisible(false);
+		scrollInv.setVisible(false);
+		cambioContraseñaStaff.setVisible(true);
 	}
 	
 	public void updateStaff(Set<Staff> empleados) {
@@ -481,6 +554,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		cambioContraseñaStaff.setVisible(false);
 	}
 	
 	public void updateExpos(Set<Exhibition> expos) {
@@ -513,6 +587,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollInv.setVisible(false);
 		scrollExpo.setVisible(true);
+		cambioContraseñaStaff.setVisible(false);
 		
 	}
 	
@@ -547,6 +622,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(true);
+		cambioContraseñaStaff.setVisible(false);
 		
 	}
 	
@@ -580,6 +656,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(true);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		cambioContraseñaStaff.setVisible(false);
 	}
 	
 	public void updateSalas() {
@@ -591,6 +668,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		cambioContraseñaStaff.setVisible(false);
 	}
 	
 	
@@ -603,6 +681,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		cambioContraseñaStaff.setVisible(false);
 	}
 
 	public JPasswordField getNuevaContraseña() {
@@ -612,6 +691,15 @@ private VistaSystem parent;
 	public JPasswordField getNuevaContraseñaRepite() {
 		return nuevaContraseñaRepite;
 	}
+	
+	public JPasswordField getNuevaContraseñaStaff() {
+		return nuevaContraseñaStaff;
+	}
+
+	public JPasswordField getNuevaContraseñaRepiteStaff() {
+		return nuevaContraseñaRepiteStaff;
+	}
+
 
 	public JToggleButton getBlockedUsers() {
 		return blockedUsers;

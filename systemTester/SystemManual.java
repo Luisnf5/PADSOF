@@ -11,9 +11,7 @@ import users.Gender;
 import users.Staff;
 import users.User;
 import works.Exhibition;
-import works.Room;
 import works.SubRoom;
-import works.SubroomExhibition;
 
 public class SystemManual implements Serializable {
 
@@ -44,18 +42,19 @@ public class SystemManual implements Serializable {
 		inicio.newStaff("Staff", "4", "11111114X", Gender.OTHER, LocalDate.of(2000, 1, 1));
 		inicio.newStaff("Staff", "5", "11111115X", Gender.OTHER, LocalDate.of(2000, 1, 1));
 		
+		Staff.changeStaffPwd("Staff123");
+		
 		/* Creamos exhibiciones */
 		inicio.createExhibition("Van Gogh", "Pepe", LocalDateTime.of(2024, 6, 14, 8, 0),LocalDateTime.of(2024, 8, 7, 10, 0));
 		inicio.createExhibition("Pablo Picasso", "Francisco", LocalDateTime.of(2024, 6, 14, 8, 0),LocalDateTime.of(2024, 9, 7, 10, 0));
 		
 		/* Creamos una sala */
-		Room room1 = inicio.createSalaFisica(false, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
+		SubRoom space1 = inicio.createSalaFisica(false, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
 
 
-		Room room2 = inicio.createSalaFisica(true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
+		SubRoom space2 = inicio.createSalaFisica(true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
 
-		SubroomExhibition space1 = new SubroomExhibition(room1);
-		SubroomExhibition space2 = new SubroomExhibition(room2);
+		 
 
 		inicio.createPainting("Guernica", "Picasso", true, 20, 10, 10, 10, 0);
 		inicio.createPainting("Guernica2", "Picasso2", true, 20, 10, 10, 10, 0);
@@ -63,13 +62,13 @@ public class SystemManual implements Serializable {
 
 		exActual = inicio.searchExhibition("Van Gogh");
 		exActual.setPrice(8.00);
-		boolean staux = exActual.addRoomExhibition(space1);
+		boolean staux = exActual.setExpositionToSubRoom(space1);
 		exActual.publishExposition();
 		exActual.createRaffle("Sorteo Bienvenida", "Participa para ganar las entradas que quieras", 1, LocalDateTime.of(2024, 5, 5, 10, 0), LocalDateTime.of(2024, 5, 6, 10, 0));
 		
 		exActual = inicio.searchExhibition("Pablo Picasso");
 		exActual.setPrice(10.00);
-		staux = exActual.addRoomExhibition(space2);
+		staux = exActual.setExpositionToSubRoom(space2);
 		exActual.publishExposition();
 		exActual.createRaffle("Diablo", "Participa para ganar las entradas que quieras", 1, LocalDateTime.of(2024, 5, 5, 10, 0), LocalDateTime.of(2024, 5, 6, 10, 0));
 		
