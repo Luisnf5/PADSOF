@@ -22,8 +22,10 @@ import controladores.ControladorSorteos;
 import controladores.ControladorVistaPrincipal;
 import controladoresAdmin.ControladorNotificacionesAdmin;
 import controladoresAdmin.ControladorPerfilAdmin;
+import controladoresStaff.ControladorPerfilStaff;
 import vistasAdmin.VistaNotificacionesAdmin;
 import vistasAdmin.VistaPerfilAdmin;
+import vistasStaff.VistaPerfilStaff;
 import vistasUsers.VistaClienteReg;
 import vistasUsers.VistaCompraEntradas;
 import vistasUsers.VistaExposicion;
@@ -47,6 +49,7 @@ public class VistaSystem extends JFrame{
 	private ControladorCompraEntradas controladorCompraEntradas;
 	private ControladorPerfilAdmin controladorPerfilAdmin;
 	private ControladorNotificacionesAdmin controladorNorificacionesAdmin;
+	private ControladorPerfilStaff controladorPerfilStaff;
 	
 	private VistaClienteReg vistaClienteReg;
 	private VistaInicioSesion vistaInicioSesion;
@@ -59,6 +62,7 @@ public class VistaSystem extends JFrame{
 	private VistaCompraEntradas vistaCompraEntradas;
 	private VistaPerfilAdmin vistaPerfilAdmin;
 	private VistaNotificacionesAdmin vistaNotificacionesAdmin;
+	private VistaPerfilStaff vistaPerfilStaff;
 	
 	
 	public VistaSystem() {
@@ -79,6 +83,8 @@ public class VistaSystem extends JFrame{
 		this.vistaCompraEntradas = new VistaCompraEntradas(this);
 		this.vistaPerfilAdmin = new VistaPerfilAdmin(this);
 		this.vistaNotificacionesAdmin = new VistaNotificacionesAdmin(this);
+		this.vistaPerfilStaff = new VistaPerfilStaff(this);
+		
 		
 		
 		// crear componentes
@@ -99,6 +105,7 @@ public class VistaSystem extends JFrame{
 		vistaCompraEntradas.setVisible(false);
 		vistaPerfilAdmin.setVisible(false);
 		vistaNotificacionesAdmin.setVisible(false);
+		vistaPerfilStaff.setVisible(false);
 
 		
 		
@@ -114,6 +121,7 @@ public class VistaSystem extends JFrame{
 		this.add(vistaCompraEntradas);
 		this.add(vistaPerfilAdmin);
 		this.add(vistaNotificacionesAdmin);
+		this.add(vistaPerfilStaff);
 		
 		vistaPrincipal.setBackground(Color.black);
 		
@@ -163,6 +171,9 @@ public class VistaSystem extends JFrame{
 		//Vista Notificaciones Admin
 		this.controladorNorificacionesAdmin = controlador.getControladorNotificacionesAdmin();
 		this.vistaNotificacionesAdmin.setControlador(controladorNorificacionesAdmin);
+		//Vista Perfil Staff
+		this.controladorPerfilStaff = controlador.getControladorPerfilStaff();
+		this.vistaPerfilStaff.setControlador(controladorPerfilStaff);
 	}
 	
 	public ControladorCompraEntradas getControladorCompraEntradas() {
@@ -234,6 +245,9 @@ public class VistaSystem extends JFrame{
 	}
 	public VistaNotificacionesAdmin getVistaNotificacionesAdmin() {
 		return vistaNotificacionesAdmin;
+	}
+	public VistaPerfilStaff getVistaPerfilStaff() {
+		return vistaPerfilStaff;
 	}
 	
 	

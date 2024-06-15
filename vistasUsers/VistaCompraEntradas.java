@@ -35,13 +35,12 @@ public class VistaCompraEntradas  extends JPanel{
 	
 	private JButton botonMas;
     private JButton botonMenos;
-    private JTextField seleccion;
+    private JLabel seleccion;
     private JPasswordField pass;
     
     private Exhibition exhibition;
 	
 	public VistaCompraEntradas(VistaSystem parent) {
-		
 		
 		this.parent = parent;
 		
@@ -132,7 +131,7 @@ public class VistaCompraEntradas  extends JPanel{
 		panelNumLayout.putConstraint(SpringLayout.NORTH, botonMenos, 140, SpringLayout.NORTH, panelNum);
 		panelNumLayout.putConstraint(SpringLayout.EAST, botonMenos, -50, SpringLayout.EAST, panelNum);
 		
-		seleccion = new JTextField("0", 5);
+		seleccion = new JLabel("0");
 		seleccion.setPreferredSize(new Dimension(70, 30));
 		panelNum.add(seleccion);
 		panelNumLayout.putConstraint(SpringLayout.NORTH, seleccion, 125, SpringLayout.NORTH, panelNum);
@@ -149,7 +148,9 @@ public class VistaCompraEntradas  extends JPanel{
         botonMenos.addActionListener(new ActionListener() {
         	@Override
             public void actionPerformed(ActionEvent e) {
-                decrementar();
+        		if (Integer.parseInt(seleccion.getText()) > 0) {
+        			decrementar();
+        		}
                 updateExhibition(exhibition);
             }
         });
@@ -205,7 +206,7 @@ public class VistaCompraEntradas  extends JPanel{
 
 
 
-	public JTextField getSeleccion() {
+	public JLabel getSeleccion() {
 		return seleccion;
 	}
 	
