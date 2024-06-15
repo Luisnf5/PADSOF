@@ -2,19 +2,14 @@ package controladoresAdmin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import system.ArtGallery;
-import users.Gender;
-import users.Privileges;
-import users.Staff;
 import vistasAdmin.VistaSalaPanel;
 import vistasSystem.VistaSystem;
-import vistasUsers.VistaNotificacionPanel;
+import works.RoomComposite;
 import works.SubRoom;
 
 public class ControladorSalaPanel implements ActionListener{
@@ -125,14 +120,48 @@ public class ControladorSalaPanel implements ActionListener{
 				return;
 			}
 			else if(temp < 1) {
-				JOptionPane.showMessageDialog(null, "La temperatura no puede ser negativa");
+				JOptionPane.showMessageDialog(null, "La temperatura no puede ser negativa ni 0");
 				return;
 			}
 			
+			if (r.isExposing()) {
+				JOptionPane.showMessageDialog(null, "No se puede modificar una sala con una exposición activa");
+				return;
+			}
+			
+			r.setElectricity(vistaSalaPanel.getElecticidad().isSelected());
+			r.setTemperature(temp);
+			
+			JOptionPane.showMessageDialog(null, "Los cambios se han realizado correctamente\n (No se han modificado las dimensiones de la sala)");
+			vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			return;
+			
 		}else if(selected.getText().equals("Dividir Sala")) {
+			if (!r.isDivisible()) {
+				JOptionPane.showMessageDialog(null, "Esta Sala no es Divisible por estar exponiendo");
+				return;
+			}
 			
-		}else {
+			RoomComposite rc = r.getParent();
+			rc.divide(2, r);
 			
+			JOptionPane.showMessageDialog(null, "La sala ha sido dividida correctamente");
+			vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			return;
+		}else if (selected.getText().equals("Colapsar Sala")){
+			if (!r.isColapsable()) {
+				JOptionPane.showMessageDialog(null, "Esta Sala no es Colapsable por estar exponiendo ella misma \no una de sus hermanas o por ser de primer nivel");
+				return;
+			}
+			
+			RoomComposite rcPadre = r.getParent();
+			RoomComposite rcAbuelo = r.getParent().getParent();
+			
+			rcAbuelo.collapse(rcPadre);
+			
+			JOptionPane.showMessageDialog(null, "La sala ha sido colapsada correctamente");
+			vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			return;
 		}
 		
 	}

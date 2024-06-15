@@ -68,7 +68,7 @@ public class SystemManual implements Serializable {
 		
 		exActual = inicio.searchExhibition("Pablo Picasso");
 		exActual.setPrice(10.00);
-		staux = exActual.setExpositionToSubRoom(space2);
+		//staux = exActual.setExpositionToSubRoom(space2);
 		exActual.publishExposition();
 		exActual.createRaffle("Diablo", "Participa para ganar las entradas que quieras", 1, LocalDateTime.of(2024, 5, 5, 10, 0), LocalDateTime.of(2024, 5, 6, 10, 0));
 		

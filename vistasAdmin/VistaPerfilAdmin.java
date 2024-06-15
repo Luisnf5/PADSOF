@@ -352,7 +352,10 @@ private VistaSystem parent;
   		crearSala.setBackground(Color.CYAN);
   		crearSala.setPreferredSize(new Dimension(200, 100));
   		this.scrollSalaAux = new JPanel(new GridLayout(0, 1));
-  		this.scrollSala = new JScrollPane(scrollStaffAux);
+  		this.scrollSalaAux.setVisible(true);
+  		this.scrollSala = new JScrollPane(scrollSalaAux);
+  		scrollSalaAux.add(crearSala);
+  		scrollSalaAux.setBackground(Color.GREEN);
   		
   		scrollSala.setPreferredSize(d5);
   		  
@@ -597,6 +600,8 @@ private VistaSystem parent;
 		
 		scrollSalaAux.removeAll();
 		
+		System.out.println(salas);
+		
 		
 		if (salas.isEmpty() || salas == null) {
 			System.out.println("No ha salas disponibles");
@@ -728,20 +733,7 @@ private VistaSystem parent;
 		cambioContraseñaStaff.setVisible(false);
 		scrollSala.setVisible(false);
 	}
-	
-	public void updateSalas() {
-		personales.setVisible(false);
-		entradasCliente.setVisible(false);
-		cambioContraseña.setVisible(false);
-		scrollStaff.setVisible(false);
-		crearStaff.setVisible(false);
-		gestionUsuarios.setVisible(false);
-		scrollExpo.setVisible(false);
-		scrollInv.setVisible(false);
-		cambioContraseñaStaff.setVisible(false);
-		scrollSala.setVisible(false);
-	}
-	
+
 	
 	public void updateEntradas(Admin cl) {
 		cambioContraseña.setVisible(false);

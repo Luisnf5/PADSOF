@@ -121,7 +121,10 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			ex.setStartDate(LocalDateTime.of(añoInicio, mesInicio, diaInicio, 10, 0));
 			ex.setEndDate(LocalDateTime.of(añoFinal, mesFinal, diaFinal, 20, 0));
 			ex.setPrice(precio);
-			ex.publishExposition();
+			if (!ex.publishExposition()) {
+				JOptionPane.showMessageDialog(null, "No hay ninguna sala asociada a esta exposición");
+				return;
+			}
 			
 			
 			JOptionPane.showMessageDialog(null, "La exposición se ha publicado correctamente");

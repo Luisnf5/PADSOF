@@ -364,9 +364,11 @@ public class ArtGallery implements Serializable{
 	}
 	
 	public SubRoom createSalaFisica(boolean electricidad, double temp, double width, double length, double height, double humidity, int capacity) {
-		Room r = new RoomComposite(electricidad, temp, width, length, height, humidity, capacity);
+		RoomComposite r = new RoomComposite(electricidad, temp, width, length, height, humidity, capacity);
+		r.setParent(null);
 		SubRoom sr = new SubRoom(electricidad, temp, width, length, height, humidity, capacity);
-		r.add(sr);
+		sr.setParent(r);
+		r.getDaughters().add(sr);
 		this.rooms.add(r);
 		
 		return sr;
@@ -374,6 +376,7 @@ public class ArtGallery implements Serializable{
 	
 	public Set<SubRoom> getSubRooms(){
 		Set<SubRoom> sbr = new LinkedHashSet<>();
+		System.out.println("GetSubRooms llamada desde SYSTEM");
 		
 		for (Room r : this.rooms) {
 			sbr.addAll(r.getSubRooms());

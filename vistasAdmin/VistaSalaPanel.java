@@ -62,6 +62,10 @@ public class VistaSalaPanel extends JPanel{
 		this.electricidad = new JCheckBox();
 		
 		
+		electricidad.setSelected(room.isElectricity());
+		
+		
+		
 		this.altoLabel = new JLabel("Altura");
 		this.anchoLabel = new JLabel("Ancho");
 		this.largoLabel = new JLabel("Largo");
@@ -149,12 +153,12 @@ public class VistaSalaPanel extends JPanel{
 		capacidad.setPreferredSize(new Dimension(50, 20));
 		this.add(capacidad);
 		
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, confirmar, -10, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, confirmar, 20, SpringLayout.VERTICAL_CENTER, nombre);
 		layout.putConstraint(SpringLayout.WEST, confirmar, 40, SpringLayout.EAST, dividir);
 		confirmar.setPreferredSize(new Dimension(150, 30));
 		this.add(confirmar);
 		
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, dividir, -30, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, dividir, 0, SpringLayout.VERTICAL_CENTER, nombre);
 		layout.putConstraint(SpringLayout.WEST, dividir, 40, SpringLayout.EAST, capacidadLabel);
 		dividir.setPreferredSize(new Dimension(130, 30));
 		this.add(dividir);

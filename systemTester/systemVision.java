@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import controladores.Controlador;
 import system.ArtGallery;
 import vistasSystem.VistaSystem;
+import works.Room;
 
 public class systemVision {
 	static boolean load = false;
@@ -25,7 +26,11 @@ public class systemVision {
 					changeLoad(true);
 				}
 				
-				if (load) SystemManual.loadInfoExample();
+				if (load) {
+					SystemManual.loadInfoExample();
+				}else {
+					Room.setContadorMayor();
+				}
 			}
 		});
 	}
@@ -34,4 +39,6 @@ public class systemVision {
 	static private void changeLoad(boolean b) {
 		load = b;
 	}
+	
+
 }
