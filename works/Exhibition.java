@@ -331,10 +331,22 @@ public class Exhibition implements Serializable {
      */
     public boolean addRoomExhibition(SubroomExhibition Re) {
     	if (this.roomexhibitions.add(Re)) {
+    		Re.setExpo(this);
     		return true;
     	}
-        return this.roomexhibitions.add(Re); 
+        return false; 
+    } 
+    
+    public boolean setExpositionToSubRoom(SubRoom sr) {
+    	SubroomExhibition se = new SubroomExhibition(sr);
+    	
+    	if (this.roomexhibitions.add(se)) {
+    		se.setExpo(this);
+    		return true;
+    	}
+        return false; 
     }
+    
 
 	public void setTitle(String title) {
 		this.title = title;
@@ -406,5 +418,31 @@ public class Exhibition implements Serializable {
 
 	public void delete() {
 		ArtGallery.getSystem().removeExhibition(this);
+	}
+	
+	public SubRoom getRoomFromName(String name) {
+		int id = Integer.parseInt(name.split(" ")[1]);
+		System.out.println(id);
+		
+		for (SubroomExhibition sr : roomexhibitions) {
+			if (sr.getSubRoom().getRoomID() == id) {
+				return sr.getSubRoom();
+			}
+		}
+		
+		return null;
+	}
+	
+	public SubroomExhibition getRoomExhibitionFromName(String name) {
+		int id = Integer.parseInt(name.split(" ")[1]);
+		System.out.println(id);
+		
+		for (SubroomExhibition sr : roomexhibitions) {
+			if (sr.getSubRoom().getRoomID() == id) {
+				return sr;
+			}
+		}
+		
+		return null;
 	}
 }

@@ -7,6 +7,9 @@
 package works;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class SubRoom extends Room implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -25,4 +28,17 @@ public class SubRoom extends Room implements Serializable {
     public SubRoom(boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity){
         super(electricity, temperature, width, length, height, humidity, capacity);
     }
+
+	@Override
+	public Collection<? extends SubRoom> getSubRooms() {
+		Set<SubRoom> sbr = new LinkedHashSet<>();
+		
+		sbr.add(this);
+		return sbr;
+		
+	}
+
+	public String getName() {
+		return "Sala " + this.getRoomID();
+	}
 }

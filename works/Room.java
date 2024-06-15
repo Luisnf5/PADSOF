@@ -17,6 +17,7 @@
 package works;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -148,6 +149,8 @@ public abstract class Room implements Serializable {
     public double getHumidity() {
         return humidity;
     }
+
+	public abstract Collection<? extends SubRoom> getSubRooms();
     
     /* 
      * The following methods are for managing child rooms.

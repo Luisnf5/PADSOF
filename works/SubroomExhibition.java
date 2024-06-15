@@ -14,6 +14,7 @@ public class SubroomExhibition implements Serializable{
     private static final long serialVersionUID = 1L;
     private Set<Work> worksIn = new LinkedHashSet<Work>();
     private SubRoom salaHija;
+    private Exhibition expo;
     
     /**
      * Constructs a SubroomExhibition object with specified parameters.
@@ -32,17 +33,27 @@ public class SubroomExhibition implements Serializable{
      */
     public void addWorks(Work...works){
         for(Work w : works){
-            if(this.salaHija.getTemperature() == w.getTemperature()) {
-                this.worksIn.add(w);
-            }
-            else {
-                // Possible error message print
-            }
+        	if (w.getSta() == Status.INVENTORY) {
+        		this.worksIn.add(w);
+                w.setSubRoomExhibition(this);
+                w.setSta(Status.EXHIBITED);
+        	}
+            
         }   
+    }
+    
+    public void removeWork (String name) {
+    	for (Work w : worksIn) {
+    		if (w.getTitle().equals(name)) {
+    			worksIn.remove(w);
+    			w.setSta(Status.INVENTORY);
+    			w.setSubRoomExhibition(null);
+    		}
+    	}
     }
 
     /**
-     * Sets the status of all works in the exhibition.
+     * Sets the status of all works in the exhibition. 
      * 
      * @param st the status to be set
      */
@@ -61,7 +72,23 @@ public class SubroomExhibition implements Serializable{
         return this.worksIn;
     }
     
+    public SubRoom getSubRoom() {
+    	return this.salaHija;
+    }
+    
     public int getCapacity() {
     	return this.salaHija.getCapacity();
     }
+
+	public Exhibition getExpo() {
+		return expo;
+	}
+
+	public void setExpo(Exhibition expo) {
+		this.expo = expo;
+	}
+
+	public SubRoom getSalaHija() {
+		return salaHija;
+	}
 }

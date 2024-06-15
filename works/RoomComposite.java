@@ -8,11 +8,16 @@ public class RoomComposite extends Room {
 
     public RoomComposite(boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity){
         super(electricity, temperature, width, length, height, humidity, capacity);
-        this.add(new SubRoom(electricity, temperature, width, length, height, humidity, capacity));
     }
     
-    public List<Room> getSubRooms(){
-    	return this.subRooms;
+    public Set<SubRoom> getSubRooms(){
+    	Set<SubRoom> sbr = new LinkedHashSet<>();
+    	
+    	for (Room r : this.subRooms) {
+			sbr.addAll(r.getSubRooms());
+		}
+    	
+    	return sbr;
     }
     
     public void add(Room...rooms) {

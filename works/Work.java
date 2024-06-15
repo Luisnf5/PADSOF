@@ -18,6 +18,7 @@ public abstract class Work implements Serializable{
     private double height;
     private double humidity;
     private Status sta;
+    private SubroomExhibition subRoomExhibition;
 
     /**
      * Constructs a Work object with specified parameters.
@@ -121,6 +122,46 @@ public abstract class Work implements Serializable{
 
 	public Status getSta() {
 		return sta;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public void setElctricity(Boolean elctricity) {
+		this.elctricity = elctricity;
+	}
+
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
+	}
+
+	public void setWidth(double width) {
+		this.width = width;
+	}
+
+	public void setLenght(double lenght) {
+		this.lenght = lenght;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+
+	public void setSta(Status sta) {
+		this.sta = sta;
+	}
+
+	public SubroomExhibition getSubRoomExhibition() {
+		return subRoomExhibition;
+	}
+
+	public void setSubRoomExhibition(SubroomExhibition subRoomExhibition) {
+		this.subRoomExhibition = subRoomExhibition;
 	}  
     
     

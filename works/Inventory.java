@@ -56,8 +56,18 @@ public class Inventory implements Serializable{
      * @param works the works to be added
      */
     public void addWorks(Work...works){
+    	boolean dup = false;
+    	
         for (Work w : works){
-            this.works.add(w);
+        	dup = false;
+        	for (Work w2 : this.works) {
+        		if (w2.getTitle().equals(w.getTitle())) {
+        			dup = true;
+        		}
+        	}
+        	if (!dup) {
+        		this.works.add(w);
+        	}
         }
     }
     
