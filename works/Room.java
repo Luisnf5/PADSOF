@@ -18,8 +18,9 @@ package works;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.Set;
+
+import system.ArtGallery;
 
 public abstract class Room implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -33,6 +34,7 @@ public abstract class Room implements Serializable {
     private double humidity;
     protected int capacity;
     private boolean divided;
+    private RoomComposite parent;
 
     /**
      * Constructs a Room object with specified parameters.
@@ -58,8 +60,18 @@ public abstract class Room implements Serializable {
         this.capacity = capacity;
         this.divided = false;
     }
+    
+    public abstract boolean isExposing();
         
-    public void add(Room...room) {
+    public RoomComposite getParent() {
+		return parent;
+	}
+
+	public void setParent(RoomComposite parent) {
+		this.parent = parent;
+	}
+
+	public void add(Room...room) {
     	throw new UnsupportedOperationException();
     }
     
@@ -83,7 +95,15 @@ public abstract class Room implements Serializable {
     	this.divided = divided;
     }
     
-    /**
+    public static void setCont(int cont) {
+		Room.cont = cont;
+	}
+
+	public static int getCont() {
+		return cont;
+	}
+
+	/**
      * Gets the width of the room.
      * 
      * @return the width of the room
@@ -149,6 +169,36 @@ public abstract class Room implements Serializable {
     public double getHumidity() {
         return humidity;
     }
+
+	public void setElectricity(boolean electricity) {
+		this.electricity = electricity;
+	}
+
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
+	}
+
+	public void setWidth(double width) {
+		this.width = width;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+	
+	public static void setContadorMayor() {
+		Set<SubRoom> sbr = ArtGallery.getSystem().getSubRooms();
+		int idMax = 0;
+		
+		for (SubRoom sr : sbr) {
+			if (sr.getRoomID() > idMax) {
+				idMax = sr.getRoomID();
+			}
+		}
+		
+		Room.setCont(idMax);
+		System.out.println("CONT = " + idMax);
+	}
 
 	public abstract Collection<? extends SubRoom> getSubRooms();
     

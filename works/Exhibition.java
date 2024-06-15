@@ -150,9 +150,23 @@ public class Exhibition implements Serializable {
      * <p>The method initializes tickets for each day and hour of the exhibition.</p>
      * <p>It sets the status of all sub-room exhibitions to EXHIBITED.</p>
      */
-    public void publishExposition() {
+    public boolean publishExposition() {
+    	boolean publicar = false;
+    	
         if (status != ExhibitionStatus.DRAFT) {
-            return;
+            return false;
+        }
+        
+        for (SubroomExhibition sbe : this.roomexhibitions){
+            if(sbe != null) {
+            	this.capacity += sbe.getCapacity();
+                sbe.setWorkStatus(Status.EXHIBITED);
+                publicar = true;
+            }
+        }
+        
+        if (publicar == false) {
+        	return false;
         }
         
         int days;
@@ -170,14 +184,10 @@ public class Exhibition implements Serializable {
             }
         }
 
-        for (SubroomExhibition sbe : this.roomexhibitions){
-            if(sbe != null) {
-            	this.capacity += sbe.getCapacity();
-                sbe.setWorkStatus(Status.EXHIBITED);
-            }
-        }
+        
         
         this.status = ExhibitionStatus.PUBLISHED;
+        return true;
     }
     
     /**
@@ -445,4 +455,5 @@ public class Exhibition implements Serializable {
 		
 		return null;
 	}
+	
 }

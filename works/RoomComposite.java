@@ -1,6 +1,9 @@
 package works;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class RoomComposite extends Room {
 	
@@ -12,7 +15,7 @@ public class RoomComposite extends Room {
     
     public Set<SubRoom> getSubRooms(){
     	Set<SubRoom> sbr = new LinkedHashSet<>();
-    	
+    	System.out.println("getSubRooms llamada desde RoomComposite");
     	for (Room r : this.subRooms) {
 			sbr.addAll(r.getSubRooms());
 		}
@@ -20,14 +23,10 @@ public class RoomComposite extends Room {
     	return sbr;
     }
     
-    @Override
-    public void add(Room...rooms) {
-    	if(!this.getDivided()) {
-    		for(Room r : rooms)
-    			this.subRooms.add(r);
-    		this.setDivided(true);
-    	}
+    public List<Room> getDaughters(){
+    	return subRooms;
     }
+    
     
     @Override
     public void remove(Room room) {
@@ -40,20 +39,47 @@ public class RoomComposite extends Room {
     public Room getChild(int index) {
     	return this.subRooms.get(index);
     }
-    
-    public void divide(double factor, Room room) {
+     
+    public void divide(double factor, SubRoom room) {
+    	System.out.println("dividir llamado desde roomCompsite para " + room.getName());
     	double l = room.getLength();
+    	Double newCap =  (room.getCapacity()/factor);
+    	int newCapInt = newCap.intValue();
     	
-    	Room comp = new RoomComposite(this.isElectricity(), this.getTemperature(), this.getWidth(), l, this.getHeight(), this.getHumidity(), this.getCapacity());
-    	comp.add(new SubRoom(this.isElectricity(), this.getTemperature(), this.getWidth(), l - (l/factor), this.getHeight(), this.getHumidity(), this.getCapacity()));
-    	comp.add(new SubRoom(this.isElectricity(), this.getTemperature(), this.getWidth(), l/factor, this.getHeight(), this.getHumidity(), this.getCapacity()));
+    	SubRoom sr1 = new SubRoom(this.isElectricity(), this.getTemperature(), this.getWidth(), l - (l/factor), this.getHeight(), this.getHumidity(), newCapInt);
+    	SubRoom sr2 = new SubRoom(this.isElectricity(), this.getTemperature(), this.getWidth(), l/factor, this.getHeight(), this.getHumidity(),  newCapInt);
+    	RoomComposite comp = new RoomComposite(this.isElectricity(), this.getTemperature(), this.getWidth(), l, this.getHeight(), this.getHumidity(), room.getCapacity());
     	
-    	this.add(comp);
+    	sr1.setParent(comp);
+    	sr2.setParent(comp);
+    	
+    	comp.subRooms.add(sr1);
+    	comp.subRooms.add(sr2);
+    	
+    	comp.setParent(this);
+    	
+    	this.subRooms.add(comp);
     	this.remove(room);
     }
 
     public void collapse(RoomComposite room) {
-    	this.add(new SubRoom(room.isElectricity(), room.getTemperature(), room.getWidth(), room.getLength(), room.getHeight(), room.getHumidity(), room.getCapacity()));
+    	SubRoom sr = new SubRoom(room.isElectricity(), room.getTemperature(), room.getWidth(), room.getLength(), room.getHeight(), room.getHumidity(), room.getCapacity());
+    	sr.setParent(this);
+    	this.subRooms.add(sr);
     	this.remove(room);
     }
+
+	@Override
+	public boolean isExposing() {
+		boolean ret = false;
+		for (Room r : this.subRooms) {
+			if (r.isExposing()) {
+				ret = true;
+			}
+		}
+		
+		return ret;
+	}
+    
+    
 }

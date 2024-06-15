@@ -24,6 +24,7 @@ public class SubroomExhibition implements Serializable{
     public SubroomExhibition(SubRoom salaHija){
         super();
         this.salaHija = salaHija;
+        this.salaHija.setSrb(this);
     }
 
     /**
