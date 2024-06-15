@@ -42,10 +42,16 @@ public class ControladorExposicion implements ActionListener{
 			vistaSystem.getVistaSorteos().updateSorteos(vistaSystem.getControladorSorteos().getSorteos());
 			vistaSystem.getVistaSorteos().setVisible(true);
 		}else if (selected.getText().equals("Notificaciones") && system.getLoggedUser() != null) {
-			cl = (Client) system.getLoggedUser();
-			vistaExposicion.setVisible(false);
-			vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
-			vistaSystem.getVistaNotificaciones().setVisible(true);
+			if (system.getLoggedUser() instanceof Client) {
+				cl = (Client) system.getLoggedUser();
+				vistaExposicion.setVisible(false);
+				vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
+				vistaSystem.getVistaNotificaciones().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Admin) {
+				vistaExposicion.setVisible(false);
+				vistaSystem.getVistaNotificacionesAdmin().updateClients(system.getClientsStrings());
+				vistaSystem.getVistaNotificacionesAdmin().setVisible(true);
+			}
 		}else if (selected.getText().equals("Mi Perfil")) {
 			if (system.getLoggedUser() == null) {
 				vistaExposicion.setVisible(false);

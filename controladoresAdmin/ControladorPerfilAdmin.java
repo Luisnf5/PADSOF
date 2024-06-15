@@ -42,7 +42,8 @@ public class ControladorPerfilAdmin implements ActionListener{
 		
 		if (selected.getText().equals("Notificaciones")) {
 			vistaPerfil.setVisible(false);
-			vistaSystem.getVistaNotificaciones().setVisible(true);
+			vistaSystem.getVistaNotificacionesAdmin().updateClients(system.getClientsStrings());
+			vistaSystem.getVistaNotificacionesAdmin().setVisible(true);
 		}else if (selected.getText().equals("Sorteos")) {
 			vistaPerfil.setVisible(false);
 			vistaSystem.getVistaSorteos().updateSorteos(vistaSystem.getControladorSorteos().getSorteos());
@@ -67,6 +68,7 @@ public class ControladorPerfilAdmin implements ActionListener{
 		}else if(selected.getText().equals("Gestionar Exposiciones")) {
 			vistaPerfil.updateExpos(system.getExhibitions());
 		}else if(selected.getText().equals("Gestionar Inventario")) {
+			System.out.println("INVVVVVV");
 			vistaPerfil.updateInv(system.getInventory());
 		}else if(selected.getText().equals("Gestionar Usuarios")) {
 			System.out.println("Gestion Usuartios pulsado");

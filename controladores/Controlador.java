@@ -2,6 +2,7 @@
 package controladores;
 
 
+import controladoresAdmin.ControladorNotificacionesAdmin;
 import controladoresAdmin.ControladorPerfilAdmin;
 import system.ArtGallery;
 import vistasSystem.VistaSystem;
@@ -22,6 +23,7 @@ public class Controlador {
 	private ControladorPerfil controladorPerfil;
 	private ControladorCompraEntradas controladorCompraEntradas;
 	private ControladorPerfilAdmin controladorPerfilAdmin;
+	private ControladorNotificacionesAdmin controladorNotificacionesAdmin;
 	
 	public Controlador(VistaSystem vistaSystem, ArtGallery system) {
 		this.ventana = vistaSystem;
@@ -35,7 +37,7 @@ public class Controlador {
 		this.controladorCompraEntradas = new ControladorCompraEntradas(vistaSystem, system);
 		this.controladorExpo = new ControladorExposicion(system, vistaSystem);
 		this.controladorPerfilAdmin = new ControladorPerfilAdmin(vistaSystem, system);	
-		
+		this.controladorNotificacionesAdmin = new ControladorNotificacionesAdmin(vistaSystem, system);
 	
 	}
 
@@ -78,6 +80,10 @@ public class Controlador {
 
 	public ControladorPerfilAdmin getControladorPerfilAdmin() {
 		return controladorPerfilAdmin;
+	}
+
+	public ControladorNotificacionesAdmin getControladorNotificacionesAdmin() {
+		return controladorNotificacionesAdmin;
 	}
 	
 	

@@ -18,12 +18,15 @@ import javax.swing.SpringLayout;
 
 import system.ArtGallery;
 import vistasSystem.VistaSystem;
-import works.Exhibition;
 import works.Painting;
+import works.Sculpture;
+import works.Status;
+import works.Video;
 import works.Work;
 
 public class VistaWorkEditPanel extends JPanel{
 	private Work work;
+	private String type = null;
 	
 	private VistaSystem parent;
 	
@@ -39,6 +42,7 @@ public class VistaWorkEditPanel extends JPanel{
 	private JCheckBox elec;
 	private JComboBox<String> expo;
 	private JComboBox<String> sala;
+	private JComboBox<String> tipo;
 	
 	private JLabel titleLabel;
 	private JLabel autorLabel;
@@ -49,11 +53,24 @@ public class VistaWorkEditPanel extends JPanel{
 	private JLabel largoLabel;
 	private JLabel expoLabel;
 	private JLabel salaLabel;
+	private JLabel tipoLabel;
 	
 	
-	public VistaWorkEditPanel(VistaSystem parent, Work work, boolean newExhibition) {
+	public VistaWorkEditPanel(VistaSystem parent, Work work, boolean newRoom) {
 		this.parent = parent;
 		this.work = work;
+		
+		if (!newRoom) {
+			if (work instanceof Painting) {
+				type = "PAINTING";
+			}else if (work instanceof Sculpture) {
+				type = "SCULPTURE";
+			}else if (work instanceof Video) {
+				type = "VIDEO";
+			}else {
+				type = "PHOTO";	
+			}
+		}
 		
 		int anchoPanel = this.getWidth();
 		int altoPanel = this.getHeight();
@@ -75,10 +92,37 @@ public class VistaWorkEditPanel extends JPanel{
 		ArtGallery.getSystem().getExhibitions().forEach(e -> expStrings.add(e.getTitle()));
 		
 		this.expo = new JComboBox<String>(expStrings.toArray(new String[expStrings.size()]));
+		this.tipo = new JComboBox<String>(new String[] {"PAINTING", "SCULPTURE", "VIDEO", "PHOTO"});
+		if (newRoom || work.getSta() != Status.EXHIBITED) {
+			this.expo.setSelectedItem(null);
+		}else {
+			String expoString = work.getSubRoomExhibition().getExpo().getTitle();
+			for (int i = 0; i< expo.getItemCount(); i++) {
+				if (expo.getItemAt(i).equals(expoString)) {
+					expo.setSelectedIndex(i);
+				}
+			}
+		}
+		
 		this.sala = new JComboBox<String>();
+		updateSalas();
+		if (newRoom || work.getSta() == Status.EXHIBITED) {
+			String salaString = work.getSubRoomExhibition().getSalaHija().getName();
+			for (int i = 0; i< sala.getItemCount(); i++) {
+				if (sala.getItemAt(i).equals(salaString)) {
+					sala.setSelectedIndex(i);
+				}
+			}
+		} 
 		
-		
+		this.expo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				updateSalas();
+			}
+		});
 
+		
 		this.titleLabel = new JLabel("Título");
 		this.autorLabel = new JLabel("Autor");
 		this.tempLabel = new JLabel("Temperatura");
@@ -86,13 +130,22 @@ public class VistaWorkEditPanel extends JPanel{
 		this.altoLabel = new JLabel("Alto");
 		this.largoLabel = new JLabel("Largo");
 		this.elecLabel = new JLabel("Electricidad");
+		this.expoLabel = new JLabel("Exposición");
+		this.salaLabel = new JLabel("Sala");
+		this.tipoLabel = new JLabel("Tipo");
 		
 		
 		this.editar = new JButton("Editar Obra");
 		this.editar.setBackground(Color.BLUE);
 		this.editar.setForeground(Color.WHITE);
 		
-		this.confirmar = new JButton("Confirmar");
+		if (this.work.getSta() == Status.INVENTORY) {
+			this.confirmar = new JButton("Exponer Obra");
+			this.confirmar.setBackground(Color.GREEN);
+		}else if (this.work.getSta() == Status.RESTORATION || this.work.getSta() == Status.EXHIBITED) {
+			this.confirmar = new JButton("Devolver a Inventario");
+			this.confirmar.setBackground(Color.CYAN);
+		}
 		
 		layout.putConstraint(SpringLayout.NORTH, titleLabel, (int) ((altoPanel - titleLabel.getHeight())/2+40)-15, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, titleLabel, 20, SpringLayout.WEST, this);
@@ -163,16 +216,38 @@ public class VistaWorkEditPanel extends JPanel{
 		alto.setPreferredSize(new Dimension(60, 20));
 		this.add(alto);
 		
-		layout.putConstraint(SpringLayout.NORTH, alto, 0, SpringLayout.SOUTH, largo);
-		layout.putConstraint(SpringLayout.WEST, alto, 0, SpringLayout.EAST, altoLabel);
-		alto.setPreferredSize(new Dimension(60, 20));
-		this.add(alto);
+		layout.putConstraint(SpringLayout.NORTH, expoLabel, (int) ((altoPanel - titleLabel.getHeight())/2+40)-20, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, expoLabel, 20, SpringLayout.EAST, alto);
+		expoLabel.setPreferredSize(new Dimension(80, 20));
+		this.add(expoLabel);
 		
+		layout.putConstraint(SpringLayout.NORTH, salaLabel, (int) ((altoPanel - titleLabel.getHeight())/2+40)-20, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, salaLabel, 20, SpringLayout.EAST, expoLabel);
+		salaLabel.setPreferredSize(new Dimension(60, 20));
+		this.add(salaLabel);
 		
+		layout.putConstraint(SpringLayout.NORTH, expo, 10, SpringLayout.SOUTH, expoLabel);
+		layout.putConstraint(SpringLayout.WEST, expo, 20, SpringLayout.EAST, alto);
+		expo.setPreferredSize(new Dimension(80, 20));
+		this.add(expo);
 		
+		layout.putConstraint(SpringLayout.NORTH, sala, 10, SpringLayout.SOUTH, salaLabel);
+		layout.putConstraint(SpringLayout.WEST, sala, 20, SpringLayout.EAST, expo);
+		sala.setPreferredSize(new Dimension(60, 20));
+		this.add(sala);
+		
+		layout.putConstraint(SpringLayout.NORTH, tipoLabel, (int) ((altoPanel - titleLabel.getHeight())/2+40)-20, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, tipoLabel, 20, SpringLayout.EAST, salaLabel);
+		tipoLabel.setPreferredSize(new Dimension(60, 20));
+		this.add(tipoLabel);
+		
+		layout.putConstraint(SpringLayout.NORTH, tipo, 10, SpringLayout.SOUTH, tipoLabel);
+		layout.putConstraint(SpringLayout.WEST, tipo, 20, SpringLayout.EAST, sala);
+		tipo.setPreferredSize(new Dimension(100, 20));
+		this.add(tipo);
 	
 		layout.putConstraint(SpringLayout.NORTH, confirmar, (int) ((altoPanel - confirmar.getHeight())/2+30), SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, confirmar, 20, SpringLayout.EAST, altoLabel);
+		layout.putConstraint(SpringLayout.WEST, confirmar, 20, SpringLayout.EAST, tipo);
 		this.add(confirmar);
 		
 		layout.putConstraint(SpringLayout.NORTH, editar, (int) ((altoPanel - editar.getHeight())/2+30), SpringLayout.NORTH, this);
@@ -184,6 +259,22 @@ public class VistaWorkEditPanel extends JPanel{
 	public void setControlador(ActionListener c) {
 		confirmar.addActionListener(c);
 		editar.addActionListener(c);
+	}
+	
+	private void updateSalas() {
+		System.out.println("LLAMAO");
+		String selectedItem = (String) expo.getSelectedItem();
+		if (selectedItem == null) {
+			sala.removeAllItems();
+			return;
+		}
+		
+		sala.removeAllItems();
+		
+		ArtGallery.getSystem().getExhibitionFromName(selectedItem).getRoomexhibitions().forEach(r -> sala.addItem(r.getSubRoom().getName()));
+		
+		sala.setSelectedItem(null);
+
 	}
 
 	public Work getWork() {
@@ -197,6 +288,42 @@ public class VistaWorkEditPanel extends JPanel{
 
 	public JTextField getTitle() {
 		return title;
+	}
+
+	public JTextField getTemp() {
+		return temp;
+	}
+
+	public JTextField getAncho() {
+		return ancho;
+	}
+
+	public JTextField getAlto() {
+		return alto;
+	}
+
+	public JTextField getLargo() {
+		return largo;
+	}
+
+	public JCheckBox getElec() {
+		return elec;
+	}
+
+	public JComboBox<String> getExpo() {
+		return expo;
+	}
+
+	public JComboBox<String> getSala() {
+		return sala;
+	}
+	
+	public String previousType() {
+		return type;
+	}
+
+	public JComboBox<String> getTipo() {
+		return tipo;
 	}
 
 	public static void main(String[] args) {
@@ -223,7 +350,6 @@ public class VistaWorkEditPanel extends JPanel{
                 } else if (e.getSource() == vistaWorkEditPanel.getTitle()) {
                     System.out.println("Título: " + vistaWorkEditPanel.getTitle().getText());
                 }
-                // Aquí puedes manejar más acciones
             }
         });
 
@@ -233,6 +359,8 @@ public class VistaWorkEditPanel extends JPanel{
         // Hacer el frame visible
         frame.setVisible(true);
     }
+
+
 
 
 	

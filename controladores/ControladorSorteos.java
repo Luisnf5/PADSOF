@@ -49,6 +49,10 @@ public class ControladorSorteos implements ActionListener{
 				vistaSorteos.setVisible(false);
 				vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
 				vistaSystem.getVistaNotificaciones().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Admin) {
+				vistaSorteos.setVisible(false);
+				vistaSystem.getVistaNotificacionesAdmin().updateClients(system.getClientsStrings());
+				vistaSystem.getVistaNotificacionesAdmin().setVisible(true);
 			}
 		}else if (selected.getText().equals("Mi Perfil")) {
 			if (system.getLoggedUser() == null) {

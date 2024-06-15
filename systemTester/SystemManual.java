@@ -7,13 +7,11 @@ import java.time.LocalDateTime;
 import system.ArtGallery;
 import users.Admin;
 import users.Client;
-import users.User;
 import users.Gender;
-import users.Raffle;
 import users.Staff;
 import users.User;
 import works.Exhibition;
-import works.Painting;
+import works.Room;
 import works.SubRoom;
 import works.SubroomExhibition;
 
@@ -26,10 +24,11 @@ public class SystemManual implements Serializable {
 		Admin adminSing = null;
 		Exhibition exActual = null;
 		Client cl = null;
+		
+		System.out.println("Loading Info...");
 
 		/* Cogemos la aplicacion con la clase sistema */
 		ArtGallery inicio = ArtGallery.getSystem();
-		inicio.readSistem();
 		/* Creamos nuevos usuarios */
 		inicio.newClient("Paco", "Fiestas", "51546798A", Gender.MALE, LocalDate.of(2004, 10, 2), "SOY-EL-JEFE");
 		inicio.newClient("Pepe", "Cocas", "51546797A", Gender.MALE, LocalDate.of(2004, 6, 23), "SOY-EL-JEFE");
@@ -46,21 +45,21 @@ public class SystemManual implements Serializable {
 		inicio.newStaff("Staff", "5", "11111115X", Gender.OTHER, LocalDate.of(2000, 1, 1));
 		
 		/* Creamos exhibiciones */
-		inicio.createExhibition("Van Gogh", "Pepe", LocalDateTime.of(2024, 5, 3, 8, 0),LocalDateTime.of(2024, 5, 7, 10, 0));
-		inicio.createExhibition("Pablo Picasso", "Francisco", LocalDateTime.of(2024, 5, 3, 8, 0),LocalDateTime.of(2024, 5, 7, 10, 0));
+		inicio.createExhibition("Van Gogh", "Pepe", LocalDateTime.of(2024, 6, 14, 8, 0),LocalDateTime.of(2024, 8, 7, 10, 0));
+		inicio.createExhibition("Pablo Picasso", "Francisco", LocalDateTime.of(2024, 6, 14, 8, 0),LocalDateTime.of(2024, 9, 7, 10, 0));
 		
 		/* Creamos una sala */
-		SubRoom room1 = new SubRoom(true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
-		inicio.addSubRoom(room1);
+		Room room1 = inicio.createSalaFisica(false, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
 
-		SubRoom room2 = new SubRoom(true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
-		inicio.addSubRoom(room2);
+
+		Room room2 = inicio.createSalaFisica(true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
 
 		SubroomExhibition space1 = new SubroomExhibition(room1);
 		SubroomExhibition space2 = new SubroomExhibition(room2);
 
-		Painting p1 = new Painting("Guernika", "Pablo Picasso", false, 21.5, 0.180, 0, 0.180, 50);
-		space1.addWorks(p1);
+		inicio.createPainting("Guernica", "Picasso", true, 20, 10, 10, 10, 0);
+		inicio.createPainting("Guernica2", "Picasso2", true, 20, 10, 10, 10, 0);
+		inicio.createPainting("Guernica3", "Picasso3", true, 20, 10, 10, 10, 0);
 
 		exActual = inicio.searchExhibition("Van Gogh");
 		exActual.setPrice(8.00);
@@ -84,20 +83,6 @@ public class SystemManual implements Serializable {
 		}
 		
 		inicio.createNotification("Enhorabuena", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
 
 		for (User u : inicio.getUsers()) {
 			if (u.getName().equals("Juan")) {
@@ -107,20 +92,6 @@ public class SystemManual implements Serializable {
 		}
 		
 		inicio.createNotification("Enhorabuena", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
-		inicio.createNotification("Mensaje prueba", "Esto es un mensaje automatizado enviado a los ganadores del sorteo hecho en la previa fecha, si le ha llegado esta notificacion porfavor revise su bandeja de entrada del correo electrónico pararecibir el PDF de la entrada ganadora", cl);
 
 		
 		

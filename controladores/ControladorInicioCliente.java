@@ -44,10 +44,16 @@ public class ControladorInicioCliente implements ActionListener{
 			vistaSystem.getVistaSorteos().setVisible(true);
 			System.out.println("sorteos pulsado");
 		}else if (selected.getText().equals("Notificaciones") && system.getLoggedUser() != null) {
-			cl = (Client) system.getLoggedUser();
-			vistaInicioCliente.setVisible(false);
-			vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
-			vistaSystem.getVistaNotificaciones().setVisible(true);
+			if (system.getLoggedUser() instanceof Client) {
+				cl = (Client) system.getLoggedUser();
+				vistaInicioCliente.setVisible(false);
+				vistaSystem.getVistaNotificaciones().updateNotificaciones(cl.getNotifications());
+				vistaSystem.getVistaNotificaciones().setVisible(true);
+			}else if (system.getLoggedUser() instanceof Admin) {
+				vistaInicioCliente.setVisible(false);
+				vistaSystem.getVistaNotificacionesAdmin().updateClients(system.getClientsStrings());
+				vistaSystem.getVistaNotificacionesAdmin().setVisible(true);
+			}
 		}else if (selected.getText().equals("Mi Perfil")) {
 			if (system.getLoggedUser() == null) {
 				vistaInicioCliente.setVisible(false);

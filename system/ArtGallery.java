@@ -1,6 +1,7 @@
 package system;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,13 +13,10 @@ import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.bouncycastle.jcajce.provider.asymmetric.ec.IESCipher.ECIESwithDESedeCBC;
-
 import users.Admin;
 import users.Client;
 import users.Gender;
 import users.Notification;
-import users.Raffle;
 import users.Staff;
 import users.User;
 import works.CompositeRoom;
@@ -27,6 +25,7 @@ import works.Inventory;
 import works.Painting;
 import works.Photo;
 import works.Room;
+import works.RoomComposite;
 import works.Sculpture;
 import works.SubRoom;
 import works.Video;
@@ -191,16 +190,18 @@ public class ArtGallery implements Serializable{
 		
 	}
 	
-	public boolean readSistem() {
+	public boolean readSistem() throws FileNotFoundException{
 		try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(sistemTxt));
             ArtGallery sistemRead = (ArtGallery) ois.readObject();
             ois.close();
             copyLastSystem(sistemRead);
-            return true;
-        } catch (IOException | ClassNotFoundException e) {
+            return true; 
+        } catch (ClassNotFoundException e) {
         	e.printStackTrace();
             return false;
+        } catch (IOException ex) {
+        	throw new FileNotFoundException();
         }
 	}
 	
@@ -268,8 +269,8 @@ public class ArtGallery implements Serializable{
 	}
 	
 	public void createPainting(String title, String author, Boolean elctricity, double temperature, double width, double lenght,
-	double height, double humidity, String technique){
-		Painting p = new Painting(title, author, elctricity, temperature, width, lenght, height, humidity, technique);
+	double height, double humidity){
+		Painting p = new Painting(title, author, elctricity, temperature, width, lenght, height, humidity);
 		this.inventory.addWorks(p);
 	}
 
@@ -349,6 +350,36 @@ public class ArtGallery implements Serializable{
 		}
 		
 		return null;
+	}
+	
+	public Set<String> getClientsStrings(){
+		Set<String> cls = new LinkedHashSet<>();
+		Set<Client> clients = getClients();
+		
+		for (Client cl : clients) {
+			cls.add(cl.getNif());
+		}
+		
+		return cls;
+	}
+	
+	public SubRoom createSalaFisica(boolean electricidad, double temp, double width, double length, double height, double humidity, int capacity) {
+		Room r = new RoomComposite(electricidad, temp, width, length, height, humidity, capacity);
+		SubRoom sr = new SubRoom(electricidad, temp, width, length, height, humidity, capacity);
+		r.add(sr);
+		this.rooms.add(r);
+		
+		return sr;
+	}
+	
+	public Set<SubRoom> getSubRooms(){
+		Set<SubRoom> sbr = new LinkedHashSet<>();
+		
+		for (Room r : this.rooms) {
+			sbr.addAll(r.getSubRooms());
+		}
+		
+		return sbr;
 	}
 	
 }

@@ -21,6 +21,7 @@ import javax.swing.SpringLayout;
 import controladoresAdmin.ControladorClientPanel;
 import controladoresAdmin.ControladorExposicionEditPanel;
 import controladoresAdmin.ControladorStaffPanel;
+import controladoresAdmin.ControladorWorkEditPanel;
 import users.Admin;
 import users.Client;
 import users.Staff;
@@ -388,7 +389,7 @@ private VistaSystem parent;
   		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollInv, 950, SpringLayout.WEST, this);
   		scrollInv.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    scrollInv.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-	    JScrollBar verticalScrollInvBar = scrollStaff.getVerticalScrollBar();
+	    JScrollBar verticalScrollInvBar = scrollInv.getVerticalScrollBar();
 	    verticalScrollInvBar.setUnitIncrement(40);
 	    this.add(scrollInv);
 	    scrollInv.setVisible(false);
@@ -416,6 +417,7 @@ private VistaSystem parent;
 		users.addActionListener(c);
 		crearExpo.addActionListener(c);
 		crearObra.addActionListener(c);
+		inv.addActionListener(c);
 		
 	}
 	
@@ -528,7 +530,7 @@ private VistaSystem parent;
 			for (Work e : inv.getWorks()) {
 				aux = new VistaWorkEditPanel(parent, e, false); 
 				this.scrollInvAux.add(aux);
-				new ControladorInvEditPanel(parent, null, aux);
+				new ControladorWorkEditPanel(parent, null, aux);
 			}
 			scrollInvAux.add(crearExpo);
 			this.revalidate();
