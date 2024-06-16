@@ -11,9 +11,12 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import activities.Activity;
+
 public class SubRoom extends Room implements Serializable {
     private static final long serialVersionUID = 1L;
     private SubroomExhibition srb = null;
+    private Activity act = null;
 
     /**
      * Constructs a SubRoom object with specified parameters.
@@ -80,5 +83,21 @@ public class SubRoom extends Room implements Serializable {
 		}else {
 			return true;
 		}
+	}
+
+	public Activity getAct() {
+		return act;
+	}
+
+	public void setAct(Activity act) {
+		this.act = act;
+	}
+	
+	public boolean isActiviting() {
+		if (this.act == null) {
+			return false;
+		}
+		
+		return true;
 	}
 }
