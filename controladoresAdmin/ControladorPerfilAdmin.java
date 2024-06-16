@@ -11,10 +11,13 @@ import javax.swing.AbstractButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import activities.Activity;
+import activities.ActivityType;
 import system.ArtGallery;
 import users.Admin;
 import users.Gender;
 import users.Staff;
+import vistasAdmin.VistaActivityEditPanel;
 import vistasAdmin.VistaExposicionEditPanel;
 import vistasAdmin.VistaPerfilAdmin;
 import vistasAdmin.VistaSalaPanel;
@@ -69,6 +72,9 @@ public class ControladorPerfilAdmin implements ActionListener{
 			vistaPerfil.updateSalas(system.getSubRooms());
 		}else if(selected.getText().equals("Gestionar Exposiciones")) {
 			vistaPerfil.updateExpos(system.getExhibitions());
+		}else if(selected.getText().equals("Gestionar Actividades")) {
+			System.out.println("Actividades pulsado");
+			vistaPerfil.updateActivities(system.getActivities());
 		}else if(selected.getText().equals("Gestionar Inventario")) {
 			System.out.println("INVVVVVV");
 			vistaPerfil.updateInv(system.getInventory());
@@ -98,6 +104,12 @@ public class ControladorPerfilAdmin implements ActionListener{
 			new ControladorSalaPanel(vistaSystem, null, aux);
 			JOptionPane.showMessageDialog(null, aux);
 			vistaPerfil.updateSalas(system.getSubRooms());
+		}else if(selected.getText().equals("Nueva Actividad")) {
+			System.out.println("Nueva act pulsado");
+			VistaActivityEditPanel aux = new VistaActivityEditPanel(vistaSystem, new Activity("Ejemplo", ActivityType.VISITA, "Descripcion ejemplo", 50, LocalDateTime.now(), null), true); 
+			new ControladorActivityEditPanel(vistaSystem, null, aux);
+			JOptionPane.showMessageDialog(new JFrame("Nueva Actividad"), aux);
+			vistaPerfil.updateActivities(system.getActivities());
 		}else if(selected.getText().equals("Nueva Exposición")) {
 			System.out.println("Nueva expo pulsado");
 			VistaExposicionEditPanel aux = new VistaExposicionEditPanel(vistaSystem, new Exhibition("ejemplo", "ejemplo", LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)),  LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0))), true); 

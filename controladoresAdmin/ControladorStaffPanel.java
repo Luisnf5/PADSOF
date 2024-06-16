@@ -115,6 +115,11 @@ public class ControladorStaffPanel implements ActionListener{
 				}else {
 					cl.deletePrivilege(Privileges.GESTION_EXPOSICIONES);
 				}
+				if (vistaStaffPanel.getAct().isSelected()) {
+					cl.addPrivilege(Privileges.GESTION_ACTIVIDADES);
+				}else {
+					cl.deletePrivilege(Privileges.GESTION_ACTIVIDADES);
+				}
 			}
 			JOptionPane.showMessageDialog(null, "Se han confirmado los cambios de forma exitosa");
 		}else if (selected.getText().equals("Eliminar Empleado")) {

@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import activities.ActivityType;
 import system.ArtGallery;
 import users.Admin;
 import users.Client;
@@ -73,7 +74,7 @@ public class SystemManual implements Serializable {
 
 		SubRoom space2 = inicio.createSalaFisica(true, 21.5, 48.00, 24.00, 5.00, 40.00, 10);
 
-		 
+		inicio.createActivity("EJEMPLO", ActivityType.ACTUACION, "DESC EJEMPLO", 10, LocalDateTime.of(2024, 06, 20, 10, 0), space2);
 
 		inicio.createPainting("Guernica", "Picasso", true, 20, 10, 10, 10, 0);
 		inicio.createPainting("Guernica2", "Picasso2", true, 20, 10, 10, 10, 0);

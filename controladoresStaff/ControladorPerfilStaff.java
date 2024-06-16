@@ -11,12 +11,16 @@ import javax.swing.AbstractButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import activities.Activity;
+import activities.ActivityType;
+import controladoresAdmin.ControladorActivityEditPanel;
 import controladoresAdmin.ControladorExposicionEditPanel;
 import controladoresAdmin.ControladorSalaPanel;
 import system.ArtGallery;
 import users.Admin;
 import users.Privileges;
 import users.Staff;
+import vistasAdmin.VistaActivityEditPanel;
 import vistasAdmin.VistaExposicionEditPanel;
 import vistasAdmin.VistaSalaPanel;
 import vistasStaff.VistaPerfilStaff;
@@ -85,6 +89,13 @@ public class ControladorPerfilStaff implements ActionListener{
 				JOptionPane.showMessageDialog(null, "No posee este privilegio, contacte con el administrador");
 				return;
 			}
+		}else if(selected.getText().equals("Gestionar Actividades")) {
+			if (s.hasPrivilege(Privileges.GESTION_ACTIVIDADES)) {
+				vistaPerfil.updateActivities(system.getActivities());
+			}else {
+				JOptionPane.showMessageDialog(null, "No posee este privilegio, contacte con el administrador");
+				return;
+			}
 		}else if(selected.getText().equals("Gestionar Inventario")) {
 			if (s.hasPrivilege(Privileges.GESTION_INVENTARIO)) {
 				vistaPerfil.updateInv(system.getInventory());
@@ -115,6 +126,12 @@ public class ControladorPerfilStaff implements ActionListener{
 			new ControladorExposicionEditPanel(vistaSystem, null, aux);
 			JOptionPane.showMessageDialog(new JFrame("Nueva Exposicion"), aux);
 			vistaPerfil.updateExpos(system.getExhibitions());
+		}else if(selected.getText().equals("Nueva Actividad")) {
+			System.out.println("Nueva act pulsado");
+			VistaActivityEditPanel aux = new VistaActivityEditPanel(vistaSystem, new Activity("Ejemplo", ActivityType.VISITA, "Descripcion ejemplo", 50, LocalDateTime.now(), null), true); 
+			new ControladorActivityEditPanel(vistaSystem, null, aux);
+			JOptionPane.showMessageDialog(new JFrame("Nueva Actividad"), aux);
+			vistaPerfil.updateActivities(system.getActivities());
 		}else if(selected.getText().equals("Crear Sala")) {
 			System.out.println("Nueva sala pulsado");
 			VistaSalaPanel aux = new VistaSalaPanel(vistaSystem, new SubRoom(false, 0, 0, 0, 0, 0, 0), true); 

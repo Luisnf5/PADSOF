@@ -13,6 +13,8 @@ import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import activities.Activity;
+import activities.ActivityType;
 import users.Admin;
 import users.Client;
 import users.Gender;
@@ -41,6 +43,7 @@ public class ArtGallery implements Serializable{
 	private Inventory inventory = new Inventory();
 	private Set<Exhibition> exhibitions = new LinkedHashSet<>();
 	private Set<Room> rooms = new LinkedHashSet<>();
+	private Set<Activity> activities = new LinkedHashSet<>();
 
 	String sistemTxt = "system.dat";
 
@@ -53,6 +56,19 @@ public class ArtGallery implements Serializable{
 	
 	public Set<User> getUsers() {
 		return users;
+	}
+	
+	public void createActivity(String name, ActivityType type, String description, int maxParticipants, LocalDateTime date, SubRoom room) {
+		for(Activity a : this.activities) {
+			if(a.getName().equals(name))
+				return;
+		}
+		
+		this.activities.add(new Activity(name, type, description, maxParticipants, date, room));
+	}
+	
+	public Set<Activity> getActivities() {
+		return activities;
 	}
 	
 	public Set<Staff> getStaffs(){

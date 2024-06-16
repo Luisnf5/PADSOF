@@ -22,10 +22,17 @@ public class Activity {
 		this.description = description;
 		this.date = date;
 		this.room = room;
-		if(maxParticipants > room.getCapacity())
-			this.maxParticipants = room.getCapacity();
-		else
+		if (room != null) {
+			room.setAct(this);
+		}
+		if (room == null) {
 			this.maxParticipants = maxParticipants;
+		}else if(maxParticipants > room.getCapacity()) {
+			this.maxParticipants = room.getCapacity();
+		}
+		else {
+			this.maxParticipants = maxParticipants;
+		}
 	}
 	
 	public boolean enroll(String nif) {
@@ -62,6 +69,34 @@ public class Activity {
 
 	public SubRoom getRoom() {
 		return room;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setType(ActivityType type) {
+		this.type = type;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setMaxParticipants(int maxParticipants) {
+		this.maxParticipants = maxParticipants;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public void setRoom(SubRoom room) {
+		if (this.room != null) {
+			this.room.setAct(null);
+		}
+		this.room = room;
+		room.setAct(this);
 	}
 
 	public Set<String> getParticipants() {
