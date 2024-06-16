@@ -17,9 +17,11 @@ import users.Gender;
 import users.Staff;
 import vistasAdmin.VistaExposicionEditPanel;
 import vistasAdmin.VistaPerfilAdmin;
+import vistasAdmin.VistaSalaPanel;
 import vistasAdmin.VistaStaffPanel;
 import vistasSystem.VistaSystem;
 import works.Exhibition;
+import works.SubRoom;
 
 public class ControladorPerfilAdmin implements ActionListener{
 	private ArtGallery system;
@@ -90,6 +92,12 @@ public class ControladorPerfilAdmin implements ActionListener{
 			new ControladorStaffPanel(vistaSystem, null, aux, true);
 			JOptionPane.showMessageDialog(null, aux);
 			vistaPerfil.updateStaff(system.getStaffs());
+		}else if(selected.getText().equals("Crear Sala")) {
+			System.out.println("Nueva sala pulsado");
+			VistaSalaPanel aux = new VistaSalaPanel(vistaSystem, new SubRoom(false, 0, 0, 0, 0, 0, 0), true); 
+			new ControladorSalaPanel(vistaSystem, null, aux);
+			JOptionPane.showMessageDialog(null, aux);
+			vistaPerfil.updateSalas(system.getSubRooms());
 		}else if(selected.getText().equals("Nueva Exposición")) {
 			System.out.println("Nueva expo pulsado");
 			VistaExposicionEditPanel aux = new VistaExposicionEditPanel(vistaSystem, new Exhibition("ejemplo", "ejemplo", LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0)),  LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0))), true); 

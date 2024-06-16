@@ -19,7 +19,6 @@ import users.Gender;
 import users.Notification;
 import users.Staff;
 import users.User;
-import works.CompositeRoom;
 import works.Exhibition;
 import works.Inventory;
 import works.Painting;
@@ -112,9 +111,7 @@ public class ArtGallery implements Serializable{
 	public void addSubRoom(SubRoom e) {
 		this.rooms.add(e);
 	}
-	public void addSubRoom(CompositeRoom c) {
-		this.rooms.add(c);
-	}
+
 	
 	public Set<Room> getRooms() {
 		return rooms;
@@ -383,6 +380,18 @@ public class ArtGallery implements Serializable{
 		}
 		
 		return sbr;
+	}
+	
+	public SubRoom getSubRoomFromName(String name) {
+		Set<SubRoom> sbroms = getSubRooms();
+		
+		for (SubRoom sr : sbroms) {
+			if (sr.getName().equals(name)) {
+				return sr;
+			}
+		}
+		
+		return null;
 	}
 	
 }

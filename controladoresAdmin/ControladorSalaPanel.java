@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import system.ArtGallery;
+import users.Admin;
 import vistasAdmin.VistaSalaPanel;
 import vistasSystem.VistaSystem;
 import works.RoomComposite;
@@ -15,16 +16,14 @@ import works.SubRoom;
 public class ControladorSalaPanel implements ActionListener{
 	private ArtGallery system;
 	private VistaSystem vistaSystem;
-	private boolean newRoom = false;
 	
 	private VistaSalaPanel vistaSalaPanel;
 	
-	public ControladorSalaPanel(VistaSystem vistaSystem, ArtGallery system, VistaSalaPanel vista, boolean newRoom) {
+	public ControladorSalaPanel(VistaSystem vistaSystem, ArtGallery system, VistaSalaPanel vista) {
 		super();
 		this.system = vistaSystem.getControladorVistaPrincipal().getSystem(); 
 		this.vistaSystem = vistaSystem;
 		this.vistaSalaPanel = vista;
-		this.newRoom = newRoom;
 		
 		vista.setControlador(this);
 	}
@@ -38,7 +37,7 @@ public class ControladorSalaPanel implements ActionListener{
 		String altoStr = vistaSalaPanel.getAlto().getText().replaceAll(",", ".");
 		String anchoStr = vistaSalaPanel.getAncho().getText().replaceAll(",", ".");
 		String largoStr = vistaSalaPanel.getLargo().getText().replaceAll(",", ".");
-		String capacidadStr = vistaSalaPanel.getLargo().getText();
+		String capacidadStr = vistaSalaPanel.getCapacidad().getText();
         double temp = 0, alto = 0, ancho = 0, largo = 0;
         int capacidad = 0;
         SubRoom r = vistaSalaPanel.getRoom();
@@ -107,6 +106,15 @@ public class ControladorSalaPanel implements ActionListener{
 			}
 			
 			system.createSalaFisica(vistaSalaPanel.getElecticidad().isSelected(), temp, ancho, largo, alto, 10, capacidad);
+			
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			}else {
+				vistaSystem.getVistaPerfilStaff().updateSalas(system.getSubRooms());
+			}
+			
+			JOptionPane.showMessageDialog(null, "La sala se ha creado correctamente");
+			return;
 				
 		}else if (selected.getText().equals("Confirmar Cambios")) {
 			try {
@@ -133,7 +141,12 @@ public class ControladorSalaPanel implements ActionListener{
 			r.setTemperature(temp);
 			
 			JOptionPane.showMessageDialog(null, "Los cambios se han realizado correctamente\n (No se han modificado las dimensiones de la sala)");
-			vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			}else {
+				vistaSystem.getVistaPerfilStaff().updateSalas(system.getSubRooms());
+			}
+			
 			return;
 			
 		}else if(selected.getText().equals("Dividir Sala")) {
@@ -146,7 +159,11 @@ public class ControladorSalaPanel implements ActionListener{
 			rc.divide(2, r);
 			
 			JOptionPane.showMessageDialog(null, "La sala ha sido dividida correctamente");
-			vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			}else {
+				vistaSystem.getVistaPerfilStaff().updateSalas(system.getSubRooms());
+			}
 			return;
 		}else if (selected.getText().equals("Colapsar Sala")){
 			if (!r.isColapsable()) {
@@ -160,7 +177,11 @@ public class ControladorSalaPanel implements ActionListener{
 			rcAbuelo.collapse(rcPadre);
 			
 			JOptionPane.showMessageDialog(null, "La sala ha sido colapsada correctamente");
-			vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaSystem.getVistaPerfilAdmin().updateSalas(system.getSubRooms());
+			}else {
+				vistaSystem.getVistaPerfilStaff().updateSalas(system.getSubRooms());
+			}
 			return;
 		}
 		

@@ -7,11 +7,15 @@ import java.time.LocalDateTime;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import es.uam.eps.padsof.telecard.OrderRejectedException;
+import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+import es.uam.eps.padsof.tickets.NonExistentFileException;
+import es.uam.eps.padsof.tickets.UnsupportedImageTypeException;
 import system.ArtGallery;
 import users.Client;
 import vistasSystem.VistaSystem;
-import vistasUsers.VistaClienteReg;
 import vistasUsers.VistaCompraEntradas;
+import works.Exhibition;
 
 public class ControladorCompraEntradas implements ActionListener{
 	private ArtGallery system;
@@ -45,6 +49,8 @@ public class ControladorCompraEntradas implements ActionListener{
 			vistaCompraEntradas.setVisible(false);
 			vistaSystem.getVistaInicioCliente().setVisible(true);
 		}else if (selected.getText().equals("Comprar")) {
+			Exhibition ex = this.vistaCompraEntradas.getExhibition();
+			
 			int numEntradas = Integer.parseInt(vistaCompraEntradas.getSeleccion().getText());
 			if (numEntradas < 1) {
 				JOptionPane.showMessageDialog(null, "El numero de entradas no puede ser menor que 1");
@@ -62,25 +68,29 @@ public class ControladorCompraEntradas implements ActionListener{
             
             cl = (Client) system.getLoggedUser();
             
-            if (!(cl.buyTickets(this.vistaCompraEntradas.getExhibition(), fecha))) {
-            	JOptionPane.showMessageDialog(null, "La fecha seleccionada '" + fecha + "' no está disponible o no es válida");
+            if (ex.getCapacityHour(fecha) == -1) {
+            	JOptionPane.showMessageDialog(null, "La fecha seleccionada no está dentro del rango de fechas posibles");
+	            return;
+            }else if (ex.getCapacityHour(fecha) < numEntradas){
+            	JOptionPane.showMessageDialog(null, "No hay capacidad para " + numEntradas +", solo quedan " + this.vistaCompraEntradas.getExhibition().getCapacityHour(fecha) + " entradas para esta hora");
+	            return;
+            }else if (cl.getBankAccount() == null){
+            	JOptionPane.showMessageDialog(null, "No tiene ninguna cuenta bancaria asociada a su cuenta");
+	            return;
+            }else if (!TeleChargeAndPaySystem.isValidCardNumber(cl.getBankAccount())){
+            	JOptionPane.showMessageDialog(null, "Su tarjeta bancaria no es válida");
 	            return;
             }else {
-            	
-            	for (int i=1; i<numEntradas; i++) {
-            		if (!(cl.buyTickets(this.vistaCompraEntradas.getExhibition(), fecha))) {
-                    	JOptionPane.showMessageDialog(null, "La fecha seleccionada '" + fecha + "' no está disponible o no es válida\n Se han podido comprar " + i + " entradas");
-                    	System.out.println(cl.getTickets());
-        	            return;
-                    }
-            	}
-            	
-            	JOptionPane.showMessageDialog(null, "Las entrada/s se ha comprado con éxito");
-            	vistaSystem.getVistaInicioCliente().setVisible(true);
-            	vistaCompraEntradas.setVisible(false);
-            	System.out.println(cl.getTickets());
-            	
-	            return;
+            	try {
+					ex.payTicket(cl, fecha, numEntradas, cl.getBankAccount(), ex.getPrice());
+				} catch (NonExistentFileException | OrderRejectedException | UnsupportedImageTypeException e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "El pago no se pudo procesar");
+					return;
+				}
+				JOptionPane.showMessageDialog(null, "Se ha/n comprado la/s entrada/s correctamente");
+				return;
+				
             }
 		}
 			

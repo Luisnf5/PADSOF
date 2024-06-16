@@ -1,6 +1,11 @@
 package systemTester;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -24,6 +29,19 @@ public class SystemManual implements Serializable {
 		Client cl = null;
 		
 		System.out.println("Loading Info...");
+		
+		Path currentPath = Paths.get("").toAbsolutePath();
+		Path entradasPath = currentPath.resolve("EntradasPDF");
+		
+		deleteFile(entradasPath.toFile());
+		
+		try {
+			if (Files.exists(entradasPath)) {
+				Files.delete(entradasPath);
+			}
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		/* Cogemos la aplicacion con la clase sistema */
 		ArtGallery inicio = ArtGallery.getSystem();
@@ -33,6 +51,7 @@ public class SystemManual implements Serializable {
 		inicio.newClient("Silvia", "De la Calle", "51546796A", Gender.FEMALE, LocalDate.of(2005, 5, 25), "SOY-EL-JEFE");
 		inicio.newClient("Juan Jose", "Vieira", "51546795A", Gender.MALE, LocalDate.of(2004, 7, 22), "SOY-EL-JEFE");
 		inicio.newClient("Juan", "Lopez", "12345678X", Gender.MALE, LocalDate.of(1998, 1, 1), "Password123");
+		inicio.newClient("Luis", "Nunez", "43229075T", Gender.MALE, LocalDate.of(2004, 3, 11), "Hola123");
 		
 		inicio.newAdmin("Admin", "Sistema", "99999999X", Gender.OTHER, LocalDate.of(2000, 1, 1), "Admin123");
 		
@@ -45,7 +64,7 @@ public class SystemManual implements Serializable {
 		Staff.changeStaffPwd("Staff123");
 		
 		/* Creamos exhibiciones */
-		inicio.createExhibition("Van Gogh", "Pepe", LocalDateTime.of(2024, 6, 14, 8, 0),LocalDateTime.of(2024, 8, 7, 10, 0));
+		inicio.createExhibition("Van Gogh", "Pepe", LocalDateTime.of(2024, 6, 18, 8, 0),LocalDateTime.of(2024, 8, 4, 10, 0));
 		inicio.createExhibition("Pablo Picasso", "Francisco", LocalDateTime.of(2024, 6, 14, 8, 0),LocalDateTime.of(2024, 9, 7, 10, 0));
 		
 		/* Creamos una sala */
@@ -95,6 +114,21 @@ public class SystemManual implements Serializable {
 		
 		
 		inicio.saveSistem();
+	}
+	
+	public static void deleteFile(File file){
+	    if (file.exists()) {
+	        if (file.isFile())
+	            file.delete();
+	        else {
+	            File f[]=file.listFiles();
+	            for (int i = 0; i < f.length; i++) {
+	                    deleteFile(f[i]);
+	            }
+	            file.delete();
+	        }
+	    }else
+	        System.out.println("El archivo no existe!");
 	}
 
 }

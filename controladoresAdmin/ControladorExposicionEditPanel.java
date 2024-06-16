@@ -4,11 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import system.ArtGallery;
+import users.Admin;
 import vistasAdmin.VistaExposicionEditPanel;
 import vistasSystem.VistaSystem;
 import works.Exhibition;
@@ -34,6 +36,12 @@ public class ControladorExposicionEditPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton selected;
 		selected = (JButton) e.getSource();
+		
+		if (selected.getText().equals("Borrar Selección")) {
+			System.out.println("borrar");
+			vistaExposicionEditPanel.getSalas().clearSelection();
+			return;
+		}
 		
 		
 		Exhibition ex;
@@ -84,6 +92,9 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			}else if (!(fechaFinal.matches(patronFecha))) {
 				JOptionPane.showMessageDialog(null, "Introduzca una Fecha de final válida con el formato: DD/MM/YYYY");
 				return;
+			}else if (vistaExposicionEditPanel.getSalasSeleccionadas().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Debes seleccionar al menos una sala");
+				return;
 			}
 			
 			diaInicio = Integer.parseInt(fechaInicio.split("/")[0]);
@@ -121,6 +132,11 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			ex.setStartDate(LocalDateTime.of(añoInicio, mesInicio, diaInicio, 10, 0));
 			ex.setEndDate(LocalDateTime.of(añoFinal, mesFinal, diaFinal, 20, 0));
 			ex.setPrice(precio);
+			
+			for (String name : vistaExposicionEditPanel.getSalasSeleccionadas()) {
+				ex.setExpositionToSubRoom(system.getSubRoomFromName(name));
+			}
+			
 			if (!ex.publishExposition()) {
 				JOptionPane.showMessageDialog(null, "No hay ninguna sala asociada a esta exposición");
 				return;
@@ -128,8 +144,16 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			
 			
 			JOptionPane.showMessageDialog(null, "La exposición se ha publicado correctamente");
-			vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
+			}else {
+				vistaSystem.getVistaPerfilStaff().updateExpos(system.getExhibitions());
+			}
 		}else if (selected.getText().equals("Editar Exposición")) {
+			ArrayList<String> salasExpo = new ArrayList<>();
+			ex.getRoomexhibitions().forEach(r -> salasExpo.add(r.getSalaHija().getName()));
+			System.out.println("FOR EACH : " + salasExpo);
+			
 			if (vistaExposicionEditPanel.getNombre().getText().length() < 1) {
 				JOptionPane.showMessageDialog(null, "El título no puede estar vacío");
 				return;
@@ -141,6 +165,9 @@ public class ControladorExposicionEditPanel implements ActionListener{
 				return;
 			}else if (!(fechaFinal.matches(patronFecha))) {
 				JOptionPane.showMessageDialog(null, "Introduzca una Fecha de final válida con el formato: DD/MM/YYYY");
+				return;
+			}else if (ex.getStatus() == ExhibitionStatus.PUBLISHED && !vistaExposicionEditPanel.getSalasSeleccionadas().containsAll(salasExpo)) {
+				JOptionPane.showMessageDialog(null, "No puedes eliminar una sala de la exposición una vez esta esté publicada");
 				return;
 			}
 			
@@ -177,13 +204,34 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			ex.setEndDate(LocalDateTime.of(añoFinal, mesFinal, diaFinal, 20, 0));
 			ex.setPrice(precio);
 			
+			for (String name : vistaExposicionEditPanel.getSalasSeleccionadas()) {
+				ex.setExpositionToSubRoom(system.getSubRoomFromName(name));
+			}
+			
+			
+			for (String name : vistaExposicionEditPanel.getSalasOriginales()) {
+				if (!vistaExposicionEditPanel.getSalasSeleccionadas().contains(name)) {
+					ex.removeSubRoom(ArtGallery.getSystem().getSubRoomFromName(name));
+				}
+			}
+			
 
 			JOptionPane.showMessageDialog(null, "La exposición se ha editado correctamente");
-			vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
+			
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
+			}else {
+				vistaSystem.getVistaPerfilStaff().updateExpos(system.getExhibitions());
+			}
+			
 		}else if (selected.getText().equals("Cancelar Exposición")) {
 			ex.cancelExibition();
 			JOptionPane.showMessageDialog(null, "La exposición se ha cancelado correctamente y terminará de aqui a 7 días");
-			vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
+			}else {
+				vistaSystem.getVistaPerfilStaff().updateExpos(system.getExhibitions());
+			}
 		}else if (selected.getText().equals("Crear Exposición")) {
 			if (vistaExposicionEditPanel.getNombre().getText().length() < 1) {
 				JOptionPane.showMessageDialog(null, "El título no puede estar vacío");
@@ -233,7 +281,17 @@ public class ControladorExposicionEditPanel implements ActionListener{
 			ex.setStatus(ExhibitionStatus.DRAFT);
 			ex.setPrice(precio);
 			
+			for (String name : vistaExposicionEditPanel.getSalasSeleccionadas()) {
+				ex.setExpositionToSubRoom(system.getSubRoomFromName(name));
+			}
+			
 			system.createExhibition(ex);
+			
+			if (system.getLoggedUser() instanceof Admin) {
+				vistaSystem.getVistaPerfilAdmin().updateExpos(system.getExhibitions());
+			}else {
+				vistaSystem.getVistaPerfilStaff().updateExpos(system.getExhibitions());
+			}
 			
 
 			JOptionPane.showMessageDialog(null, "La exposición se ha creado correctamente");

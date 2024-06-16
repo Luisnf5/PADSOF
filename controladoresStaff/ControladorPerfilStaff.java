@@ -12,14 +12,17 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import controladoresAdmin.ControladorExposicionEditPanel;
+import controladoresAdmin.ControladorSalaPanel;
 import system.ArtGallery;
 import users.Admin;
 import users.Privileges;
 import users.Staff;
 import vistasAdmin.VistaExposicionEditPanel;
+import vistasAdmin.VistaSalaPanel;
 import vistasStaff.VistaPerfilStaff;
 import vistasSystem.VistaSystem;
 import works.Exhibition;
+import works.SubRoom;
 
 public class ControladorPerfilStaff implements ActionListener{
 	private ArtGallery system;
@@ -59,8 +62,7 @@ public class ControladorPerfilStaff implements ActionListener{
 			vistaSystem.getVistaExposicion().setVisible(true);
 		}else if(selected.getText().equals("Datos Personales")) {
 			vistaPerfil.updateDatos(getActualStaff());
-		}
-		else if(selected.getText().equals("Confirmar Cambios")) {
+		}else if(selected.getText().equals("Confirmar Cambios")) {
 			if (vistaPerfil.getCuentaBancaria().getText().isBlank()) {
 				JOptionPane.showMessageDialog(null, "El espacio de Cuenta Bancaria no puede estar vacío");
 				return;
@@ -71,7 +73,7 @@ public class ControladorPerfilStaff implements ActionListener{
 			}
 		}else if(selected.getText().equals("Gestionar Salas")) {
 			if (s.hasPrivilege(Privileges.GESTION_SALAS)) {
-				vistaPerfil.updateSalas();
+				vistaPerfil.updateSalas(system.getSubRooms());
 			}else {
 				JOptionPane.showMessageDialog(null, "No posee este privilegio, contacte con el administrador");
 				return;
@@ -113,6 +115,12 @@ public class ControladorPerfilStaff implements ActionListener{
 			new ControladorExposicionEditPanel(vistaSystem, null, aux);
 			JOptionPane.showMessageDialog(new JFrame("Nueva Exposicion"), aux);
 			vistaPerfil.updateExpos(system.getExhibitions());
+		}else if(selected.getText().equals("Crear Sala")) {
+			System.out.println("Nueva sala pulsado");
+			VistaSalaPanel aux = new VistaSalaPanel(vistaSystem, new SubRoom(false, 0, 0, 0, 0, 0, 0), true); 
+			new ControladorSalaPanel(vistaSystem, null, aux);
+			JOptionPane.showMessageDialog(null, aux);
+			vistaPerfil.updateSalas(system.getSubRooms());
 		}else if(selected.getText().equals("Cerrar Sesion")) {
 			system.setLoggedUser(null);
 			vistaPerfil.setVisible(false);
