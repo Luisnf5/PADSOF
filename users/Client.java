@@ -16,6 +16,7 @@ public class Client extends User implements Serializable{
 	private Set<Ticket> tickets = new LinkedHashSet<Ticket>();
 	private Set<Notification> notifications = new LinkedHashSet<Notification>();
 	private Set<Raffle> raffles = new LinkedHashSet<>();
+	private boolean usual = false;
 
 	public Client(String name, String surname, String nif, Gender gender, LocalDate birthDate, String password){
 		super(name, surname, nif, gender, birthDate, password);
@@ -23,7 +24,9 @@ public class Client extends User implements Serializable{
 		this.notificationEnable = true;
 	}
 	
-	
+	public boolean isUsual() {
+		return this.usual;
+	}
 	
 	public int getNumTickets() {
 		return numTickets;
@@ -50,6 +53,13 @@ public class Client extends User implements Serializable{
 	}
 
 	public void addTickets(Ticket...tickets){
+		for(Ticket t : tickets){
+			this.tickets.add(t);
+			this.numTickets++;
+		}
+	}
+	
+	public void addTickets(Set<Ticket> tickets){
 		for(Ticket t : tickets){
 			this.tickets.add(t);
 			this.numTickets++;
