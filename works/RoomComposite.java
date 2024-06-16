@@ -8,28 +8,25 @@ public class RoomComposite extends Room {
 
     public RoomComposite(boolean electricity, double temperature, double width, double length, double height, double humidity, int capacity){
         super(electricity, temperature, width, length, height, humidity, capacity);
-        this.add(new SubRoom(electricity, temperature, width, length, height, humidity, capacity));
     }
     
+    @Override
     public List<Room> getSubRooms(){
     	return this.subRooms;
     }
     
+    @Override
     public void add(Room...rooms) {
-    	if(!this.getDivided()) {
-    		for(Room r : rooms)
-    			this.subRooms.add(r);
-    		this.setDivided(true);
-    	}
+		for(Room r : rooms)
+			this.subRooms.add(r);
     }
     
+    @Override
     public void remove(Room room) {
     	this.subRooms.remove(room);
-    	if(this.subRooms.isEmpty()) {
-    		this.setDivided(false);
-    	}
     }
     
+    @Override
     public Room getChild(int index) {
     	return this.subRooms.get(index);
     }

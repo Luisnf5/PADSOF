@@ -10,11 +10,11 @@ package works;
 import es.uam.eps.padsof.tickets.*;
 
 public class TicketInfo implements ITicketInfo {
-    private int idTicket;
-    private String exhibitionCenterName;
+    private int id;
+    private String centerName;
     private String exhibitionName;
     private int numberOfTickets;
-    private String ticketDateTime;
+    private String ticketDate;
     private double price;
     private double discount;
     private double payedPrice;
@@ -34,11 +34,11 @@ public class TicketInfo implements ITicketInfo {
      * @param picture the picture associated with the ticket
      */
     public TicketInfo(int idTicket, String exhibitionCenterName, String exhibitionName, int numberOfTickets, String ticketDateTime, double price, double discount, double payedPrice, String picture) {
-        this.idTicket = idTicket;
-        this.exhibitionCenterName = exhibitionCenterName;
+        this.id = idTicket;
+        this.centerName = exhibitionCenterName;
         this.exhibitionName = exhibitionName;
         this.numberOfTickets = numberOfTickets;
-        this.ticketDateTime = ticketDateTime;
+        this.ticketDate = ticketDateTime;
         this.price = price;
         this.discount = discount;
         this.payedPrice = payedPrice;
@@ -47,12 +47,12 @@ public class TicketInfo implements ITicketInfo {
 
     @Override
     public int getIdTicket() {
-        return idTicket;
+        return id;
     }
 
     @Override
     public String getExhibitionCenterName() {
-        return exhibitionCenterName;
+        return centerName;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class TicketInfo implements ITicketInfo {
 
     @Override
     public String getTicketDateTime() {
-        return ticketDateTime;
+        return ticketDate;
     }
 
     @Override

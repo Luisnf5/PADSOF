@@ -18,6 +18,7 @@ package works;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class Room implements Serializable {
@@ -31,7 +32,6 @@ public abstract class Room implements Serializable {
     private double height;
     private double humidity;
     protected int capacity;
-    private boolean divided;
 
     /**
      * Constructs a Room object with specified parameters.
@@ -55,10 +55,9 @@ public abstract class Room implements Serializable {
         this.height = height;
         this.humidity = humidity;
         this.capacity = capacity;
-        this.divided = false;
     }
         
-    public void add(Room room) {
+    public void add(Room...rooms) {
     	throw new UnsupportedOperationException();
     }
     
@@ -73,14 +72,6 @@ public abstract class Room implements Serializable {
     public int getCapacity() {
 		return capacity;
 	}
-    
-    public boolean getDivided() {
-    	return this.divided;
-    }
-    
-    public void setDivided(boolean divided) {
-    	this.divided = divided;
-    }
     
     /**
      * Gets the width of the room.
@@ -148,6 +139,8 @@ public abstract class Room implements Serializable {
     public double getHumidity() {
         return humidity;
     }
+
+	public abstract List<Room> getSubRooms();
     
     /* 
      * The following methods are for managing child rooms.

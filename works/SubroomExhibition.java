@@ -14,6 +14,7 @@ public class SubroomExhibition implements Serializable{
     private static final long serialVersionUID = 1L;
     private Set<Work> worksIn = new LinkedHashSet<Work>();
     private SubRoom salaHija;
+    private Exhibition expo;
     
     /**
      * Constructs a SubroomExhibition object with specified parameters.
