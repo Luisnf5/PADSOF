@@ -14,19 +14,35 @@
  */
 package works;
 
+import java.io.File;
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+import es.uam.eps.padsof.telecard.OrderRejectedException;
+import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+import es.uam.eps.padsof.tickets.NonExistentFileException;
+import es.uam.eps.padsof.tickets.TicketSystem;
+import es.uam.eps.padsof.tickets.UnsupportedImageTypeException;
 import system.ArtGallery;
 import users.Client;
+import users.Privileges;
 import users.Raffle;
+import users.Staff;
 
 public class Exhibition implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -122,6 +138,13 @@ public class Exhibition implements Serializable {
             return true;
         }
     }
+    
+    public int getCapacityHour(LocalDateTime hour) {
+    	if (tickets.get(hour) == null) {
+    		return -1;
+    	}
+    	return this.capacity - tickets.get(hour).size();
+    }
 
     /**
      * Buys a ticket for the exhibition.
@@ -168,11 +191,10 @@ public class Exhibition implements Serializable {
         if (publicar == false) {
         	return false;
         }
-        
-        int days;
+       
+        long days;
         LocalDateTime actual = this.startDate.minusDays(1);
-        
-        days = (Period.between(this.startDate.toLocalDate(), this.endDate.toLocalDate())).getDays();
+        days = ChronoUnit.DAYS.between(startDate.toLocalDate(), endDate.toLocalDate());
         
         for (int i = 0; i<days+1; i++) {
             actual = actual.plusDays(1);
@@ -184,8 +206,6 @@ public class Exhibition implements Serializable {
             }
         }
 
-        
-        
         this.status = ExhibitionStatus.PUBLISHED;
         return true;
     }
@@ -455,5 +475,102 @@ public class Exhibition implements Serializable {
 		
 		return null;
 	}
+	
+	public void removeSubRoom(SubRoom sr) {
+		Iterator<SubroomExhibition> iterator = roomexhibitions.iterator();
+		while (iterator.hasNext()) {
+			SubroomExhibition sre = iterator.next();
+		
+			if (sre.getSalaHija() == sr) {
+				sr.setSrb(null);
+				sre.setExpo(null);iterator.remove(); // Eliminar de la colección de forma segura
+			}
+		}
+	}
+	
+	public Set<Ticket> selectTickets(Client client, LocalDateTime date, int tickets) throws StaffPrivilegesException, InsufficientPrivilegesException{
+	    Set<Ticket> entrselec = new LinkedHashSet<>();
+
+	    if (client == null) {
+	    	System.out.println("CLIENT NULL");
+	        if (ArtGallery.getSystem().getLoggedUser() instanceof Staff) {
+	            Staff s = (Staff) ArtGallery.getSystem().getLoggedUser();
+	            if (s.hasPrivilege(Privileges.COMPRA_ENTRADAS)) {
+	                for (int i = 0; i < tickets; i++) {
+	                    Ticket newTicket = new Ticket(date, this.price, client, this);
+	                    this.tickets.get(date).add(newTicket);
+	                }
+	                return null;
+	            } else {
+	                throw new StaffPrivilegesException("No hay privilegios suficientes para la venta de entradas");
+	            }
+	        } else {
+	            throw new InsufficientPrivilegesException();
+	        }
+	    } else {
+	        for (int i = 0; i < tickets; i++) {
+	            Ticket newTicket = new Ticket(date, this.price, client, this);
+	            entrselec.add(newTicket);
+	        }
+	        return entrselec;
+	    }
+	}
+	
+	public double calculatePrice(Client client, int tickets) {
+	    double price = 0;
+
+	    for (int i = 0; i < tickets; i++) {
+	        price += this.price;
+	    }
+
+	    return price;
+	}
+	
+	public void payTicket(Client client, LocalDateTime date, int tickets, String cardn, double price)
+            	throws InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, NonExistentFileException, UnsupportedImageTypeException {
+		
+		Path currentPath = Paths.get("").toAbsolutePath();
+		Path entradasPath = currentPath.resolve("EntradasPDF");
+		Path clientPath = entradasPath.resolve(client.getNif());
+		File clientDir = clientPath.toFile();
+		
+		if (!clientDir.exists() || !clientDir.isDirectory()) {
+			if (clientDir.mkdirs()) {
+				System.out.println("Directorio de Entradas de " + client.getNif() + " creado");
+			}else {
+				System.out.println("Directorio de Entradas de " + client.getNif() + " no pudo ser creado");
+				return;
+			}
+		}
+		
+		double precio;
+
+		Set<Ticket> entradasslec = new LinkedHashSet<>();
+
+		entradasslec = this.selectTickets(client, date, tickets);
+
+		precio = calculatePrice(client, tickets);
+
+		if (TeleChargeAndPaySystem.isValidCardNumber(cardn) == true) {
+			TeleChargeAndPaySystem.charge(cardn, "Entrada", precio, true);
+			this.tickets.get(date).addAll(entradasslec);
+			client.addTickets(entradasslec);
+
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd - MM - YYYY HH:mm");
+			String fechahora = date.format(formatter);
+
+			SecureRandom random = new SecureRandom();
+			int rand = random.nextInt();
+
+			TicketInfo ticket = new TicketInfo(Math.abs(rand), "ArtGallery", this.getTitle(), tickets, fechahora, this.price * tickets, this.discount.getDiscount(), precio, null);
+
+			TicketSystem.createTicket(ticket, clientPath.toString()); // Output folder
+
+		}else {
+			System.out.println("Tarjeta");
+		}
+	}
+		
+	
 	
 }
