@@ -167,6 +167,11 @@ public class VistaSalaPanel extends JPanel{
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, colapsar, 0, SpringLayout.HORIZONTAL_CENTER, dividir);
 		colapsar.setPreferredSize(new Dimension(130, 30));
 		this.add(colapsar);
+		
+		if (newRoom) {
+			dividir.setVisible(false);
+			colapsar.setVisible(false);
+		}
 	}
 	
 	public void setControlador(ActionListener c) {

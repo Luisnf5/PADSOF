@@ -4,25 +4,28 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Set;
 
-import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 
-import users.Client;
-import users.Gender;
-import users.Staff;
+import system.ArtGallery;
 import vistasSystem.VistaSystem;
 import works.Exhibition;
 import works.ExhibitionStatus;
+import works.SubRoom;
 
 public class VistaExposicionEditPanel extends JPanel{
 	private Exhibition exhibition;
@@ -31,6 +34,7 @@ public class VistaExposicionEditPanel extends JPanel{
 	
 	private JButton confirmar;
 	private JButton editar;
+	private JButton borrar;
 	
 	private JTextField nombre;
 	private JTextField autor;
@@ -43,6 +47,13 @@ public class VistaExposicionEditPanel extends JPanel{
 	private JLabel fechaInicioLabel;
 	private JLabel fechaFinalLabel;
 	private JLabel precioLabel;
+	
+	private JLabel info;
+	
+	private JList<String> salas;
+	private JScrollPane salasScroll;
+	
+	private ArrayList<String> salasOriginales = new ArrayList<String>();
 	
 	
 	public VistaExposicionEditPanel(VistaSystem parent, Exhibition ex, boolean newExhibition) {
@@ -59,7 +70,7 @@ public class VistaExposicionEditPanel extends JPanel{
 		
 		Dimension d2 = Toolkit.getDefaultToolkit().getScreenSize();
         d2.width -= 450;
-        d2.height = 100;
+        d2.height = 150;
 		
 		this.setPreferredSize(d2);
 		
@@ -77,6 +88,31 @@ public class VistaExposicionEditPanel extends JPanel{
 		this.fechaInicioLabel = new JLabel("Inicio");
 		this.fechaFinalLabel = new JLabel("Final");
 		this.precioLabel = new JLabel("Precio");
+		this.info = new JLabel("<html>Para seleccionar varias<br>salas pulse CTRL + Click</html>");
+		
+		DefaultListModel<String> listModel = new DefaultListModel<>();
+		Set<SubRoom> rooms = ArtGallery.getSystem().getSubRooms();
+		int i = 0;
+		ArrayList<Integer> indexes = new ArrayList<>();
+		for (SubRoom sr : rooms) {
+			if (!sr.isExposing()) {
+				listModel.addElement(sr.getName());
+				i++;
+			}else if (sr.isExposing() && sr.getSrb().getExpo() == ex) {
+				listModel.addElement(sr.getName());
+				indexes.add(i);
+				salasOriginales.add(sr.getName());
+				System.out.println(sr.getName() + "is exposing this");
+				i++;
+			}
+			
+		}
+		
+		salas = new JList<>(listModel);
+		salas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		salasScroll = new JScrollPane(salas);
+		salas.setSelectedIndices(indexes.stream().mapToInt(Integer::intValue).toArray());
+
 		
 		if (newExhibition) {
 			this.confirmar = new JButton("Crear Exposición");
@@ -93,6 +129,8 @@ public class VistaExposicionEditPanel extends JPanel{
 		this.editar = new JButton("Editar Exposición");
 		this.editar.setBackground(Color.BLUE);
 		this.editar.setForeground(Color.WHITE);
+		
+		this.borrar = new JButton("Borrar Selección");
 		
 		
 		
@@ -146,9 +184,24 @@ public class VistaExposicionEditPanel extends JPanel{
 		layout.putConstraint(SpringLayout.WEST, precio, 10, SpringLayout.EAST, precioLabel);
 		precio.setPreferredSize(new Dimension(40, 20));
 		this.add(precio);
-	
+		
+		layout.putConstraint(SpringLayout.NORTH, info, (int) ((altoPanel - nombreLabel.getHeight())/2+40)-45, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, info, 10, SpringLayout.EAST, precio);
+		info.setPreferredSize(new Dimension(150, 40));
+		this.add(info);
+		
+		layout.putConstraint(SpringLayout.NORTH, salasScroll, 5, SpringLayout.SOUTH, info);
+		layout.putConstraint(SpringLayout.WEST, salasScroll, 40, SpringLayout.EAST, precio);
+		salasScroll.setPreferredSize(new Dimension(80, 70));
+		this.add(salasScroll);
+		
+		layout.putConstraint(SpringLayout.NORTH, borrar, (int) ((altoPanel - borrar.getHeight())/2+30)+40, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, borrar, 10, SpringLayout.EAST, salasScroll);
+		this.add(borrar);
+		
+		
 		layout.putConstraint(SpringLayout.NORTH, confirmar, (int) ((altoPanel - confirmar.getHeight())/2+30), SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, confirmar, 20, SpringLayout.EAST, precio);
+		layout.putConstraint(SpringLayout.WEST, confirmar, 80, SpringLayout.EAST, borrar);
 		this.add(confirmar);
 		
 		layout.putConstraint(SpringLayout.NORTH, editar, (int) ((altoPanel - editar.getHeight())/2+30), SpringLayout.NORTH, this);
@@ -160,6 +213,19 @@ public class VistaExposicionEditPanel extends JPanel{
 	public void setControlador(ActionListener c) {
 		confirmar.addActionListener(c);
 		editar.addActionListener(c);
+		borrar.addActionListener(c);
+	}
+
+	public ArrayList<String> getSalasOriginales() {
+		return salasOriginales;
+	}
+	
+	public ArrayList<String> getSalasSeleccionadas(){
+		
+		ArrayList<String> list = new ArrayList<>(salas.getSelectedValuesList());
+		System.out.println("Selected Rooms: " + list);
+		return list;
+	
 	}
 
 	public Exhibition getExposicion() {
@@ -189,6 +255,10 @@ public class VistaExposicionEditPanel extends JPanel{
 
 	public JTextField getPrecio() {
 		return precio;
+	}
+
+	public JList<String> getSalas() {
+		return salas;
 	}
 
 	public static void main(String[] args) {

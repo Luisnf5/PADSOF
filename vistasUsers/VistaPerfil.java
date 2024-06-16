@@ -32,6 +32,7 @@ private VistaSystem parent;
 	private JButton contra;
 	private JButton cerrar;
 	private JButton entradas;
+	private JButton confirmarCambios;
 	
 	//DATOS PERSONALES
 	private JPanel personales;
@@ -40,6 +41,8 @@ private VistaSystem parent;
 	private JLabel nifCliente;
 	private JLabel generoCliente;
 	private JLabel fechaCliente;
+	private JLabel cuentaBancariaLabel;
+	private JTextField cuentaBancaria;
 	
 	//CAMBIO CONTRASEÑA
 	private JPanel cambioContraseña;
@@ -138,6 +141,9 @@ private VistaSystem parent;
 		nifCliente = new JLabel("NIF: 12345678X");
 		generoCliente = new JLabel("Genero: example");
 		fechaCliente = new JLabel("Fecha de Nacimiento: DD/MM/YYYY");
+		cuentaBancaria = new JTextField("CUENTA_BANCARIA_AQUI");
+		cuentaBancariaLabel = new JLabel("Cuenta Bancaria");
+		confirmarCambios = new JButton("Confirmar Cambios");
 		
 		layout.putConstraint(SpringLayout.NORTH, personales, 50, SpringLayout.SOUTH, buscar);
 		layout.putConstraint(SpringLayout.EAST, personales, -300, SpringLayout.EAST, this);
@@ -163,6 +169,19 @@ private VistaSystem parent;
 		personalesLayout.putConstraint(SpringLayout.NORTH, fechaCliente, 20, SpringLayout.NORTH, nombreCliente);
 		personalesLayout.putConstraint(SpringLayout.WEST, fechaCliente, 20, SpringLayout.EAST, generoCliente);
 		personales.add(fechaCliente);
+		
+		personalesLayout.putConstraint(SpringLayout.NORTH, cuentaBancariaLabel, 20, SpringLayout.NORTH, generoCliente);
+		personalesLayout.putConstraint(SpringLayout.WEST, cuentaBancariaLabel, 20, SpringLayout.WEST, personales);
+		personales.add(cuentaBancariaLabel);
+		
+		personalesLayout.putConstraint(SpringLayout.NORTH, cuentaBancaria, 20, SpringLayout.NORTH, generoCliente);
+		personalesLayout.putConstraint(SpringLayout.WEST, cuentaBancaria, 20, SpringLayout.EAST, cuentaBancariaLabel);
+		cuentaBancaria.setPreferredSize(new Dimension(210, 20));
+		personales.add(cuentaBancaria);
+		
+		personalesLayout.putConstraint(SpringLayout.NORTH, confirmarCambios, 60, SpringLayout.NORTH, cuentaBancaria);
+		personalesLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, confirmarCambios, 0, SpringLayout.HORIZONTAL_CENTER, personales);
+		personales.add(confirmarCambios);
 		
 		personales.setVisible(false);
 		
@@ -230,17 +249,24 @@ private VistaSystem parent;
 		cerrar.addActionListener(c);
 		confirmarContraseña.addActionListener(c);
 		entradas.addActionListener(c);
+		confirmarCambios.addActionListener(c);
 	}
 	
 	public void updateDatos(User cl) {
 		if(cl == null)
 			return;
+		Client cli = (Client) cl;
 		
-		nombreCliente.setText("Nombre: " + cl.getName());
-		apellidoCliente.setText("Apellido: " + cl.getSurname());
-		nifCliente.setText("NIF: " + cl.getNif());
-		generoCliente.setText("Genero: " + cl.getGender());
-		fechaCliente.setText("Fecha de Nacimiento: " + cl.getBirthDate());
+		nombreCliente.setText("Nombre: " + cli.getName());
+		apellidoCliente.setText("Apellido: " + cli.getSurname());
+		nifCliente.setText("NIF: " + cli.getNif());
+		generoCliente.setText("Genero: " + cli.getGender());
+		fechaCliente.setText("Fecha de Nacimiento: " + cli.getBirthDate());
+		if (cli.getBankAccount() == null || cli.getBankAccount().equals("")) {
+			cuentaBancaria.setText("INTRODUZCA_CUENTA_BANCARIA");
+		}else {
+			cuentaBancaria.setText(cli.getBankAccount());
+		}
 		personales.setVisible(true);
 		entradasCliente.setVisible(false);
 		cambioContraseña.setVisible(false);
@@ -272,6 +298,10 @@ private VistaSystem parent;
 
 	public JPasswordField getNuevaContraseñaRepite() {
 		return nuevaContraseñaRepite;
+	}
+
+	public JTextField getCuentaBancaria() {
+		return cuentaBancaria;
 	}
 
 	

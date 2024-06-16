@@ -5,7 +5,6 @@ package vistasUsers;
 import javax.swing.*;
 
 import controladores.ControladorClienteReg;
-import systemTester.systemTester;
 import users.Client;
 import users.Gender;
 import users.User;

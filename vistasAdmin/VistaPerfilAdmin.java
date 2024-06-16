@@ -610,7 +610,7 @@ private VistaSystem parent;
 			for (SubRoom r : salas) {
 				aux = new VistaSalaPanel(parent, r, false); 
 				this.scrollSalaAux.add(aux);
-				new ControladorSalaPanel(parent, null, aux, false);
+				new ControladorSalaPanel(parent, null, aux);
 			}
 			scrollSalaAux.add(crearSala);
 			this.revalidate();

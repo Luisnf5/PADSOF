@@ -56,19 +56,26 @@ public class Client extends User implements Serializable{
 		}
 	}
 	
+	public void addTickets(Set<Ticket> tickets){
+		for(Ticket t : tickets){
+			this.tickets.add(t);
+			this.numTickets++;
+		}
+	}
+	
 	public void removeNotification(Notification noti) {
 		this.notifications.remove(noti);
 	}
 
-	public boolean buyTickets(Exhibition exp, LocalDateTime date){
+	public Ticket buyTickets(Exhibition exp, LocalDateTime date){
 		Ticket t = exp.buyTicket(this, date);
 		
 		if (t == null) {
-			return false;
+			return null;
 		}
 		this.tickets.add(t);
 		numTickets++;
-		return true;
+		return t;
 	}
 
 	public boolean participateRaffle(Exhibition exp, LocalDateTime date){

@@ -20,17 +20,20 @@ import javax.swing.SpringLayout;
 
 import controladoresAdmin.ControladorClientPanel;
 import controladoresAdmin.ControladorExposicionEditPanel;
+import controladoresAdmin.ControladorSalaPanel;
 import controladoresAdmin.ControladorWorkEditPanel;
 import users.Admin;
 import users.Client;
 import users.Staff;
 import vistasAdmin.VistaClientPanel;
 import vistasAdmin.VistaExposicionEditPanel;
+import vistasAdmin.VistaSalaPanel;
 import vistasAdmin.VistaWorkEditPanel;
 import vistasSystem.VistaSystem;
 import vistasUsers.VistaPrincipal;
 import works.Exhibition;
 import works.Inventory;
+import works.SubRoom;
 import works.Work;
 
 public class VistaPerfilStaff extends JPanel{
@@ -74,6 +77,11 @@ private VistaSystem parent;
 	private JPanel scrollInvAux;
 	private JScrollPane scrollInv;
 	private JButton crearObra;
+	
+	//GESTIONAR SALAS
+	private JPanel scrollSalaAux;
+	private JScrollPane scrollSala;
+	private JButton crearSala;
 		
 	
 	
@@ -266,6 +274,32 @@ private VistaSystem parent;
         
 		gestionUsuarios.setVisible(false);
 		
+		 //GESTIONAR SALAS
+  		Dimension d5 = Toolkit.getDefaultToolkit().getScreenSize();
+  		d5.width -= 415;
+  		d5.height -= 300;
+  		  
+  		this.crearSala = new JButton("Crear Sala");
+  		crearSala.setBackground(Color.CYAN);
+  		crearSala.setPreferredSize(new Dimension(200, 100));
+  		this.scrollSalaAux = new JPanel(new GridLayout(0, 1));
+  		this.scrollSalaAux.setVisible(true);
+  		this.scrollSala = new JScrollPane(scrollSalaAux);
+  		scrollSalaAux.add(crearSala);
+  		scrollSalaAux.setBackground(Color.GREEN);
+  		
+  		scrollSala.setPreferredSize(d5);
+  		  
+  		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollSala, 0, SpringLayout.VERTICAL_CENTER, this);
+  		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollSala, -70, SpringLayout.HORIZONTAL_CENTER, this);
+  		scrollSala.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+  		scrollSala.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+  		JScrollBar verticalscrollSalaBar = scrollSala.getVerticalScrollBar();
+  		verticalscrollSalaBar.setUnitIncrement(40);
+  		this.add(scrollSala);
+  		scrollSala.setVisible(false);
+      	
+		
 		//GESTIONAR EXPOSICIONES
 		Dimension d2 = Toolkit.getDefaultToolkit().getScreenSize();
         d2.width -= 400;
@@ -326,6 +360,7 @@ private VistaSystem parent;
 		crearObra.addActionListener(c);
 		inv.addActionListener(c);
 		confirmarCambios.addActionListener(c);
+		crearSala.addActionListener(c);
 		
 	}
 	
@@ -347,6 +382,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		scrollSala.setVisible(false);
 	}
 	
 	public void updateCambioContraseña() {
@@ -354,6 +390,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		scrollSala.setVisible(false);
 	}
 	
 
@@ -383,6 +420,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollInv.setVisible(false);
 		scrollExpo.setVisible(true);
+		scrollSala.setVisible(false);
 		
 	}
 	
@@ -413,6 +451,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(true);
+		scrollSala.setVisible(false);
 		
 	}
 	
@@ -442,13 +481,38 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(true);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		scrollSala.setVisible(false);
 	}
 	
-	public void updateSalas() {
+	public void updateSalas(Set<SubRoom> salas) {
+		VistaSalaPanel aux;
+		
+		scrollSalaAux.removeAll();
+		
+		System.out.println(salas);
+		
+		
+		if (salas.isEmpty() || salas == null) {
+			System.out.println("No ha salas disponibles");
+			scrollSalaAux.add(crearSala);
+		}else {
+			for (SubRoom r : salas) {
+				aux = new VistaSalaPanel(parent, r, false); 
+				this.scrollSalaAux.add(aux);
+				new ControladorSalaPanel(parent, null, aux);
+			}
+			scrollSalaAux.add(crearSala);
+			this.revalidate();
+			this.repaint();
+			
+		}
+		
+		
 		personales.setVisible(false);
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		scrollSala.setVisible(true);
 	}
 	
 	
@@ -457,6 +521,7 @@ private VistaSystem parent;
 		gestionUsuarios.setVisible(false);
 		scrollExpo.setVisible(false);
 		scrollInv.setVisible(false);
+		scrollSala.setVisible(false);
 	}
 
 	public JToggleButton getBlockedUsers() {
