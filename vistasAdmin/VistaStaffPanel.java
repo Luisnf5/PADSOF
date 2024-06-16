@@ -58,6 +58,7 @@ public class VistaStaffPanel extends JPanel{
 	private JCheckBox inv;
 	private JCheckBox users;
 	private JCheckBox expos;
+	private JCheckBox act;
 	
 	
 	public VistaStaffPanel(VistaSystem parent, Staff staff) {
@@ -73,7 +74,7 @@ public class VistaStaffPanel extends JPanel{
 		this.setLayout(layout);
 		
 		
-		this.setPreferredSize(new Dimension(1100, 150));
+		this.setPreferredSize(new Dimension(1100, 170));
 		
 		this.nombre = new JTextField(staff.getName());
 		this.apellido = new JTextField(staff.getSurname());
@@ -103,6 +104,8 @@ public class VistaStaffPanel extends JPanel{
 		users.setSelected(staff.hasPrivilege(Privileges.GESTION_USUARIOS));
 		expos = new JCheckBox("Gestion Exposiciones");
 		expos.setSelected(staff.hasPrivilege(Privileges.GESTION_EXPOSICIONES));
+		act = new JCheckBox("Gestion Actividades");
+		act.setSelected(staff.hasPrivilege(Privileges.GESTION_ACTIVIDADES));
 		
 		if (staff.getGender() == Gender.MALE) {
 			male.setSelected(true);
@@ -206,6 +209,10 @@ public class VistaStaffPanel extends JPanel{
 		layout.putConstraint(SpringLayout.WEST, expos, 50, SpringLayout.EAST, other);
 		this.add(expos);
 		
+		layout.putConstraint(SpringLayout.NORTH, act, 0, SpringLayout.SOUTH, expos);
+		layout.putConstraint(SpringLayout.WEST, act, 50, SpringLayout.EAST, other);
+		this.add(act);
+		
 		layout.putConstraint(SpringLayout.NORTH, confirmar, (int) ((altoPanel - confirmar.getHeight())/2+30), SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, confirmar, 20, SpringLayout.EAST, privilegios);
 		this.add(confirmar);
@@ -279,6 +286,10 @@ public class VistaStaffPanel extends JPanel{
 
 	public JRadioButton getOther() {
 		return other;
+	}
+
+	public JCheckBox getAct() {
+		return act;
 	}
 
 	public static void main(String[] args) {
