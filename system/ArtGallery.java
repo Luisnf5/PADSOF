@@ -1,3 +1,7 @@
+//en addSubRoom ponía CompositeRoom, cambiado a RoomComposite
+//se ha eliminado la clase CompositeRoom porque existe RoomComposite
+
+
 package system;
 
 import java.io.FileInputStream;
@@ -21,12 +25,12 @@ import users.Notification;
 import users.Raffle;
 import users.Staff;
 import users.User;
-import works.CompositeRoom;
 import works.Exhibition;
 import works.Inventory;
 import works.Painting;
 import works.Photo;
 import works.Room;
+import works.RoomComposite;
 import works.Sculpture;
 import works.SubRoom;
 import works.Video;
@@ -115,7 +119,7 @@ public class ArtGallery implements Serializable{
 	public void addSubRoom(SubRoom e) {
 		this.rooms.add(e);
 	}
-	public void addSubRoom(CompositeRoom c) {
+	public void addSubRoom(RoomComposite c) {
 		this.rooms.add(c);
 	}
 	
