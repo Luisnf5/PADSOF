@@ -82,7 +82,7 @@ public class ControladorSorteoEditPanel implements ActionListener{
 		}else if (fechaInicio.isAfter(fechaFinal)) {
 			JOptionPane.showMessageDialog(null, "La fecha de inicio debe ser anterior a la fecha final");
 			return;
-		}else if (fechaFinal.isAfter(system.getExhibitionFromName(selectedExpo).getEndDate().toLocalDate())) {
+		}else if (fechaFinal.isAfter(system.searchExhibition(selectedExpo).getEndDate().toLocalDate())) {
 			JOptionPane.showMessageDialog(null, "La fecha de final debe ser anterior a la fecha final de la exposición");
 			return;
 		}
@@ -108,12 +108,12 @@ public class ControladorSorteoEditPanel implements ActionListener{
 			JOptionPane.showMessageDialog(null, "El sorteo ha sido modificado correctamente");
 			return;
 		}else if (selected.getText().equals("Crear Sorteo")) {
-			sorteo.setExhibition(system.getExhibitionFromName(selectedExpo));
-			if (system.getExhibitionFromName(selectedExpo).getRaffle() != null) {
+			sorteo.setExhibition(system.searchExhibition(selectedExpo));
+			if (system.searchExhibition(selectedExpo).getRaffle() != null) {
 				JOptionPane.showMessageDialog(null, "El sorteo no se pudo crear porque la exposición seleccionada ya tiene un sorteo en curso.");
 				return;
 			}
-			system.getExhibitionFromName(selectedExpo).createRaffle(sorteo);
+			system.searchExhibition(selectedExpo).createRaffle(sorteo);
 			JOptionPane.showMessageDialog(null, "El sorteo ha sido creado correctamente");
 		}
 	}

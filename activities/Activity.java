@@ -1,5 +1,6 @@
 package activities;
 
+import java.io.Serializable;
 import java.time.*;
 import works.*;
 import users.*;
@@ -7,7 +8,7 @@ import java.util.*;
 
 import system.ArtGallery;
 
-public class Activity {
+public class Activity implements Serializable{
 	private String name;
 	private ActivityType type;
 	private String description;

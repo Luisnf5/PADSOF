@@ -96,7 +96,7 @@ public class ControladorWorkEditPanel implements ActionListener{
 				return;
 			}
 			
-			Exhibition expo = system.getExhibitionFromName((String) vistaWorkEditPanel.getExpo().getSelectedItem());
+			Exhibition expo = system.searchExhibition((String) vistaWorkEditPanel.getExpo().getSelectedItem());
 			SubRoom room = expo.getRoomFromName((String)vistaWorkEditPanel.getSala().getSelectedItem());
 			
 			if (room.getHeight() < alto) {

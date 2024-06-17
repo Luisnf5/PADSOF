@@ -117,9 +117,6 @@ public class ControladorActivityEditPanel implements ActionListener{
 			}else if (vistaActivityEditPanel.getDescription().getText().length() < 1) {
 				JOptionPane.showMessageDialog(null, "La descripción no puede estar vacía");
 				return;
-			}else if (!(fecha.matches(patronFecha))) {
-				JOptionPane.showMessageDialog(null, "Introduzca una Fecha válida con el formato: DD/MM/YYYY/HH");
-				return;
 			}else if (vistaActivityEditPanel.getSalasSeleccionadas().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Debes seleccionar una sala");
 				return;

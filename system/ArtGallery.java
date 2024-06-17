@@ -355,15 +355,7 @@ public class ArtGallery implements Serializable{
 		this.exhibitions.remove(e);
 	}
 	
-	public Exhibition getExhibitionFromName(String name) {
-		for (Exhibition e : this.getExhibitions()) {
-			if (e.getTitle().equals(name)) {
-				return e;
-			}
-		}
-		
-		return null;
-	}
+
 	
 	public Set<String> getClientsStrings(){
 		Set<String> cls = new LinkedHashSet<>();
