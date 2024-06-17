@@ -271,7 +271,7 @@ public class VistaWorkEditPanel extends JPanel{
 		
 		sala.removeAllItems();
 		
-		ArtGallery.getSystem().getExhibitionFromName(selectedItem).getRoomexhibitions().forEach(r -> sala.addItem(r.getSubRoom().getName()));
+		ArtGallery.getSystem().searchExhibition(selectedItem).getRoomexhibitions().forEach(r -> sala.addItem(r.getSubRoom().getName()));
 		
 		sala.setSelectedItem(null);
 

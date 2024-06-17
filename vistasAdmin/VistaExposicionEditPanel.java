@@ -69,7 +69,7 @@ public class VistaExposicionEditPanel extends JPanel{
 		this.setLayout(layout);
 		
 		Dimension d2 = Toolkit.getDefaultToolkit().getScreenSize();
-        d2.width -= 450;
+        d2.width -= 200;
         d2.height = 150;
 		
 		this.setPreferredSize(d2);
@@ -201,7 +201,7 @@ public class VistaExposicionEditPanel extends JPanel{
 		
 		
 		layout.putConstraint(SpringLayout.NORTH, confirmar, (int) ((altoPanel - confirmar.getHeight())/2+30), SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, confirmar, 80, SpringLayout.EAST, borrar);
+		layout.putConstraint(SpringLayout.WEST, confirmar, 40, SpringLayout.EAST, borrar);
 		this.add(confirmar);
 		
 		layout.putConstraint(SpringLayout.NORTH, editar, (int) ((altoPanel - editar.getHeight())/2+30), SpringLayout.NORTH, this);

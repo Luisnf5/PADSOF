@@ -77,7 +77,7 @@ public class VistaActivityEditPanel extends JPanel{
 		
 		this.nombre = new JTextField(activity.getName());
 		this.desc = new JTextField(activity.getDescription());
-		String fechaString = String.format("%02d/%02d/%04d", activity.getDate().getDayOfMonth(), activity.getDate().getMonthValue(), activity.getDate().getYear());
+		String fechaString = String.format("%02d/%02d/%04d/%02d", activity.getDate().getDayOfMonth(), activity.getDate().getMonthValue(), activity.getDate().getYear(), activity.getDate().getHour());
 		this.fecha = new JTextField(fechaString);
 		this.nif = new JTextField("");
 		this.tipo = new JComboBox<String>(new String[] {"CONFERENCIA", "MESA", "PROYECCION", "ACTUACION", "VISITA", "FORMATIVA", "OTROS"});

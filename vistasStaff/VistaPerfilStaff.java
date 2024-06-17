@@ -368,10 +368,10 @@ private VistaSystem parent;
   		crearObra.setPreferredSize(new Dimension(200, 100));
   		this.scrollInvAux = new JPanel(new GridLayout(0, 1));
   		this.scrollInv = new JScrollPane(scrollInvAux);
-  		scrollInv.setPreferredSize(new Dimension(1200, 700));
+  		scrollInv.setPreferredSize(d4);
   	
-  		layout.putConstraint(SpringLayout.NORTH, scrollInv, 150, SpringLayout.SOUTH, buscar);
-  		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollInv, 950, SpringLayout.WEST, this);
+  		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollInv, 0, SpringLayout.VERTICAL_CENTER, this);
+  		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollInv, -70, SpringLayout.HORIZONTAL_CENTER, this);
   		scrollInv.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    scrollInv.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	    JScrollBar verticalScrollInvBar = scrollInv.getVerticalScrollBar();
